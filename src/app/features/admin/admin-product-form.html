@@ -1,0 +1,228 @@
+<div class="flex flex-wrap items-center justify-between gap-2">
+  <a routerLink="/admin" class="text-sm underline" style="color: var(--verde-guadua);">← Volver a Muebles</a>
+  @if (!isNew()) {
+    <button
+      type="button"
+      (click)="togglePublish()"
+      class="admin-btn admin-btn--sm"
+      [class.admin-btn--primary]="!active()"
+    >
+      {{ active() ? '● Publicado — ocultar' : 'Publicar' }}
+    </button>
+  }
+</div>
+
+<h1 class="mt-2 text-xl">{{ isNew() ? 'Nuevo mueble' : (form.controls.name.value || 'Editar mueble') }}</h1>
+
+@if (loading()) {
+  <p class="mt-6" style="color: var(--texto-suave);">Cargando…</p>
+} @else {
+  @if (notice()) {
+    <p class="mt-3 rounded-md border px-3 py-2 text-sm font-medium" style="border-color: var(--verde-guadua); color: var(--verde-guadua); background: color-mix(in srgb, var(--verde-guadua) 8%, transparent);">{{ notice() }}</p>
+  }
+  @if (error()) {
+    <p class="mt-3 rounded-md border px-3 py-2 text-sm" style="border-color: #c98; color: #8c4a34;">{{ error() }}</p>
+  }
+
+  <!-- ===== FOTOS (arriba: es lo primero que importa) ===== -->
+  <section class="mt-4 rounded-lg border p-3" style="border-color: color-mix(in srgb, var(--musgo) 35%, transparent); background: var(--blanco-taller);">
+    <h2 class="text-base font-semibold">Fotos</h2>
+    <p class="mt-0.5 text-sm" style="color: var(--texto-suave);">
+      La primera foto es la que se ve en el catálogo. Sin al menos una foto, el mueble no se puede publicar.
+    </p>
+
+    @if (!isNew() && productId(); as pid) {
+      <app-admin-image-manager
+        [productId]="pid"
+        [initialImages]="images()"
+        (changed)="onImagesChanged($event)"
+      />
+    } @else {
+      <label class="mt-3 flex cursor-pointer items-center justify-center rounded-md border border-dashed px-4 py-6 text-sm font-medium" style="border-color: var(--verde-guadua); color: var(--verde-guadua);">
+        📷 Tomar o elegir fotos
+        <input type="file" accept="image/*" capture="environment" multiple class="hidden" (change)="addPending($event)" />
+      </label>
+      @if (pending().length) {
+        <ul class="mt-3 grid grid-cols-3 gap-2">
+          @for (item of pending(); track item.url; let i = $index) {
+            <li class="relative">
+              <img [src]="item.url" alt="" class="aspect-square w-full rounded-md object-cover" />
+              <button type="button" (click)="removePending(i)" aria-label="Quitar foto"
+                class="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full text-xs"
+                style="background: #8c4a34; color: #fff;">✕</button>
+              @if (i === 0) {
+                <span class="absolute bottom-1 left-1 rounded-sm px-1 text-[0.6rem]" style="background: var(--ocre-cana); color: #fff;">Principal</span>
+              }
+            </li>
+          }
+        </ul>
+        <p class="mt-1 text-xs" style="color: var(--texto-suave);">
+          Se subirán al crear el mueble. La primera queda como principal (se puede cambiar después).
+        </p>
+      }
+    }
+  </section>
+
+  <form class="mt-5 space-y-5" [formGroup]="form" (ngSubmit)="save()">
+    <div>
+      <label for="name" class="admin-label">Nombre del mueble</label>
+      <input id="name" formControlName="name" class="admin-input" />
+      @if (form.controls.name.touched && form.controls.name.invalid) {
+        <p class="mt-1 text-xs" style="color: #8c4a34;">Escribe un nombre (mínimo 2 letras).</p>
+      }
+    </div>
+
+    <div>
+      <label for="category" class="admin-label">Categoría</label>
+      <select id="category" formControlName="category" class="admin-input">
+        <option value="">Elige una categoría</option>
+        @for (c of leafCategories(); track c._id) {
+          <option [value]="c._id">{{ c.parentName ? c.parentName + ' · ' + c.name : c.name }}</option>
+        }
+      </select>
+      @if (form.controls.category.touched && form.controls.category.invalid) {
+        <p class="mt-1 text-xs" style="color: #8c4a34;">Elige la categoría del mueble.</p>
+      }
+    </div>
+
+    <div>
+      <label for="shortDescription" class="admin-label">Descripción corta</label>
+      <input id="shortDescription" formControlName="shortDescription" class="admin-input" placeholder="Tejido en fibra natural, 5 puestos" />
+      <p class="mt-1 text-xs" style="color: var(--texto-suave);">Una línea. Aparece en las tarjetas del catálogo.</p>
+    </div>
+
+    <div>
+      <label for="description" class="admin-label">Descripción</label>
+      <textarea id="description" formControlName="description" rows="3" class="admin-input"></textarea>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+      <div>
+        <label for="material" class="admin-label">Material</label>
+        <input id="material" formControlName="material" class="admin-input" placeholder="mimbre, cedro…" />
+      </div>
+      <div>
+        <label for="finish" class="admin-label">Acabado</label>
+        <input id="finish" formControlName="finish" class="admin-input" placeholder="natural, color miel…" />
+      </div>
+    </div>
+
+    <div>
+      <label for="status" class="admin-label">Disponibilidad</label>
+      <select id="status" formControlName="status" class="admin-input">
+        <option value="AVAILABLE">Disponible</option>
+        <option value="MADE_TO_ORDER">Bajo pedido</option>
+        <option value="OUT_OF_STOCK">Agotado</option>
+      </select>
+    </div>
+
+    <label class="flex items-start gap-2 text-sm">
+      <input type="checkbox" formControlName="personalizable" class="mt-0.5 h-4 w-4" />
+      <span>Se fabrica a la medida <span style="color: var(--texto-suave);">(el precio queda como "según medidas")</span></span>
+    </label>
+
+    @if (form.controls.personalizable.value) {
+      <div>
+        <label for="customizationNotes" class="admin-label">Qué se puede cambiar</label>
+        <input id="customizationNotes" formControlName="customizationNotes" class="admin-input" placeholder="medidas, color del tejido, número de puestos" />
+      </div>
+    }
+
+    <label class="flex items-start gap-2 text-sm">
+      <input type="checkbox" formControlName="featured" class="mt-0.5 h-4 w-4" />
+      <span>Mostrar en la página de inicio <span style="color: var(--texto-suave);">(máximo 8 muebles)</span></span>
+    </label>
+
+    <!-- Opciones del mueble (variantes) -->
+    <fieldset class="rounded-lg border p-3" style="border-color: color-mix(in srgb, var(--musgo) 35%, transparent);">
+      <legend class="px-1 text-sm font-semibold">Opciones del mueble</legend>
+      <p class="text-xs" style="color: var(--texto-suave);">Colores o tamaños de este mueble. Deja solo "Estándar" si no tiene variaciones.</p>
+
+      <div class="mt-3 space-y-4" formArrayName="variants">
+        @for (v of variants.controls; track $index; let i = $index) {
+          <div class="rounded-md border p-2" [formGroupName]="i" style="border-color: color-mix(in srgb, var(--musgo) 30%, transparent);">
+            <div class="flex items-center gap-2">
+              <input formControlName="name" placeholder="Nombre de la opción" class="admin-input flex-1" />
+              @if (variants.length > 1) {
+                <button type="button" (click)="removeVariant(i)" class="admin-btn admin-btn--sm admin-btn--danger">Quitar</button>
+              }
+            </div>
+            <div class="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
+              <input formControlName="price" type="number" min="0" placeholder="Precio (pesos)" class="admin-input" />
+              <input formControlName="seats" type="number" min="0" placeholder="Puestos" class="admin-input" />
+              <input formControlName="colorName" placeholder="Color" class="admin-input" />
+              <input formControlName="widthCm" type="number" min="0" placeholder="Ancho cm" class="admin-input" />
+              <input formControlName="heightCm" type="number" min="0" placeholder="Alto cm" class="admin-input" />
+              <input formControlName="depthCm" type="number" min="0" placeholder="Fondo cm" class="admin-input" />
+            </div>
+            <label class="mt-2 flex items-center gap-2 text-xs">
+              <input type="checkbox" formControlName="isDefault" class="h-4 w-4" /> Mostrar esta opción primero
+            </label>
+          </div>
+        }
+      </div>
+
+      <button type="button" (click)="addVariant()" class="admin-btn admin-btn--sm mt-3">+ Agregar otra opción</button>
+    </fieldset>
+
+    <!-- Qué puede pedir el cliente al cotizar -->
+    <fieldset class="rounded-lg border p-3" style="border-color: color-mix(in srgb, var(--musgo) 35%, transparent);">
+      <legend class="px-1 text-sm font-semibold">Qué puede pedir el cliente</legend>
+      <p class="text-xs" style="color: var(--texto-suave);">
+        Campos que el cliente responde al cotizar (medidas, color, sí/no…). Útil sobre todo si el mueble se fabrica a la medida.
+        Déjalo vacío si no aplica.
+      </p>
+
+      <div class="mt-2 flex flex-wrap gap-2">
+        <button type="button" (click)="addPreset('medidas')" class="admin-btn admin-btn--sm">+ Medidas (ancho/alto/fondo)</button>
+        <button type="button" (click)="addPreset('puestos')" class="admin-btn admin-btn--sm">+ Puestos</button>
+        <button type="button" (click)="addPreset('color')" class="admin-btn admin-btn--sm">+ Color del tejido</button>
+        <button type="button" (click)="addPreset('siNo')" class="admin-btn admin-btn--sm">+ Pregunta Sí/No</button>
+        <button type="button" (click)="addPreset('texto')" class="admin-btn admin-btn--sm">+ Texto libre</button>
+      </div>
+
+      <div class="mt-3 space-y-3" formArrayName="customFields">
+        @for (f of customFields.controls; track $index; let i = $index) {
+          <div class="rounded-md border p-2" [formGroupName]="i" style="border-color: color-mix(in srgb, var(--musgo) 30%, transparent);">
+            <div class="flex items-center gap-2">
+              <input formControlName="label" placeholder="Nombre del campo (ej: Ancho)" class="admin-input flex-1" />
+              <select formControlName="type" class="admin-input" style="width: auto;">
+                <option value="number">Número</option>
+                <option value="select">Lista</option>
+                <option value="boolean">Sí / No</option>
+                <option value="text">Texto</option>
+              </select>
+              <button type="button" (click)="removeCustomField(i)" class="admin-btn admin-btn--sm admin-btn--danger">Quitar</button>
+            </div>
+
+            @if (f.get('type')?.value === 'number') {
+              <div class="mt-2 grid grid-cols-3 gap-2">
+                <input formControlName="unit" placeholder="Unidad (cm)" class="admin-input" />
+                <input formControlName="min" type="number" placeholder="Mínimo" class="admin-input" />
+                <input formControlName="max" type="number" placeholder="Máximo" class="admin-input" />
+              </div>
+            }
+            @if (f.get('type')?.value === 'select') {
+              <input formControlName="options" placeholder="Opciones separadas por coma: Miel, Natural, Gris" class="admin-input mt-2" />
+            }
+
+            <div class="mt-2 flex items-center gap-3">
+              <input formControlName="hint" placeholder="Ayuda (ej: el estándar es 240 cm)" class="admin-input flex-1" />
+              <label class="flex items-center gap-1 whitespace-nowrap text-xs">
+                <input type="checkbox" formControlName="required" class="h-4 w-4" /> Obligatorio
+              </label>
+            </div>
+          </div>
+        } @empty {
+          <p class="text-xs" style="color: var(--texto-suave);">Sin campos. Usa los botones de arriba o "+ Agregar campo".</p>
+        }
+      </div>
+
+      <button type="button" (click)="addCustomField()" class="admin-btn admin-btn--sm mt-3">+ Agregar campo</button>
+    </fieldset>
+
+    <button type="submit" [disabled]="saving()" class="admin-btn admin-btn--primary w-full" style="min-height: 3rem;">
+      {{ saving() ? 'Guardando…' : (isNew() ? 'Crear mueble' : 'Guardar cambios') }}
+    </button>
+  </form>
+}

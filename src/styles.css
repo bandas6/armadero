@@ -1,0 +1,120 @@
+@import 'tailwindcss';
+
+/*
+ * Tokens de la Direccion 01 - "Taller Abierto" (design/direccion-01-taller-abierto/),
+ * la dirección elegida. Ver docs/plan-direcciones-diseno.md antes de tocar estos
+ * valores: cambian la identidad visual aprobada por la clienta.
+ */
+:root {
+  --lino: #f1ede4;
+  --grafito: #262420;
+  --verde-guadua: #4b5d45;
+  --ocre-cana: #c68a3d;
+  --blanco-taller: #fbfaf7;
+  --musgo: #8b9186; /* solo para bordes y detalles decorativos */
+  --texto-suave: #556356; /* texto secundario: cumple contraste AA sobre lino y blanco-taller */
+
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/*
+ * Desplazamiento suave al navegar a un ancla del menú (#categorias, #taller...).
+ * scroll-padding-top deja aire para el header sticky (barra de anuncio + nav)
+ * para que el título de la sección no quede tapado.
+ */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background: var(--lino);
+  color: var(--grafito);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
+
+.font-mono-precio {
+  font-family: var(--font-mono);
+}
+
+:focus-visible {
+  outline: 2px solid var(--verde-guadua);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---- Panel de administración: botones y controles con área de toque cómoda ---- */
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--musgo);
+  background: var(--blanco-taller);
+  color: var(--grafito);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.1;
+  text-align: center;
+  cursor: pointer;
+}
+.admin-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.admin-btn--primary {
+  background: var(--verde-guadua);
+  border-color: var(--verde-guadua);
+  color: var(--blanco-taller);
+}
+.admin-btn--sm {
+  min-height: 2rem;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+}
+.admin-btn--danger {
+  color: #8c4a34;
+  border-color: #c9a08c;
+}
+.admin-input {
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid var(--musgo);
+  background: var(--blanco-taller);
+  padding: 0.55rem 0.75rem;
+  font-size: 0.95rem;
+}
+.admin-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}

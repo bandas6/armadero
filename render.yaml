@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: artemadero-web-pruebas
+    runtime: node
+    buildCommand: npm ci && npm run build
+    startCommand: npm run serve:ssr:web
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SITE_URL
+        sync: false
+      - key: API_URL
+        sync: false

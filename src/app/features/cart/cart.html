@@ -1,0 +1,136 @@
+<section class="mx-auto max-w-3xl px-4 py-10 sm:py-14">
+  <h1 class="text-2xl sm:text-3xl">Tu selección</h1>
+
+  @if (submitted(); as result) {
+    <div class="mt-6 rounded-lg border p-5" style="border-color: var(--verde-guadua); background: var(--blanco-taller);">
+      <p class="font-semibold">¡Listo! Tu cotización quedó guardada.</p>
+      <p class="mt-1 text-sm">Código: <span class="font-mono-precio">{{ result.code }}</span></p>
+      @if (result.whatsappUrl) {
+        <a [href]="result.whatsappUrl" class="mt-3 inline-block rounded px-4 py-2 text-sm font-medium" style="background: var(--verde-guadua); color: var(--blanco-taller);">
+          Abrir WhatsApp
+        </a>
+      } @else {
+        <p class="mt-2 text-sm" style="color: var(--ocre-cana);">
+          WhatsApp sin configurar (aviso solo para desarrollo: falta WHATSAPP_NUMBER en el .env de la API).
+        </p>
+      }
+      <p class="mt-3"><a routerLink="/catalogo" class="text-sm underline" style="color: var(--verde-guadua);">Seguir viendo el catálogo</a></p>
+    </div>
+  } @else if (cart.items().length === 0) {
+    <p class="mt-6" style="color: var(--texto-suave);">Todavía no has agregado muebles.</p>
+    <a routerLink="/catalogo" class="mt-4 inline-block rounded-sm px-5 py-2.5 font-medium" style="background: var(--verde-guadua); color: var(--blanco-taller);">
+      Ir al catálogo
+    </a>
+  } @else {
+    <ul class="mt-6 space-y-4">
+      @for (item of cart.items(); track item.variantId) {
+        <li class="rounded-lg border p-3" style="border-color: color-mix(in srgb, var(--musgo) 35%, transparent); background: var(--blanco-taller);">
+          <div class="flex gap-4">
+            <div class="h-20 w-20 shrink-0 overflow-hidden rounded-md border" style="border-color: color-mix(in srgb, var(--musgo) 40%, transparent);">
+              @if (item.imageUrl) {
+                <img [src]="item.imageUrl" [alt]="item.productName" class="h-full w-full object-cover" width="80" height="80" />
+              }
+            </div>
+            <div class="flex-1">
+              <a [routerLink]="['/producto', item.slug]" class="font-medium hover:underline">{{ item.productName }}</a>
+              <p class="text-sm" style="color: var(--texto-suave);">{{ item.variantName }}</p>
+              <p class="mt-1 font-mono-precio text-sm" style="color: var(--ocre-cana);">
+                {{ item.unitPrice != null ? (item.unitPrice | copCurrency) : 'Precio según medidas' }}
+              </p>
+            </div>
+            <div class="flex flex-col items-end gap-2">
+              <label class="sr-only" [attr.for]="'qty-' + item.variantId">Cantidad de {{ item.productName }}</label>
+              <input
+                [id]="'qty-' + item.variantId"
+                type="number"
+                min="1"
+                max="20"
+                [value]="item.quantity"
+                (change)="setQty(item.variantId, $any($event.target).value)"
+                class="w-16 rounded-sm border px-2 py-1 text-sm"
+                style="border-color: var(--musgo);"
+              />
+              <button type="button" (click)="cart.remove(item.variantId)" class="text-xs underline" style="color: var(--texto-suave);">
+                Quitar
+              </button>
+            </div>
+          </div>
+
+          <!-- Personalización de este ítem -->
+          @if (item.customizationFields?.length) {
+            @if (editing() === item.variantId) {
+              <div class="mt-3 rounded-md border p-3" style="border-color: var(--verde-guadua);">
+                <app-customization-fields [fields]="item.customizationFields!" [initial]="item.customization ?? []" />
+                <div class="mt-2 flex gap-2">
+                  <button type="button" (click)="saveEditor(item)" class="admin-btn admin-btn--primary admin-btn--sm">Guardar</button>
+                  <button type="button" (click)="closeEditor()" class="admin-btn admin-btn--sm">Cancelar</button>
+                </div>
+              </div>
+            } @else {
+              <div class="mt-3 rounded-md p-2 text-sm" style="background: color-mix(in srgb, var(--lino) 55%, var(--blanco-taller));">
+                @if (item.customization?.length) {
+                  <ul>
+                    @for (a of item.customization; track a.label) {
+                      <li><span style="color: var(--texto-suave);">{{ a.label }}:</span> {{ a.value }}</li>
+                    }
+                  </ul>
+                } @else {
+                  <p style="color: var(--texto-suave);">Este mueble se puede personalizar.</p>
+                }
+                <button type="button" (click)="openEditor(item)" class="mt-1 text-xs underline" style="color: var(--verde-guadua);">
+                  Editar personalización
+                </button>
+              </div>
+            }
+          }
+        </li>
+      }
+    </ul>
+
+    <div class="mt-4 rounded-sm border p-4 font-mono-precio text-sm" style="border-color: color-mix(in srgb, var(--musgo) 40%, transparent);">
+      <div class="flex justify-between">
+        <span>Total estimado</span>
+        <span>{{ cart.estimatedTotal() | copCurrency }}</span>
+      </div>
+      @if (cart.hasCustomItems()) {
+        <p class="mt-1 text-xs" style="color: var(--texto-suave);">
+          Algunos muebles se cotizan según medidas: el valor final se acuerda por WhatsApp.
+        </p>
+      }
+      <p class="mt-1 text-xs" style="color: var(--texto-suave);">El flete se acuerda en la conversación.</p>
+    </div>
+
+    <form class="mt-8 space-y-4" [formGroup]="form" (ngSubmit)="submit()">
+      <h2 class="text-lg">Cotizar por WhatsApp</h2>
+
+      <div>
+        <label for="customerName" class="block text-sm font-medium">Nombre</label>
+        <input id="customerName" type="text" formControlName="customerName" class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--musgo);" />
+        @if (form.controls.customerName.invalid && form.controls.customerName.touched) {
+          <p class="mt-1 text-sm" style="color: var(--ocre-cana);">Escribe tu nombre.</p>
+        }
+      </div>
+
+      <div>
+        <label for="customerCity" class="block text-sm font-medium">Ciudad</label>
+        <input id="customerCity" type="text" formControlName="customerCity" class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--musgo);" />
+        @if (form.controls.customerCity.invalid && form.controls.customerCity.touched) {
+          <p class="mt-1 text-sm" style="color: var(--ocre-cana);">Cuéntanos desde qué ciudad escribes.</p>
+        }
+      </div>
+
+      <div>
+        <label for="notes" class="block text-sm font-medium">Algo más que quieras contarnos (opcional)</label>
+        <textarea id="notes" formControlName="notes" rows="2" class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--musgo);"></textarea>
+      </div>
+
+      @if (submitError()) {
+        <p class="text-sm" style="color: #8c4a34;">{{ submitError() }}</p>
+      }
+
+      <button type="submit" [disabled]="submitting()" class="w-full rounded px-4 py-3 font-medium disabled:opacity-60" style="background: var(--verde-guadua); color: var(--blanco-taller);">
+        {{ submitting() ? 'Enviando…' : 'Cotizar por WhatsApp' }}
+      </button>
+    </form>
+  }
+</section>

@@ -1,0 +1,66 @@
+<a routerLink="/admin/cotizaciones" class="text-sm underline" style="color: var(--verde-guadua);">← Cotizaciones</a>
+
+@if (loading()) {
+  <p class="mt-6" style="color: var(--texto-suave);">Cargando…</p>
+} @else if (error()) {
+  <p class="mt-6" style="color: #8c4a34;">{{ error() }}</p>
+} @else if (quote(); as q) {
+  <h1 class="mt-2 font-mono-precio text-xl">Cotización #{{ q.code }}</h1>
+  <p class="text-sm" style="color: var(--texto-suave);">{{ q.createdAt | date: 'd MMM y, HH:mm' }} · vía {{ q.source }}</p>
+
+  <div class="mt-4 rounded-sm border p-4 text-sm" style="border-color: color-mix(in srgb, var(--musgo) 35%, transparent); background: var(--blanco-taller);">
+    <p><strong>{{ q.customerName }}</strong> — {{ q.customerCity }}</p>
+    @if (q.customerPhone) { <p>Tel: {{ q.customerPhone }}</p> }
+    @if (q.customizationRequest) {
+      <p class="mt-2"><span style="color: var(--texto-suave);">Medidas o cambios:</span> {{ q.customizationRequest }}</p>
+    }
+    @if (q.notes) {
+      <p class="mt-1"><span style="color: var(--texto-suave);">Nota:</span> {{ q.notes }}</p>
+    }
+  </div>
+
+  <ul class="mt-4 divide-y" style="border-color: color-mix(in srgb, var(--musgo) 25%, transparent);">
+    @for (item of q.items; track item.sku) {
+      <li class="py-2 text-sm">
+        <div class="flex justify-between gap-3">
+          <span>{{ item.productName }} <span style="color: var(--texto-suave);">· {{ item.variantName }} · x{{ item.quantity }}</span></span>
+          <span class="font-mono-precio" style="color: var(--ocre-cana);">
+            {{ item.unitPrice != null ? (item.unitPrice | copCurrency) : 'Según medidas' }}
+          </span>
+        </div>
+        @if (item.customization?.length) {
+          <ul class="mt-1 pl-3 text-xs" style="color: var(--texto-suave);">
+            @for (a of item.customization; track a.label) {
+              <li>· {{ a.label }}: <span style="color: var(--grafito);">{{ a.value }}</span></li>
+            }
+          </ul>
+        }
+      </li>
+    }
+  </ul>
+  <p class="mt-2 flex justify-between font-mono-precio">
+    <span>Total estimado</span>
+    <span>{{ q.total > 0 ? (q.total | copCurrency) : 'Según medidas' }}</span>
+  </p>
+
+  @if (whatsappLink(); as link) {
+    <a [href]="link" target="_blank" class="mt-4 inline-block rounded-sm px-4 py-2 text-sm font-medium" style="background: var(--verde-guadua); color: var(--blanco-taller);">
+      Escribir a {{ q.customerName }} por WhatsApp
+    </a>
+  }
+
+  <div class="mt-6 space-y-3">
+    <div>
+      <label for="estado" class="block text-sm font-medium">Estado</label>
+      <select id="estado" [ngModel]="status()" (ngModelChange)="status.set($event)" class="mt-1 rounded-sm border px-3 py-2 text-sm" style="border-color: var(--musgo); background: var(--blanco-taller);">
+        @for (s of statuses; track s) { <option [value]="s">{{ label[s] }}</option> }
+      </select>
+    </div>
+    <div>
+      <label for="notas" class="block text-sm font-medium">Notas internas</label>
+      <textarea id="notas" [ngModel]="adminNotes()" (ngModelChange)="adminNotes.set($event)" rows="3" class="mt-1 w-full rounded border px-3 py-2 text-sm" style="border-color: var(--musgo);"></textarea>
+    </div>
+    <button type="button" (click)="save()" class="rounded-sm px-4 py-2 text-sm font-medium" style="background: var(--verde-guadua); color: var(--blanco-taller);">Guardar</button>
+    @if (saved()) { <span class="ml-2 text-sm" style="color: var(--verde-guadua);">Guardado.</span> }
+  </div>
+}

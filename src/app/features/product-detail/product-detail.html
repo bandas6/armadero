@@ -1,0 +1,185 @@
+@if (notFound()) {
+  <div class="mx-auto max-w-2xl px-4 py-16 text-center">
+    <h1 class="text-2xl">No encontramos este mueble</h1>
+    <p class="mt-2" style="color: var(--texto-suave);">Puede que ya no esté disponible. Escríbenos y te ayudamos a encontrar algo parecido.</p>
+  </div>
+} @else if (product(); as product) {
+  <article class="mx-auto max-w-5xl px-4 py-10 grid gap-10 md:grid-cols-2">
+    <!-- Galería -->
+    <section aria-label="Fotos del mueble">
+      <div class="aspect-[4/3] overflow-hidden rounded-lg border" style="border-color: var(--musgo); background: var(--blanco-taller);">
+        @if (product.images[selectedImageIndex()]; as mainImage) {
+          <img
+            [ngSrc]="mainImage.url"
+            [alt]="mainImage.alt || product.name"
+            width="800"
+            height="600"
+            priority
+            class="h-full w-full object-cover"
+          />
+        }
+      </div>
+      @if (product.images.length > 1) {
+        <div class="mt-3 flex gap-2">
+          @for (img of product.images; track img._id; let i = $index) {
+            <button
+              type="button"
+              (click)="selectImage(i)"
+              [attr.aria-label]="'Ver foto ' + (i + 1) + ' de ' + product.name"
+              [attr.aria-pressed]="i === selectedImageIndex()"
+              class="h-16 w-16 overflow-hidden rounded border-2"
+              [style.border-color]="i === selectedImageIndex() ? 'var(--verde-guadua)' : 'var(--musgo)'"
+            >
+              <img [ngSrc]="img.url" [alt]="img.alt || product.name" width="100" height="100" class="h-full w-full object-cover" />
+            </button>
+          }
+        </div>
+      }
+    </section>
+
+    <!-- Ficha -->
+    <section>
+      <p class="text-sm uppercase tracking-wide" style="color: var(--ocre-cana);">{{ product.category.name }}</p>
+      <h1 class="mt-1 text-3xl">{{ product.name }}</h1>
+      @if (product.shortDescription) {
+        <p class="mt-2" style="color: var(--texto-suave);">{{ product.shortDescription }}</p>
+      }
+
+      <p class="font-mono-precio mt-4 text-2xl" style="color: var(--grafito);">
+        {{ selectedVariant()?.price | copCurrency }}
+      </p>
+
+      @if (product.variants.length > 1) {
+        <fieldset class="mt-5">
+          <legend class="text-sm font-medium">Opciones</legend>
+          <div class="mt-2 flex flex-wrap gap-2">
+            @for (variant of product.variants; track variant._id) {
+              <button
+                type="button"
+                (click)="selectVariant(variant._id)"
+                class="rounded border px-3 py-1.5 text-sm"
+                [style.border-color]="selectedVariant()?._id === variant._id ? 'var(--verde-guadua)' : 'var(--musgo)'"
+                [style.background]="selectedVariant()?._id === variant._id ? 'var(--verde-guadua)' : 'transparent'"
+                [style.color]="selectedVariant()?._id === variant._id ? 'var(--blanco-taller)' : 'var(--grafito)'"
+              >
+                {{ variant.name }}
+              </button>
+            }
+          </div>
+        </fieldset>
+      }
+
+      <dl class="mt-6 grid grid-cols-2 gap-3 text-sm font-mono-precio">
+        <div>
+          <dt style="color: var(--texto-suave);">Medidas</dt>
+          <dd>{{ measureLabel() }}</dd>
+        </div>
+        @if (product.material) {
+          <div>
+            <dt style="color: var(--texto-suave);">Material</dt>
+            <dd>{{ product.material }}</dd>
+          </div>
+        }
+        <div>
+          <dt style="color: var(--texto-suave);">Tiempo de fabricación</dt>
+          <dd>Se confirma al cotizar</dd>
+        </div>
+        <div>
+          <dt style="color: var(--texto-suave);">Garantía</dt>
+          <dd>Detalle al cotizar</dd>
+        </div>
+      </dl>
+
+      @if (product.personalizable && !product.customizationFields?.length) {
+        <p class="mt-4 rounded border px-3 py-2 text-sm" style="border-color: var(--ocre-cana); background: var(--blanco-taller);">
+          Se fabrica a la medida. Cuéntanos tus medidas en el formulario.
+        </p>
+      }
+
+      <!-- Personaliza tu mueble -->
+      @if (product.customizationFields?.length) {
+        <section class="mt-6 rounded-lg border p-4" style="border-color: var(--verde-guadua); background: var(--blanco-taller);">
+          <h2 class="text-lg">Personaliza tu mueble</h2>
+          <p class="mt-0.5 text-sm" style="color: var(--texto-suave);">
+            Estos datos van en tu cotización. Lo demás se ajusta hablando por WhatsApp.
+          </p>
+          <div class="mt-3">
+            <app-customization-fields [fields]="product.customizationFields!" />
+          </div>
+        </section>
+      }
+
+      <!-- Agregar a la selección para cotizar varios muebles juntos -->
+      <div class="mt-6">
+        <button type="button" (click)="addToCart()"
+          class="w-full rounded border px-4 py-2.5 text-sm font-medium"
+          style="border-color: var(--verde-guadua); color: var(--verde-guadua);">
+          Agregar a mi selección
+        </button>
+        @if (addedToCart()) {
+          <p class="mt-2 text-sm">
+            Agregado.
+            <a routerLink="/carrito" class="underline" style="color: var(--verde-guadua);">Ver mi selección</a>
+          </p>
+        }
+      </div>
+
+      <!-- Formulario de cotización -->
+      @if (submitted(); as result) {
+        <div class="mt-8 rounded-lg border p-4" style="border-color: var(--verde-guadua); background: var(--blanco-taller);">
+          <p class="font-semibold">¡Listo! Tu cotización quedó guardada.</p>
+          <p class="mt-1 text-sm">Código: <span class="font-mono-precio">{{ result.code }}</span></p>
+          @if (result.whatsappUrl) {
+            <a [href]="result.whatsappUrl" class="mt-3 inline-block rounded px-4 py-2 text-sm font-medium" style="background: var(--verde-guadua); color: var(--blanco-taller);">
+              Abrir WhatsApp
+            </a>
+          } @else {
+            <p class="mt-2 text-sm" style="color: var(--ocre-cana);">
+              WhatsApp sin configurar (aviso solo para desarrollo: falta WHATSAPP_NUMBER en el .env de la API).
+            </p>
+          }
+        </div>
+      } @else {
+        <form class="mt-8 space-y-4" [formGroup]="quoteForm" (ngSubmit)="submitQuote()">
+          <h2 class="text-lg">Cotizar por WhatsApp</h2>
+
+          <div>
+            <label for="customerName" class="block text-sm font-medium">Nombre</label>
+            <input id="customerName" type="text" formControlName="customerName"
+              class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--musgo);" />
+            @if (quoteForm.controls.customerName.invalid && quoteForm.controls.customerName.touched) {
+              <p class="mt-1 text-sm" style="color: var(--ocre-cana);">Escribe tu nombre.</p>
+            }
+          </div>
+
+          <div>
+            <label for="customerCity" class="block text-sm font-medium">Ciudad</label>
+            <input id="customerCity" type="text" formControlName="customerCity"
+              class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--musgo);" />
+            @if (quoteForm.controls.customerCity.invalid && quoteForm.controls.customerCity.touched) {
+              <p class="mt-1 text-sm" style="color: var(--ocre-cana);">Cuéntanos desde qué ciudad escribes.</p>
+            }
+          </div>
+
+          <div>
+            <label for="notes" class="block text-sm font-medium">Nota (opcional)</label>
+            <textarea id="notes" formControlName="notes" rows="2"
+              class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--musgo);"></textarea>
+          </div>
+
+          @if (submitError()) {
+            <p class="text-sm" style="color: #8c4a34;">{{ submitError() }}</p>
+          }
+
+          <button type="submit" [disabled]="submitting()"
+            class="w-full rounded px-4 py-3 font-medium disabled:opacity-60"
+            style="background: var(--verde-guadua); color: var(--blanco-taller);">
+            {{ submitting() ? 'Enviando…' : 'Cotizar por WhatsApp' }}
+          </button>
+        </form>
+      }
+    </section>
+  </article>
+} @else {
+  <div class="mx-auto max-w-2xl px-4 py-16 text-center" style="color: var(--texto-suave);">Cargando…</div>
+}

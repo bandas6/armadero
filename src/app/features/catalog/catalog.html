@@ -1,0 +1,131 @@
+<section class="mx-auto max-w-6xl px-4 py-10 sm:py-14">
+  @let cat = activeCategory();
+  <h1 class="text-2xl sm:text-3xl">{{ cat ? cat.name : 'Catálogo' }}</h1>
+  <p class="mt-2 max-w-xl" style="color: color-mix(in srgb, var(--grafito) 80%, transparent);">
+    @if (cat?.description) {
+      {{ cat!.description }}
+    } @else {
+      Primero el material, después el tipo de mueble. Todo se fabrica a la medida.
+    }
+  </p>
+
+  <!-- Filtro por material: de primer nivel (docs/cliente.md) -->
+  <div class="mt-6 flex flex-wrap gap-2" role="group" aria-label="Filtrar por material">
+    <button
+      type="button"
+      (click)="setMaterial(null)"
+      [attr.aria-pressed]="!filters().material"
+      class="rounded-sm border px-5 py-2 text-sm font-medium"
+      [style.background]="!filters().material ? 'var(--verde-guadua)' : 'transparent'"
+      [style.color]="!filters().material ? 'var(--blanco-taller)' : 'var(--verde-guadua)'"
+      style="border-color: var(--verde-guadua);"
+    >
+      Todos
+    </button>
+    <button
+      type="button"
+      (click)="setMaterial('tejido')"
+      [attr.aria-pressed]="filters().material === 'tejido'"
+      class="rounded-sm border px-5 py-2 text-sm font-medium"
+      [style.background]="filters().material === 'tejido' ? 'var(--verde-guadua)' : 'transparent'"
+      [style.color]="filters().material === 'tejido' ? 'var(--blanco-taller)' : 'var(--verde-guadua)'"
+      style="border-color: var(--verde-guadua);"
+    >
+      Tejido
+    </button>
+    <button
+      type="button"
+      (click)="setMaterial('madera')"
+      [attr.aria-pressed]="filters().material === 'madera'"
+      class="rounded-sm border px-5 py-2 text-sm font-medium"
+      [style.background]="filters().material === 'madera' ? 'var(--verde-guadua)' : 'transparent'"
+      [style.color]="filters().material === 'madera' ? 'var(--blanco-taller)' : 'var(--verde-guadua)'"
+      style="border-color: var(--verde-guadua);"
+    >
+      Madera
+    </button>
+  </div>
+
+  <!-- Chips de tipo de mueble -->
+  <div class="mt-4 flex flex-wrap gap-2 font-mono-precio text-xs">
+    <button
+      type="button"
+      (click)="setCategory(null)"
+      class="rounded-full border px-3 py-1"
+      [style.border-color]="!filters().category ? 'var(--verde-guadua)' : 'color-mix(in srgb, var(--musgo) 60%, transparent)'"
+      [style.color]="!filters().category ? 'var(--verde-guadua)' : 'var(--musgo)'"
+    >
+      Todos los muebles
+    </button>
+    @for (parent of parentCategories(); track parent._id) {
+      <button
+        type="button"
+        (click)="setCategory(parent.slug)"
+        class="rounded-full border px-3 py-1"
+        [style.border-color]="isCategoryActive(parent.slug) ? 'var(--verde-guadua)' : 'color-mix(in srgb, var(--musgo) 60%, transparent)'"
+        [style.color]="isCategoryActive(parent.slug) ? 'var(--verde-guadua)' : 'var(--musgo)'"
+      >
+        {{ parent.name }}
+      </button>
+    }
+  </div>
+
+  <!-- Orden -->
+  <div class="mt-6 flex items-center gap-3 text-sm">
+    <label for="orden" style="color: var(--texto-suave);">Ordenar por</label>
+    <select
+      id="orden"
+      class="rounded-sm border px-3 py-1.5"
+      style="border-color: var(--musgo); background: var(--blanco-taller);"
+      [value]="filters().sort"
+      (change)="setSort($any($event.target).value)"
+    >
+      @for (s of sorts; track s.value) {
+        <option [value]="s.value">{{ s.label }}</option>
+      }
+    </select>
+  </div>
+
+  <!-- Resultados -->
+  @if (loading()) {
+    <p class="mt-10" style="color: var(--texto-suave);">Cargando…</p>
+  } @else if (response(); as r) {
+    <p class="mt-6 text-sm" style="color: var(--texto-suave);">
+      {{ r.total }} {{ r.total === 1 ? 'mueble' : 'muebles' }}
+    </p>
+
+    @if (r.items.length === 0) {
+      <div class="mt-8 rounded-sm border p-6" style="border-color: color-mix(in srgb, var(--musgo) 40%, transparent);">
+        <p class="text-lg">Todavía no hay fotos de esta selección.</p>
+        <p class="mt-1" style="color: var(--texto-suave);">
+          Sí fabricamos estos muebles. Escríbenos por WhatsApp y te enviamos referencias y precios.
+        </p>
+      </div>
+    } @else {
+      <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        @for (product of r.items; track product._id) {
+          <app-product-card [product]="product" [priority]="$index < 3" />
+        }
+      </div>
+
+      @if (totalPages() > 1) {
+        <nav class="mt-10 flex flex-wrap gap-2" aria-label="Paginación">
+          @for (p of [].constructor(totalPages()); track $index) {
+            <button
+              type="button"
+              (click)="goToPage($index + 1)"
+              [attr.aria-label]="'Página ' + ($index + 1)"
+              [attr.aria-current]="r.page === $index + 1 ? 'page' : null"
+              class="h-9 w-9 rounded-sm border text-sm"
+              [style.background]="r.page === $index + 1 ? 'var(--verde-guadua)' : 'transparent'"
+              [style.color]="r.page === $index + 1 ? 'var(--blanco-taller)' : 'var(--grafito)'"
+              style="border-color: var(--musgo);"
+            >
+              {{ $index + 1 }}
+            </button>
+          }
+        </nav>
+      }
+    }
+  }
+</section>
