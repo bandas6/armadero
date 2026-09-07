@@ -24,16 +24,18 @@ describe('App', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('muestra el logotipo en el encabezado y el pie', async () => {
+  it('muestra el logotipo dorado en el encabezado y en el pie', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     TestBed.inject(HttpTestingController).match(() => true).forEach((req) => req.flush(null));
     await fixture.whenStable();
 
+    // Las dos superficies oscuras del sitio llevan el dorado. La version en tinta es solo
+    // para fondo claro, y desde el hero a sangre ya no hay ninguna en el armazon.
     const el = fixture.nativeElement as HTMLElement;
     const logos = [...el.querySelectorAll('img')].map((img) => img.getAttribute('src'));
-    expect(logos).toContain('/marca/logotipo-tinta.svg');
-    expect(logos).toContain('/marca/logotipo.svg');
+    expect(logos.filter((src) => src === '/marca/logotipo.svg')).toHaveLength(2);
+    expect(logos).not.toContain('/marca/logotipo-tinta.svg');
   });
 
   it('deja el horario de atención a la vista en el pie', async () => {

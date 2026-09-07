@@ -21,48 +21,83 @@
 <body>
 <div style="--hueso:#F7F6F2;--tinta:#191C1E;--tejido:#A8641E;--madera:#3A5A6B;--hoja:#42604B;--gris:#5E6467;background:var(--hueso);overflow-x:hidden">
 
-<header data-screen-label="Cabecera" style="position:sticky;top:0;z-index:30;background:var(--hueso);border-bottom:1px solid #191C1E1F">
+<header data-screen-label="Cabecera" style="position:sticky;top:0;z-index:30;background:var(--tinta);border-bottom:1px solid #FFFFFF1F">
   <div style="max-width:1360px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
-    <a href="#c-home" style="display:flex;align-items:center;text-decoration:none"><img src="../../marca/logotipo-tinta.svg" alt="Artemadero" style="height:32px;width:auto;display:block"></a>
+    <a href="#c-home" style="display:flex;align-items:center;text-decoration:none"><img src="../../marca/logotipo.svg" alt="Artemadero" style="height:32px;width:auto;display:block"></a>
     <nav style="display:flex;gap:18px;font-size:15px">
-      <a href="#c-home" style="color:var(--tinta);text-decoration:none">Inicio</a>
-      <a href="#c-catalogo" style="color:var(--tinta);text-decoration:none">Catálogo</a>
-      <a href="#c-ficha" style="color:var(--tinta);text-decoration:none">Ficha</a>
+      <a href="#c-home" style="color:#F7F6F2;text-decoration:none">Inicio</a>
+      <a href="#c-catalogo" style="color:#F7F6F2;text-decoration:none">Catálogo</a>
+      <a href="#c-ficha" style="color:#F7F6F2;text-decoration:none">Ficha</a>
     </nav>
     <a href="https://wa.me/573162542637?text=Hola%20Artemadero%2C%20quiero%20cotizar%20un%20mueble." style="margin-left:auto;display:inline-flex;align-items:center;min-height:44px;padding:11px 17px;background:var(--hoja);color:#fff;text-decoration:none;font-weight:600;font-size:15px">Cotizar por WhatsApp</a>
   </div>
 </header>
 
 <section id="c-home" data-screen-label="Home">
-  <div style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1px;background:#191C1E1F;border-bottom:1px solid #191C1E1F">
-    <img src="../../marca/guirnalda.png" srcset="../../marca/guirnalda.png 1x, ../../marca/guirnalda-2x.png 2x" alt="" aria-hidden="true" style="position:absolute;top:14px;right:20px;width:208px;max-width:38%;height:auto;z-index:2;pointer-events:none">
-    <div style="background:var(--hueso);padding:clamp(26px,4vw,52px);display:flex;flex-direction:column;gap:22px">
-      <div>
-        <span style="display:inline-block;width:34px;height:6px;background:var(--tejido);margin-bottom:16px"></span>
-        <h2 style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(40px,6vw,74px);line-height:0.95;margin:0 0 12px;color:var(--tinta)">Tejido</h2>
-        <p style="margin:0;font-size:17px;line-height:1.6;color:#43484B;max-width:38ch">Mimbre, ratán y fibra natural, tejidos a mano. Salas, comedores, mecedoras, lámparas y espejos. Es más de la mitad de lo que hacemos.</p>
-      </div>
-      <div style="position:relative;aspect-ratio:16/10;border:1px solid #191C1E1F">
-        <image-slot id="c-hero-t" shape="rect" fit="cover" placeholder="Portada tejido — una sala tejida"></image-slot>
-      </div>
-      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:auto">
-        <p style="margin:0;font-size:15px;color:var(--gris)">9 categorías con fotos</p>
-        <a href="#c-catalogo" style="display:inline-flex;align-items:center;min-height:44px;padding:11px 18px;background:var(--tejido);color:#fff;text-decoration:none;font-weight:600;font-size:16px">Ver lo tejido</a>
+  <div style="position:relative;background:var(--tinta);color:#F7F6F2;overflow:hidden;isolation:isolate;min-height:min(82vh,760px);display:flex;flex-direction:column">
+    <div style="position:absolute;inset:0;z-index:0"><image-slot id="c-hero-fondo" shape="rect" fit="cover" placeholder="Foto de fondo — la más presentable que tengas, de una sala o un comedor completo"></image-slot></div>
+    <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(105deg,#191C1E5C 0%,#191C1E33 44%,#191C1E14 100%)"></div>
+    <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to top,#191C1EED 0%,#191C1E96 11%,#191C1E00 34%)"></div>
+    <img src="../../marca/guirnalda.png" srcset="../../marca/guirnalda.png 1x, ../../marca/guirnalda-2x.png 2x" alt="" aria-hidden="true" style="position:absolute;top:0;right:22px;width:198px;max-width:30%;height:auto;z-index:3;opacity:0.92;pointer-events:none">
+
+    <div style="position:relative;z-index:2;max-width:1360px;width:100%;margin:0 auto;padding:clamp(30px,4vw,52px) 20px clamp(34px,4.4vw,56px);pointer-events:none;flex:1;display:flex;align-items:center">
+      <div style="max-width:50ch;background:#12151799;backdrop-filter:blur(3px);padding:clamp(22px,2.8vw,36px);border-left:5px solid var(--hoja)">
+        <p style="margin:0 0 16px;font-size:14px;letter-spacing:0.18em;text-transform:uppercase;color:#E4E7E0">Muebles campestres y tejidos · Cali</p>
+        <h1 style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(40px,7.2vw,90px);line-height:0.94;margin:0 0 18px;max-width:20ch;text-wrap:balance">Lo tejemos y lo armamos aquí mismo.</h1>
+        <p style="margin:0 0 30px;font-size:clamp(17px,1.9vw,21px);line-height:1.55;color:#DEE1DA;max-width:48ch">Taller propio. Casi todo se fabrica con las medidas de tu espacio, en el tejido y el acabado que escojas.</p>
+
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:#FFFFFF2E;border:1px solid #FFFFFF2E;margin-bottom:28px">
+          <div style="padding:13px 15px;background:#121517BF">
+            <p style="margin:0 0 2px;font-family:'Instrument Serif',Georgia,serif;font-size:23px;line-height:1.05">A la medida</p>
+            <p style="margin:0;font-size:15px;color:#E4E7E0">Casi todo el catálogo</p>
+          </div>
+          <div style="padding:13px 15px;background:#121517BF">
+            <p style="margin:0 0 2px;font-family:'Instrument Serif',Georgia,serif;font-size:23px;line-height:1.05">Tejido a mano</p>
+            <p style="margin:0;font-size:15px;color:#E4E7E0">Pieza por pieza</p>
+          </div>
+          <div style="padding:13px 15px;background:#121517BF">
+            <p style="margin:0 0 2px;font-family:'Instrument Serif',Georgia,serif;font-size:23px;line-height:1.05">2 a 5 semanas</p>
+            <p style="margin:0;font-size:15px;color:#E4E7E0">Fabricación</p>
+          </div>
+          <div style="padding:13px 15px;background:#121517BF">
+            <p style="margin:0 0 2px;font-family:'Instrument Serif',Georgia,serif;font-size:23px;line-height:1.05">12 meses</p>
+            <p style="margin:0;font-size:15px;color:#E4E7E0">De garantía</p>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:20px">
+          <a href="https://wa.me/573162542637?text=Hola%20Artemadero%2C%20quiero%20cotizar%20un%20mueble." style="display:inline-flex;flex-direction:column;justify-content:center;min-height:62px;padding:12px 26px;background:var(--hoja);color:#fff;text-decoration:none;pointer-events:auto">
+            <span style="font-weight:600;font-size:18px">Cotizar por WhatsApp</span>
+            <span style="font-size:13px;color:#D2DECE">Mándanos tus medidas</span>
+          </a>
+          <a href="#c-catalogo" style="display:inline-flex;align-items:center;min-height:62px;padding:12px 24px;border:1.5px solid #FFFFFF66;color:#F7F6F2;text-decoration:none;font-weight:600;font-size:17px;pointer-events:auto">Ver el catálogo</a>
+          <p style="margin:0;font-size:15px;color:#E4E7E0;line-height:1.55;max-width:23ch">Lunes a viernes 8:30 a. m. – 5:30 p. m.<br>Sábado 7:30 a. m. – 3:00 p. m.</p>
+        </div>
+
+        <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:15px;color:#E4E7E0">
+          <span style="display:flex;align-items:center;gap:8px"><span style="width:7px;height:7px;border-radius:50%;background:#7C8A72"></span>Local a la calle en Cali</span>
+          <span style="display:flex;align-items:center;gap:8px"><span style="width:7px;height:7px;border-radius:50%;background:#7C8A72"></span>Enviamos a todo el país</span>
+          <span style="display:flex;align-items:center;gap:8px"><span style="width:7px;height:7px;border-radius:50%;background:#7C8A72"></span>Hablas con quien fabrica</span>
+        </div>
       </div>
     </div>
 
-    <div style="background:#F2F1EC;padding:clamp(26px,4vw,52px);display:flex;flex-direction:column;gap:22px">
-      <div>
-        <span style="display:inline-block;width:34px;height:6px;background:var(--madera);margin-bottom:16px"></span>
-        <h2 style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(40px,6vw,74px);line-height:0.95;margin:0 0 12px;color:var(--tinta)">Madera</h2>
-        <p style="margin:0;font-size:17px;line-height:1.6;color:#43484B;max-width:38ch">Maciza y rústica, y guadua. Comedores, camas, nocheros, butacos y mecedoras. La línea que estamos ampliando ahora.</p>
-      </div>
-      <div style="position:relative;aspect-ratio:16/10;border:1px solid #191C1E1F">
-        <image-slot id="c-hero-m" shape="rect" fit="cover" placeholder="Portada madera — un comedor rústico"></image-slot>
-      </div>
-      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:auto">
-        <p style="margin:0;font-size:15px;color:var(--gris)">3 categorías con fotos · 3 en camino</p>
-        <a href="#c-catalogo" style="display:inline-flex;align-items:center;min-height:44px;padding:11px 18px;background:var(--madera);color:#fff;text-decoration:none;font-weight:600;font-size:16px">Ver lo de madera</a>
+    <div style="position:relative;z-index:2;border-top:1px solid #FFFFFF33;pointer-events:none">
+      <div style="max-width:1360px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))">
+        <a href="#c-catalogo" style="padding:clamp(18px,2.4vw,30px) 20px;text-decoration:none;color:#F7F6F2;display:flex;align-items:center;gap:16px;border-bottom:5px solid var(--tejido);pointer-events:auto">
+          <div style="min-width:0;flex:1">
+            <p style="margin:0 0 3px;font-family:'Instrument Serif',Georgia,serif;font-size:clamp(28px,3.4vw,36px);line-height:1">Tejido</p>
+            <p style="margin:0;font-size:15px;color:#BDC2B8">Mimbre, ratán y fibra · 9 categorías</p>
+          </div>
+          <span style="font-size:22px;color:#D08B3C" aria-hidden="true">→</span>
+        </a>
+        <a href="#c-catalogo" style="padding:clamp(18px,2.4vw,30px) 20px;text-decoration:none;color:#F7F6F2;display:flex;align-items:center;gap:16px;border-bottom:5px solid var(--madera);border-left:1px solid #FFFFFF33;pointer-events:auto">
+          <div style="min-width:0;flex:1">
+            <p style="margin:0 0 3px;font-family:'Instrument Serif',Georgia,serif;font-size:clamp(28px,3.4vw,36px);line-height:1">Madera</p>
+            <p style="margin:0;font-size:15px;color:#BDC2B8">Maciza, rústica y guadua · 3 categorías</p>
+          </div>
+          <span style="font-size:22px;color:#8FAFC2" aria-hidden="true">→</span>
+        </a>
       </div>
     </div>
   </div>

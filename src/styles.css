@@ -24,11 +24,32 @@
   --linea: #191c1e1f;
   --linea-fuerte: #191c1e33;
 
-  /* Pie oscuro: el logotipo dorado no alcanza AA sobre el hueso, por eso el pie va en
-     tinta y el encabezado claro. Es deliberado (design/PROMPT-1-arranque.md). */
+  /*
+   * Superficies oscuras: el encabezado, el hero y el pie van sobre --tinta, y ahi el
+   * logotipo dorado si alcanza contraste (sobre el hueso no lo alcanzaba, que es por lo
+   * que el pie ya iba oscuro). Los tres tonos de texto son el mismo escalon: claro para
+   * lo que se lee, tenue para lo secundario, y las lineas en blanco translucido.
+   */
+  --sobre-oscuro: #f7f6f2;
+  --sobre-oscuro-2: #e4e7e0;
+  --sobre-oscuro-3: #bdc2b8;
   --pie-texto: #c9c6be;
   --pie-tenue: #9a968d;
   --pie-linea: #ffffff26;
+  --linea-oscura: #ffffff33;
+  --linea-oscura-tenue: #ffffff1f;
+
+  /*
+   * Los dos colores de material, aclarados para leerse sobre --tinta. Significan lo
+   * mismo que --tejido y --madera: son el mismo codigo, no colores nuevos. Sobre fondo
+   * claro se usan los originales, siempre.
+   */
+  --tejido-claro: #d08b3c;
+  --madera-claro: #8fafc2;
+
+  /* Velo del panel del hero, sobre la foto de fondo. */
+  --velo-hero: #12151799;
+  --velo-celda: #121517bf;
 
   /* Unico color fuera de la paleta: el rojo de error del panel, que ya existia en el
      proyecto. No aparece nunca en el catalogo publico. */
@@ -45,6 +66,12 @@
  */
 @theme inline {
   --color-hueso: var(--hueso);
+  --color-sobre-oscuro: var(--sobre-oscuro);
+  --color-sobre-oscuro-2: var(--sobre-oscuro-2);
+  --color-sobre-oscuro-3: var(--sobre-oscuro-3);
+  --color-tejido-claro: var(--tejido-claro);
+  --color-madera-claro: var(--madera-claro);
+  --color-linea-oscura: var(--linea-oscura);
   --color-hueso-alt: var(--hueso-alt);
   --color-tinta: var(--tinta);
   --color-tinta-suave: var(--tinta-suave);

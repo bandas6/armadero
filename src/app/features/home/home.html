@@ -1,101 +1,160 @@
 @let s = settings();
 
 <!--
-  1. Hero partido en dos mitades: Tejido | Madera.
-  El corte tejido/madera es la idea que sostiene el sitio entero. Aquí aparece por primera
-  vez, como dos mitades; en el catálogo, como el conmutador; en la ficha, como el enlace a
-  la pieza gemela (design/IMPLEMENTACION.md).
+  1. Hero. Una sola foto a sangre, oscurecida, con el titular encima y la banda
+  tejido / madera abajo. El corte tejido/madera es la idea que sostiene el sitio entero:
+  aquí abre el home, en el catálogo es el conmutador y en la ficha, el enlace a la pieza
+  gemela (design/IMPLEMENTACION.md).
 -->
 <section
-  class="relative grid gap-px border-b"
-  style="grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); background: var(--linea); border-color: var(--linea);"
+  class="relative isolate flex flex-col overflow-hidden"
+  style="background: var(--tinta); color: var(--sobre-oscuro); min-height: min(82vh, 760px);"
 >
+  <img
+    [ngSrc]="filesUrl + '/fotos/salas-tejidas/salas-tejidas-03.webp'"
+    alt="Sala tejida en fibra natural con mesa de centro, en el local de Artemadero"
+    fill
+    priority
+    sizes="100vw"
+    class="-z-10 object-cover"
+  />
+  <!--
+    Dos velos, no uno: el diagonal aclara la foto hacia la derecha y el de abajo asienta
+    la banda de material. Con uno solo, o el titular no se lee o la foto se apaga entera.
+  -->
+  <div
+    class="pointer-events-none absolute inset-0 z-0"
+    style="background: linear-gradient(105deg, #191c1e5c 0%, #191c1e33 44%, #191c1e14 100%);"
+  ></div>
+  <div
+    class="pointer-events-none absolute inset-0 z-0"
+    style="background: linear-gradient(to top, #191c1eed 0%, #191c1e96 11%, #191c1e00 34%);"
+  ></div>
   <!-- Las hojas del aviso, decorativas: fuera del orden de lectura y sin capturar el puntero. -->
   <img
     src="/marca/guirnalda.png"
     srcset="/marca/guirnalda.png 1x, /marca/guirnalda-2x.png 2x"
     alt=""
     aria-hidden="true"
-    width="208"
-    height="119"
-    class="guirnalda top-3.5 right-5"
+    width="198"
+    height="113"
+    class="guirnalda top-0 right-[22px] z-10 w-[198px] max-w-[30%] opacity-90"
   />
 
-  <div class="flex flex-col gap-[22px] p-[clamp(26px,4vw,52px)]" style="background: var(--hueso);">
-    <div>
-      <span class="mb-4 inline-block h-1.5 w-[34px]" style="background: var(--tejido);"></span>
-      <h2 class="font-display m-0 mb-3 leading-[0.95]" style="font-size: clamp(40px, 6vw, 74px);">
-        Tejido
-      </h2>
-      <p class="m-0 max-w-[38ch] text-[17px] leading-relaxed" style="color: var(--tinta-suave);">
-        Mimbre, ratán y fibra natural, tejidos a mano. Salas, comedores, mecedoras, lámparas y
-        espejos. Es más de la mitad de lo que hacemos.
+  <div
+    class="relative z-10 mx-auto flex w-full max-w-[1360px] flex-1 items-center px-5"
+    style="padding-top: clamp(30px, 4vw, 52px); padding-bottom: clamp(34px, 4.4vw, 56px);"
+  >
+    <div
+      class="max-w-[50ch]"
+      style="background: var(--velo-hero); backdrop-filter: blur(3px); padding: clamp(22px, 2.8vw, 36px); border-left: 5px solid var(--hoja);"
+    >
+      <p class="m-0 mb-4 text-[14px] tracking-[0.18em] uppercase" style="color: var(--sobre-oscuro-2);">
+        Muebles campestres y tejidos · Cali
       </p>
-    </div>
-
-    <div class="relative aspect-[16/10]" style="border: 1px solid var(--linea);">
-      <img
-        [ngSrc]="filesUrl + '/fotos/salas-tejidas/salas-tejidas-03.webp'"
-        alt="Sala tejida en fibra natural con mesa de centro y cojines crudos"
-        fill
-        priority
-        sizes="(max-width: 720px) 100vw, 50vw"
-        class="object-cover"
-      />
-    </div>
-
-    <div class="mt-auto flex flex-wrap items-baseline justify-between gap-3.5">
-      @let t = tejidoCount();
-      <p class="m-0 text-[15px]" style="color: var(--gris);">
-        {{ t.conFotos }} {{ t.conFotos === 1 ? 'categoría' : 'categorías' }} con fotos
-        @if (t.enCamino) { · {{ t.enCamino }} en camino }
-      </p>
-      <a
-        routerLink="/catalogo"
-        [queryParams]="{ material: 'tejido' }"
-        class="inline-flex min-h-11 items-center px-[18px] py-[11px] text-[16px] font-semibold no-underline"
-        style="background: var(--tejido); color: #fff;"
-        >Ver lo tejido</a
+      <h1
+        class="font-display m-0 mb-[18px] max-w-[20ch] leading-[0.94] text-balance"
+        style="font-size: clamp(40px, 7.2vw, 90px);"
       >
+        Lo tejemos y lo armamos aquí mismo.
+      </h1>
+      <p
+        class="m-0 mb-[30px] max-w-[48ch] leading-relaxed"
+        style="font-size: clamp(17px, 1.9vw, 21px); color: #dee1da;"
+      >
+        Taller propio. Casi todo se fabrica con las medidas de tu espacio, en el tejido y el
+        acabado que escojas.
+      </p>
+
+      <div
+        class="mb-7 grid gap-px"
+        style="grid-template-columns: repeat(2, minmax(0, 1fr)); background: #ffffff2e; border: 1px solid #ffffff2e;"
+      >
+        @for (dato of datosHero; track dato.dato) {
+          <div class="px-[15px] py-[13px]" style="background: var(--velo-celda);">
+            <p class="font-display m-0 mb-0.5 text-[23px] leading-[1.05]">{{ dato.dato }}</p>
+            <p class="m-0 text-[15px]" style="color: var(--sobre-oscuro-2);">{{ dato.nota }}</p>
+          </div>
+        }
+      </div>
+
+      <div class="mb-5 flex flex-wrap items-center gap-3">
+        <a
+          [href]="s?.whatsappContactUrl || whatsappUrl"
+          class="inline-flex min-h-[62px] flex-col justify-center px-[26px] py-3 no-underline"
+          style="background: var(--hoja); color: #fff;"
+        >
+          <span class="text-[18px] font-semibold">Cotizar por WhatsApp</span>
+          <span class="text-[13px]" style="color: #d2dece;">Mándanos tus medidas</span>
+        </a>
+        <a
+          routerLink="/catalogo"
+          class="inline-flex min-h-[62px] items-center px-6 py-3 text-[17px] font-semibold no-underline"
+          style="border: 1.5px solid #ffffff66; color: var(--sobre-oscuro);"
+          >Ver el catálogo</a
+        >
+        <!-- El horario va junto al botón: sin él, el botón promete de más. -->
+        <p class="m-0 max-w-[23ch] text-[15px] leading-relaxed" style="color: var(--sobre-oscuro-2);">
+          {{ hoursWeekday }}<br />
+          {{ hoursSaturday }}
+        </p>
+      </div>
+
+      <ul class="m-0 flex list-none flex-wrap gap-5 p-0 text-[15px]" style="color: var(--sobre-oscuro-2);">
+        @for (garantia of garantiasHero; track garantia) {
+          <li class="flex items-center gap-2">
+            <span class="h-[7px] w-[7px] rounded-full" style="background: #7c8a72;" aria-hidden="true"></span>
+            {{ garantia }}
+          </li>
+        }
+      </ul>
     </div>
   </div>
 
-  <div class="flex flex-col gap-[22px] p-[clamp(26px,4vw,52px)]" style="background: var(--hueso-alt);">
-    <div>
-      <span class="mb-4 inline-block h-1.5 w-[34px]" style="background: var(--madera);"></span>
-      <h2 class="font-display m-0 mb-3 leading-[0.95]" style="font-size: clamp(40px, 6vw, 74px);">
-        Madera
-      </h2>
-      <p class="m-0 max-w-[38ch] text-[17px] leading-relaxed" style="color: var(--tinta-suave);">
-        Maciza y rústica, y guadua. Comedores, camas, nocheros, butacos y mecedoras. La línea que
-        estamos ampliando ahora.
-      </p>
-    </div>
+  <!-- La banda del corte: tejido y madera, cada uno con el filete de su color. -->
+  <div class="relative z-10" style="border-top: 1px solid var(--linea-oscura);">
+    <div
+      class="mx-auto grid max-w-[1360px]"
+      style="grid-template-columns: repeat(auto-fit, minmax(min(270px, 100%), 1fr));"
+    >
+      @let t = tejidoCount();
+      <a
+        routerLink="/catalogo"
+        [queryParams]="{ material: 'tejido' }"
+        class="flex items-center gap-4 px-5 no-underline"
+        style="padding-top: clamp(18px, 2.4vw, 30px); padding-bottom: clamp(18px, 2.4vw, 30px); color: var(--sobre-oscuro); border-bottom: 5px solid var(--tejido);"
+      >
+        <span class="min-w-0 flex-1">
+          <span class="font-display mb-[3px] block leading-none" style="font-size: clamp(28px, 3.4vw, 36px);">
+            Tejido
+          </span>
+          <span class="block text-[15px]" style="color: var(--sobre-oscuro-3);">
+            Mimbre, ratán y fibra · {{ t.conFotos }}
+            {{ t.conFotos === 1 ? 'categoría' : 'categorías' }}
+          </span>
+        </span>
+        <span class="text-[22px]" style="color: var(--tejido-claro);" aria-hidden="true">→</span>
+      </a>
 
-    <div class="relative aspect-[16/10]" style="border: 1px solid var(--linea);">
-      <img
-        [ngSrc]="filesUrl + '/fotos/comedores-rusticos/comedores-rusticos-01.webp'"
-        alt="Comedor rústico en madera maciza para ocho puestos, exhibido en el local"
-        fill
-        priority
-        sizes="(max-width: 720px) 100vw, 50vw"
-        class="object-cover"
-      />
-    </div>
-
-    <div class="mt-auto flex flex-wrap items-baseline justify-between gap-3.5">
       @let m = maderaCount();
-      <p class="m-0 text-[15px]" style="color: var(--gris);">
-        {{ m.conFotos }} {{ m.conFotos === 1 ? 'categoría' : 'categorías' }} con fotos
-        @if (m.enCamino) { · {{ m.enCamino }} en camino }
-      </p>
       <a
         routerLink="/catalogo"
         [queryParams]="{ material: 'madera' }"
-        class="inline-flex min-h-11 items-center px-[18px] py-[11px] text-[16px] font-semibold no-underline"
-        style="background: var(--madera); color: #fff;"
-        >Ver lo de madera</a
+        class="flex items-center gap-4 px-5 no-underline"
+        style="padding-top: clamp(18px, 2.4vw, 30px); padding-bottom: clamp(18px, 2.4vw, 30px); color: var(--sobre-oscuro); border-bottom: 5px solid var(--madera); border-left: 1px solid var(--linea-oscura);"
       >
+        <span class="min-w-0 flex-1">
+          <span class="font-display mb-[3px] block leading-none" style="font-size: clamp(28px, 3.4vw, 36px);">
+            Madera
+          </span>
+          <span class="block text-[15px]" style="color: var(--sobre-oscuro-3);">
+            Maciza, rústica y guadua · {{ m.conFotos }}
+            {{ m.conFotos === 1 ? 'categoría' : 'categorías' }}
+            @if (m.enCamino) { · {{ m.enCamino }} en camino }
+          </span>
+        </span>
+        <span class="text-[22px]" style="color: var(--madera-claro);" aria-hidden="true">→</span>
+      </a>
     </div>
   </div>
 </section>

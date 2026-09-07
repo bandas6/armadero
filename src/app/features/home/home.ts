@@ -10,6 +10,8 @@ import { ProductCard } from '../catalog/product-card';
 import { MaterialTag } from '../../shared/material-tag';
 import {
   BUSINESS_HOURS,
+  BUSINESS_HOURS_SATURDAY,
+  BUSINESS_HOURS_WEEKDAY,
   FOUNDING_YEAR,
   WHATSAPP_GENERIC_URL,
 } from '../../core/business';
@@ -58,6 +60,24 @@ const FAQS: Faq[] = [
   },
 ];
 
+/**
+ * Las cuatro cifras del hero. Son las mismas que responden las preguntas frecuentes
+ * (2 a 5 semanas, 12 meses): si cambia una, cambian las dos.
+ */
+const DATOS_HERO: { dato: string; nota: string }[] = [
+  { dato: 'A la medida', nota: 'Casi todo el catálogo' },
+  { dato: 'Tejido a mano', nota: 'Pieza por pieza' },
+  { dato: '2 a 5 semanas', nota: 'Fabricación' },
+  { dato: '12 meses', nota: 'De garantía' },
+];
+
+/** Las tres cosas que quitan el miedo a escribir por WhatsApp. */
+const GARANTIAS_HERO = [
+  'Local a la calle en Cali',
+  'Enviamos a todo el país',
+  'Hablas con quien fabrica',
+];
+
 interface Pilar {
   material: Material | 'ambos';
   title: string;
@@ -104,9 +124,13 @@ export class Home {
 
   readonly faqs = FAQS;
   readonly pilares = PILARES;
+  readonly datosHero = DATOS_HERO;
+  readonly garantiasHero = GARANTIAS_HERO;
   readonly filesUrl = environment.filesUrl;
   readonly whatsappUrl = WHATSAPP_GENERIC_URL;
   readonly hours = BUSINESS_HOURS;
+  readonly hoursWeekday = BUSINESS_HOURS_WEEKDAY;
+  readonly hoursSaturday = BUSINESS_HOURS_SATURDAY;
 
   /**
    * PENDIENTE — sin el año de fundación la frase se arma sin él. "Fabricamos desde 2011"

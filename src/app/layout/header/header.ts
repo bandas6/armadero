@@ -8,9 +8,10 @@ import { WHATSAPP_GENERIC_URL } from '../../core/business';
 import type { SiteSettings } from '../../core/models/catalog.model';
 
 /**
- * Encabezado del sitio publico. Claro sobre --hueso, con el logotipo en tinta: el
- * logotipo dorado no alcanza contraste AA sobre el hueso y por eso vive en el pie, que
- * va oscuro. Ver design/PROMPT-1-arranque.md.
+ * Encabezado del sitio publico. Oscuro sobre --tinta, con el logotipo dorado, igual que
+ * el pie: el dorado no alcanza contraste AA sobre el hueso, pero sobre la tinta si, y
+ * asi el hero arranca del mismo negro sin costura. Ver el mockup aprobado,
+ * design/direccion-03-tejido-o-madera/index.html.
  *
  * Sin menu hamburguesa a proposito: son dos enlaces y dos acciones, y con flex-wrap
  * caben en dos filas hasta en 360 px sin esconder nada detras de un boton.
@@ -23,19 +24,19 @@ import type { SiteSettings } from '../../core/models/catalog.model';
     @let s = settings();
     @let announcement = s?.announcement;
     @if (announcement) {
-      <p class="px-5 py-2 text-center text-sm" style="background: var(--tinta); color: var(--hueso);">
+      <p class="px-5 py-2 text-center text-sm" style="background: var(--hoja); color: #fff;">
         {{ announcement }}
       </p>
     }
 
     <header
       class="sticky top-0 z-40 border-b"
-      style="background: var(--hueso); border-color: var(--linea);"
+      style="background: var(--tinta); border-color: var(--linea-oscura-tenue);"
     >
       <div class="mx-auto flex max-w-[1360px] flex-wrap items-center gap-x-5 gap-y-3 px-5 py-3">
         <a routerLink="/" class="flex shrink-0 items-center" aria-label="Artemadero, ir al inicio">
           <img
-            src="/marca/logotipo-tinta.svg"
+            src="/marca/logotipo.svg"
             alt="Artemadero"
             width="182"
             height="32"
@@ -49,14 +50,14 @@ import type { SiteSettings } from '../../core/models/catalog.model';
             routerLinkActive="font-semibold"
             [routerLinkActiveOptions]="{ exact: true }"
             class="no-underline"
-            style="color: var(--tinta);"
+            style="color: var(--sobre-oscuro);"
             >Inicio</a
           >
           <a
             routerLink="/catalogo"
             routerLinkActive="font-semibold"
             class="no-underline"
-            style="color: var(--tinta);"
+            style="color: var(--sobre-oscuro);"
             >Catálogo</a
           >
         </nav>
@@ -65,13 +66,13 @@ import type { SiteSettings } from '../../core/models/catalog.model';
           <a
             routerLink="/carrito"
             class="inline-flex min-h-11 items-center border px-3 text-[15px] no-underline"
-            style="border-color: var(--linea-fuerte); color: var(--tinta);"
+            style="border-color: var(--linea-oscura); color: var(--sobre-oscuro);"
           >
             Mi cotización
             @if (cart.count() > 0) {
               <span
                 class="ml-2 inline-flex h-6 min-w-6 items-center justify-center px-1 text-[13px] font-semibold"
-                style="background: var(--tinta); color: var(--hueso);"
+                style="background: var(--sobre-oscuro); color: var(--tinta);"
                 >{{ cart.count() }}</span
               >
             }
