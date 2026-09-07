@@ -1,6 +1,29 @@
 # Web
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.7.
+Frontend del catálogo de Artemadero: Angular con SSR, Tailwind y la API de
+`armadero-api`.
+
+## La dirección de diseño
+
+El sitio sigue la **Dirección 03 — "Tejido o madera"**, aprobada por la clienta. La
+referencia visual es `design/direccion-03-tejido-o-madera/index.html`: ábrelo en el
+navegador antes de tocar una pantalla. Los cuatro prompts de implementación
+(`design/PROMPT-1-arranque.md` … `PROMPT-4-ficha.md`) explican cada pantalla y las reglas
+que no se negocian.
+
+La idea que lo sostiene: **el sitio entero está partido en tejido y madera**, y ese corte
+aparece tres veces —el hero del home en dos mitades, el conmutador del catálogo, y el
+enlace a la pieza gemela en cada ficha—. Si termina siendo un checkbox en una barra
+lateral, se perdió el diseño.
+
+Los tokens de color y las dos familias tipográficas viven en `src/styles.css`. El código
+de material es funcional: naranja es tejido y azul es madera, siempre.
+
+## Datos que faltan
+
+Están marcados como `PENDIENTE` en `src/app/core/business.ts` y listados en
+`docs/pendientes-diseno.md`: la **dirección del local**, el **año de fundación** y las
+cuentas de **Instagram y Facebook**. No hay que inventarlos.
 
 ## Development server
 

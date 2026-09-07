@@ -5,6 +5,7 @@ import { PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import type { Product } from '../models/product.model';
 import type { SiteSettings } from '../models/catalog.model';
+import { WHATSAPP_DISPLAY } from '../business';
 
 const SCRIPT_ID = 'ld-json';
 const AVAILABILITY: Record<string, string> = {
@@ -62,14 +63,33 @@ export class StructuredDataService {
     if (image) data['image'] = image;
     if (p.material) data['material'] = p.material;
 
+    // La oferta se declara siempre, pero nunca con un precio inventado: un mueble "segun
+    // medidas" lleva oferta con disponibilidad y sin precio, no un cero ni un precio
+    // aproximado (design/PROMPT-4-ficha.md).
+    const offer: Record<string, unknown> = {
+      '@type': 'Offer',
+      priceCurrency: 'COP',
+      availability: AVAILABILITY[p.status] ?? 'https://schema.org/PreOrder',
+      url: `${this.origin()}/producto/${p.slug}`,
+      seller: { '@type': 'Organization', name: 'Artemadero' },
+    };
     if (p.hasPrice && typeof price === 'number') {
-      data['offers'] = {
-        '@type': 'Offer',
-        price: String(price),
-        priceCurrency: 'COP',
-        availability: AVAILABILITY[p.status] ?? 'https://schema.org/PreOrder',
-        url: `${this.origin()}/producto/${p.slug}`,
-        seller: { '@type': 'Organization', name: 'Artemadero' },
+      if (typeof p.priceTo === 'number' && p.priceTo !== price) {
+        offer['@type'] = 'AggregateOffer';
+        offer['lowPrice'] = String(price);
+        offer['highPrice'] = String(p.priceTo);
+      } else {
+        offer['price'] = String(price);
+      }
+    }
+    data['offers'] = offer;
+
+    if (p.twin) {
+      // La pieza gemela en el otro material es el mismo mueble en otra version.
+      data['isRelatedTo'] = {
+        '@type': 'Product',
+        name: p.twin.name,
+        url: `${this.origin()}/producto/${p.twin.slug}`,
       };
     }
     this.write(data);
@@ -80,7 +100,10 @@ export class StructuredDataService {
       '@context': 'https://schema.org',
       '@type': 'FurnitureStore',
       name: 'Artemadero',
-      description: 'Fabricantes de muebles campestres y tejidos en Cali. Diseños personalizados para hogar, finca o negocio.',
+      description:
+        'Fabricamos muebles tejidos y de madera en Cali: salas, comedores, mecedoras, camas, ' +
+        'lámparas y espejos, a la medida de tu espacio.',
+      telephone: WHATSAPP_DISPLAY,
       url: this.origin(),
       address: {
         '@type': 'PostalAddress',

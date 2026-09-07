@@ -9,13 +9,13 @@ import { SeoService } from '../../core/services/seo.service';
   standalone: true,
   imports: [ReactiveFormsModule],
   template: `
-    <div class="flex min-h-screen items-center justify-center px-4" style="background: var(--lino);">
+    <div class="flex min-h-screen items-center justify-center px-4" style="background: var(--hueso);">
       <div
         class="w-full max-w-sm rounded-sm border p-6"
-        style="border-color: color-mix(in srgb, var(--musgo) 40%, transparent); background: var(--blanco-taller);"
+        style="border-color: var(--linea); background: var(--hueso-alt);"
       >
         <h1 class="text-xl">Panel de Artemadero</h1>
-        <p class="mt-1 text-sm" style="color: var(--texto-suave);">Ingresa para administrar el catálogo.</p>
+        <p class="mt-1 text-sm" style="color: var(--gris);">Ingresa para administrar el catálogo.</p>
 
         <form class="mt-6 space-y-4" [formGroup]="form" (ngSubmit)="submit()">
           <div>
@@ -26,7 +26,7 @@ import { SeoService } from '../../core/services/seo.service';
               autocomplete="username"
               formControlName="email"
               class="mt-1 w-full rounded border px-3 py-2"
-              style="border-color: var(--musgo);"
+              style="border-color: var(--linea-fuerte);"
             />
           </div>
           <div>
@@ -37,7 +37,7 @@ import { SeoService } from '../../core/services/seo.service';
               autocomplete="current-password"
               formControlName="password"
               class="mt-1 w-full rounded border px-3 py-2"
-              style="border-color: var(--musgo);"
+              style="border-color: var(--linea-fuerte);"
             />
           </div>
 
@@ -49,7 +49,7 @@ import { SeoService } from '../../core/services/seo.service';
             type="submit"
             [disabled]="submitting()"
             class="w-full rounded px-4 py-2.5 font-medium disabled:opacity-60"
-            style="background: var(--verde-guadua); color: var(--blanco-taller);"
+            style="background: var(--hoja); color: #fff;"
           >
             {{ submitting() ? 'Entrando…' : 'Entrar' }}
           </button>

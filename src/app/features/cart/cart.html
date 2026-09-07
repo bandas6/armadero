@@ -1,40 +1,49 @@
-<section class="mx-auto max-w-3xl px-4 py-10 sm:py-14">
-  <h1 class="text-2xl sm:text-3xl">Tu selección</h1>
+<section class="mx-auto max-w-3xl px-5 pt-15 pb-15">
+  <h1 class="font-display m-0 leading-none" style="font-size: clamp(34px, 5vw, 56px);">
+    Mi cotización
+  </h1>
+  <p class="mt-2 mb-6 max-w-[56ch] text-[17px]" style="color: var(--tinta-suave);">
+    Revisa lo que llevas, cuéntanos quién eres y seguimos por WhatsApp. Guardamos la
+    cotización antes de abrir el chat, para no perderla.
+  </p>
 
   @if (submitted(); as result) {
-    <div class="mt-6 rounded-lg border p-5" style="border-color: var(--verde-guadua); background: var(--blanco-taller);">
+    <div class="mt-6 p-5" style="border: 1.5px solid var(--hoja); background: var(--hueso-alt);">
       <p class="font-semibold">¡Listo! Tu cotización quedó guardada.</p>
-      <p class="mt-1 text-sm">Código: <span class="font-mono-precio">{{ result.code }}</span></p>
+      <p class="mt-1 text-sm">Código: <strong>{{ result.code }}</strong></p>
       @if (result.whatsappUrl) {
-        <a [href]="result.whatsappUrl" class="mt-3 inline-block rounded px-4 py-2 text-sm font-medium" style="background: var(--verde-guadua); color: var(--blanco-taller);">
+        <a [href]="result.whatsappUrl" class="mt-3 inline-flex min-h-11 items-center px-4 py-3 font-semibold no-underline" style="background: var(--hoja); color: #fff;">
           Abrir WhatsApp
         </a>
       } @else {
-        <p class="mt-2 text-sm" style="color: var(--ocre-cana);">
+        <p class="mt-2 text-sm" style="color: var(--alerta);">
           WhatsApp sin configurar (aviso solo para desarrollo: falta WHATSAPP_NUMBER en el .env de la API).
         </p>
       }
-      <p class="mt-3"><a routerLink="/catalogo" class="text-sm underline" style="color: var(--verde-guadua);">Seguir viendo el catálogo</a></p>
+      <p class="mt-3"><a routerLink="/catalogo" class="text-sm underline" style="color: var(--hoja);">Seguir viendo el catálogo</a></p>
     </div>
   } @else if (cart.items().length === 0) {
-    <p class="mt-6" style="color: var(--texto-suave);">Todavía no has agregado muebles.</p>
-    <a routerLink="/catalogo" class="mt-4 inline-block rounded-sm px-5 py-2.5 font-medium" style="background: var(--verde-guadua); color: var(--blanco-taller);">
+    <p class="mt-6" style="color: var(--gris);">Todavía no has agregado muebles.</p>
+    <a routerLink="/catalogo" class="mt-4 inline-flex min-h-11 items-center px-5 py-3 font-semibold no-underline" style="background: var(--hoja); color: #fff;">
       Ir al catálogo
     </a>
   } @else {
     <ul class="mt-6 space-y-4">
       @for (item of cart.items(); track item.variantId) {
-        <li class="rounded-lg border p-3" style="border-color: color-mix(in srgb, var(--musgo) 35%, transparent); background: var(--blanco-taller);">
+        <li class="p-3" style="border: 1px solid var(--linea); background: var(--hueso-alt);">
           <div class="flex gap-4">
-            <div class="h-20 w-20 shrink-0 overflow-hidden rounded-md border" style="border-color: color-mix(in srgb, var(--musgo) 40%, transparent);">
+            <div class="h-20 w-20 shrink-0 overflow-hidden" style="border: 1px solid var(--linea);">
               @if (item.imageUrl) {
                 <img [src]="item.imageUrl" [alt]="item.productName" class="h-full w-full object-cover" width="80" height="80" />
               }
             </div>
             <div class="flex-1">
               <a [routerLink]="['/producto', item.slug]" class="font-medium hover:underline">{{ item.productName }}</a>
-              <p class="text-sm" style="color: var(--texto-suave);">{{ item.variantName }}</p>
-              <p class="mt-1 font-mono-precio text-sm" style="color: var(--ocre-cana);">
+              <p class="text-sm" style="color: var(--gris);">{{ item.variantName }}</p>
+              <p
+                class="mt-1 text-sm font-semibold"
+                [style.color]="item.unitPrice != null ? 'var(--tinta)' : 'var(--hoja)'"
+              >
                 {{ item.unitPrice != null ? (item.unitPrice | copCurrency) : 'Precio según medidas' }}
               </p>
             </div>
@@ -47,10 +56,10 @@
                 max="20"
                 [value]="item.quantity"
                 (change)="setQty(item.variantId, $any($event.target).value)"
-                class="w-16 rounded-sm border px-2 py-1 text-sm"
-                style="border-color: var(--musgo);"
+                class="min-h-11 w-16 border px-2 py-1 text-sm"
+                style="border-color: var(--linea-fuerte);"
               />
-              <button type="button" (click)="cart.remove(item.variantId)" class="text-xs underline" style="color: var(--texto-suave);">
+              <button type="button" (click)="cart.remove(item.variantId)" class="text-xs underline" style="color: var(--gris);">
                 Quitar
               </button>
             </div>
@@ -59,7 +68,7 @@
           <!-- Personalización de este ítem -->
           @if (item.customizationFields?.length) {
             @if (editing() === item.variantId) {
-              <div class="mt-3 rounded-md border p-3" style="border-color: var(--verde-guadua);">
+              <div class="mt-3 border p-3" style="border-color: var(--hoja);">
                 <app-customization-fields [fields]="item.customizationFields!" [initial]="item.customization ?? []" />
                 <div class="mt-2 flex gap-2">
                   <button type="button" (click)="saveEditor(item)" class="admin-btn admin-btn--primary admin-btn--sm">Guardar</button>
@@ -67,17 +76,17 @@
                 </div>
               </div>
             } @else {
-              <div class="mt-3 rounded-md p-2 text-sm" style="background: color-mix(in srgb, var(--lino) 55%, var(--blanco-taller));">
+              <div class="mt-3 p-2 text-sm" style="background: var(--hueso-alt);">
                 @if (item.customization?.length) {
                   <ul>
                     @for (a of item.customization; track a.label) {
-                      <li><span style="color: var(--texto-suave);">{{ a.label }}:</span> {{ a.value }}</li>
+                      <li><span style="color: var(--gris);">{{ a.label }}:</span> {{ a.value }}</li>
                     }
                   </ul>
                 } @else {
-                  <p style="color: var(--texto-suave);">Este mueble se puede personalizar.</p>
+                  <p style="color: var(--gris);">Este mueble se puede personalizar.</p>
                 }
-                <button type="button" (click)="openEditor(item)" class="mt-1 text-xs underline" style="color: var(--verde-guadua);">
+                <button type="button" (click)="openEditor(item)" class="mt-1 text-xs underline" style="color: var(--hoja);">
                   Editar personalización
                 </button>
               </div>
@@ -87,48 +96,59 @@
       }
     </ul>
 
-    <div class="mt-4 rounded-sm border p-4 font-mono-precio text-sm" style="border-color: color-mix(in srgb, var(--musgo) 40%, transparent);">
-      <div class="flex justify-between">
-        <span>Total estimado</span>
-        <span>{{ cart.estimatedTotal() | copCurrency }}</span>
+    <!--
+      El total no se rompe cuando hay piezas sin precio: se suma lo que sí lo tiene y se
+      dice aparte cuántas se cotizan según medidas.
+    -->
+    <div class="mt-4 p-4" style="border: 1.5px solid var(--tinta);">
+      <div class="flex items-baseline justify-between gap-4">
+        <span class="text-[15px]">Subtotal estimado</span>
+        <strong class="font-display text-[28px] leading-none font-normal">
+          {{ cart.estimatedTotal() | copCurrency }}
+        </strong>
       </div>
       @if (cart.hasCustomItems()) {
-        <p class="mt-1 text-xs" style="color: var(--texto-suave);">
-          Algunos muebles se cotizan según medidas: el valor final se acuerda por WhatsApp.
+        <p class="mt-2 text-[15px] font-semibold" style="color: var(--hoja);">
+          {{ cart.customItemCount() }}
+          {{ cart.customItemCount() === 1 ? 'mueble se cotiza' : 'muebles se cotizan' }}
+          según medidas, aparte.
         </p>
       }
-      <p class="mt-1 text-xs" style="color: var(--texto-suave);">El flete se acuerda en la conversación.</p>
+      <p class="mt-1 text-[14px]" style="color: var(--gris);">
+        Es un valor estimado. El flete se acuerda en la conversación, según la ciudad y el
+        tamaño.
+      </p>
     </div>
 
     <form class="mt-8 space-y-4" [formGroup]="form" (ngSubmit)="submit()">
-      <h2 class="text-lg">Cotizar por WhatsApp</h2>
+      <h2 class="font-display m-0 text-[26px] leading-tight">Cotizar por WhatsApp</h2>
 
       <div>
         <label for="customerName" class="block text-sm font-medium">Nombre</label>
-        <input id="customerName" type="text" formControlName="customerName" class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--musgo);" />
+        <input id="customerName" type="text" formControlName="customerName" class="mt-1 min-h-11 w-full border px-3 py-2" style="border-color: var(--linea-fuerte);" />
         @if (form.controls.customerName.invalid && form.controls.customerName.touched) {
-          <p class="mt-1 text-sm" style="color: var(--ocre-cana);">Escribe tu nombre.</p>
+          <p class="mt-1 text-sm" style="color: var(--alerta);">Escribe tu nombre.</p>
         }
       </div>
 
       <div>
         <label for="customerCity" class="block text-sm font-medium">Ciudad</label>
-        <input id="customerCity" type="text" formControlName="customerCity" class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--musgo);" />
+        <input id="customerCity" type="text" formControlName="customerCity" class="mt-1 min-h-11 w-full border px-3 py-2" style="border-color: var(--linea-fuerte);" />
         @if (form.controls.customerCity.invalid && form.controls.customerCity.touched) {
-          <p class="mt-1 text-sm" style="color: var(--ocre-cana);">Cuéntanos desde qué ciudad escribes.</p>
+          <p class="mt-1 text-sm" style="color: var(--alerta);">Cuéntanos desde qué ciudad escribes.</p>
         }
       </div>
 
       <div>
         <label for="notes" class="block text-sm font-medium">Algo más que quieras contarnos (opcional)</label>
-        <textarea id="notes" formControlName="notes" rows="2" class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--musgo);"></textarea>
+        <textarea id="notes" formControlName="notes" rows="2" class="mt-1 min-h-11 w-full border px-3 py-2" style="border-color: var(--linea-fuerte);"></textarea>
       </div>
 
       @if (submitError()) {
-        <p class="text-sm" style="color: #8c4a34;">{{ submitError() }}</p>
+        <p class="text-sm" style="color: var(--alerta);">{{ submitError() }}</p>
       }
 
-      <button type="submit" [disabled]="submitting()" class="w-full rounded px-4 py-3 font-medium disabled:opacity-60" style="background: var(--verde-guadua); color: var(--blanco-taller);">
+      <button type="submit" [disabled]="submitting()" class="min-h-[58px] w-full cursor-pointer px-4 py-3 text-[18px] font-semibold disabled:opacity-60" style="background: var(--hoja); color: #fff;">
         {{ submitting() ? 'Enviando…' : 'Cotizar por WhatsApp' }}
       </button>
     </form>

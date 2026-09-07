@@ -142,6 +142,8 @@ export interface AdminVariant {
   widthCm?: number;
   heightCm?: number;
   depthCm?: number;
+  /** Alto del asiento: la ficha lo muestra como una cifra mas de la cedula de medidas. */
+  seatHeightCm?: number;
   isDefault?: boolean;
   active?: boolean;
 }
@@ -163,6 +165,8 @@ export interface AdminProduct {
   description?: string;
   material?: string;
   finish?: string;
+  /** El espacio que el mueble necesita alrededor, debajo de la cedula de medidas. */
+  spaceNote?: string;
   customizationNotes?: string;
   customizationFields?: CustomizationField[];
   status: ProductStatus;
@@ -170,6 +174,8 @@ export interface AdminProduct {
   featured: boolean;
   active: boolean;
   category: { _id: string; name: string; slug: string; parent?: string | null } | string;
+  /** La misma pieza en el otro material, o null. */
+  twinProduct?: string | null;
   variants: AdminVariant[];
   images: AdminImage[];
 }
@@ -181,11 +187,13 @@ export interface AdminProductInput {
   description?: string;
   material?: string;
   finish?: string;
+  spaceNote?: string;
   customizationNotes?: string;
   customizationFields?: CustomizationField[];
   status?: ProductStatus;
   personalizable?: boolean;
   featured?: boolean;
   category?: string;
+  twinProduct?: string | null;
   variants?: AdminVariant[];
 }

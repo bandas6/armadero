@@ -9,13 +9,13 @@ import type { AdminImage, AdminProduct } from '../../core/models/admin.model';
   template: `
     <section class="mt-8">
       <h2 class="text-lg">Fotos</h2>
-      <p class="text-sm" style="color: var(--texto-suave);">
+      <p class="text-sm" style="color: var(--gris);">
         La primera foto es la que se ve en el catálogo. No se puede publicar un mueble sin fotos.
       </p>
 
       <label
         class="mt-3 flex cursor-pointer items-center justify-center rounded-sm border border-dashed px-4 py-6 text-sm"
-        style="border-color: var(--verde-guadua); color: var(--verde-guadua);"
+        style="border-color: var(--hoja); color: var(--hoja);"
       >
         {{ uploading() ? 'Subiendo ' + progress() : 'Tomar o elegir fotos' }}
         <input
@@ -35,24 +35,24 @@ import type { AdminImage, AdminProduct } from '../../core/models/admin.model';
 
       <ul class="mt-4 grid grid-cols-3 gap-3">
         @for (img of images(); track img._id; let i = $index) {
-          <li class="rounded-sm border p-1" style="border-color: color-mix(in srgb, var(--musgo) 35%, transparent);">
+          <li class="rounded-sm border p-1" style="border-color: var(--linea);">
             <div class="relative aspect-square overflow-hidden rounded-sm">
               <img [src]="img.url" [alt]="img.alt || 'Foto del mueble'" class="h-full w-full object-cover" />
               @if (img.isPrimary) {
-                <span class="absolute left-1 top-1 rounded-sm px-1 text-[0.6rem]" style="background: var(--ocre-cana); color: #fff;">Principal</span>
+                <span class="absolute left-1 top-1 rounded-sm px-1 text-[0.6rem]" style="background: var(--hoja); color: #fff;">Principal</span>
               }
             </div>
             <div class="mt-1 flex items-center justify-between gap-1 text-[0.65rem]">
               <button type="button" (click)="move(i, -1)" [disabled]="i === 0 || busy()" class="disabled:opacity-30" aria-label="Mover antes">←</button>
               @if (!img.isPrimary) {
-                <button type="button" (click)="setPrimary(img)" [disabled]="busy()" class="underline" style="color: var(--verde-guadua);">Principal</button>
+                <button type="button" (click)="setPrimary(img)" [disabled]="busy()" class="underline" style="color: var(--hoja);">Principal</button>
               }
               <button type="button" (click)="remove(img)" [disabled]="busy()" class="underline" style="color: #8c4a34;">Borrar</button>
               <button type="button" (click)="move(i, 1)" [disabled]="i === images().length - 1 || busy()" class="disabled:opacity-30" aria-label="Mover después">→</button>
             </div>
           </li>
         } @empty {
-          <li class="col-span-3 text-sm" style="color: var(--texto-suave);">Todavía no hay fotos.</li>
+          <li class="col-span-3 text-sm" style="color: var(--gris);">Todavía no hay fotos.</li>
         }
       </ul>
     </section>

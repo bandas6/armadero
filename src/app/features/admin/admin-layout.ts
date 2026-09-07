@@ -8,18 +8,18 @@ import { SeoService } from '../../core/services/seo.service';
   standalone: true,
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
   template: `
-    <div class="min-h-screen" style="background: var(--lino);">
+    <div class="min-h-screen" style="background: var(--hueso);">
       <header
         class="sticky top-0 z-30 border-b"
-        style="border-color: color-mix(in srgb, var(--musgo) 40%, transparent); background: var(--blanco-taller);"
+        style="border-color: var(--linea); background: var(--hueso-alt);"
       >
         <div class="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-3">
-          <a routerLink="/admin" class="font-semibold tracking-wide" style="color: var(--grafito);">
+          <a routerLink="/admin" class="font-semibold tracking-wide" style="color: var(--tinta);">
             ARTEMADERO · Panel
           </a>
           <div class="flex items-center gap-3 text-sm">
-            <span style="color: var(--texto-suave);">{{ auth.user()?.name }}</span>
-            <button type="button" (click)="logout()" class="underline" style="color: var(--verde-guadua);">
+            <span style="color: var(--gris);">{{ auth.user()?.name }}</span>
+            <button type="button" (click)="logout()" class="underline" style="color: var(--hoja);">
               Salir
             </button>
           </div>
@@ -32,8 +32,8 @@ import { SeoService } from '../../core/services/seo.service';
               routerLinkActive
               #rla="routerLinkActive"
               class="whitespace-nowrap border-b-2 px-3 py-2"
-              [style.border-color]="rla.isActive ? 'var(--verde-guadua)' : 'transparent'"
-              [style.color]="rla.isActive ? 'var(--grafito)' : 'var(--musgo)'"
+              [style.border-color]="rla.isActive ? 'var(--hoja)' : 'transparent'"
+              [style.color]="rla.isActive ? 'var(--tinta)' : 'var(--linea-fuerte)'"
               [style.font-weight]="rla.isActive ? '600' : '400'"
             >
               {{ tab.label }}

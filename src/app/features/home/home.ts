@@ -1,12 +1,24 @@
 import { Component, DestroyRef, computed, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { of, catchError } from 'rxjs';
+import { RouterLink } from '@angular/router';
+import { NgOptimizedImage } from '@angular/common';
 import { CatalogService } from '../../core/services/catalog.service';
 import { SeoService } from '../../core/services/seo.service';
 import { StructuredDataService } from '../../core/services/structured-data.service';
 import { ProductCard } from '../catalog/product-card';
-import type { CategoryNode, ProductListResponse, SiteSettings } from '../../core/models/catalog.model';
-import { RouterLink } from '@angular/router';
+import { MaterialTag } from '../../shared/material-tag';
+import {
+  BUSINESS_HOURS,
+  FOUNDING_YEAR,
+  WHATSAPP_GENERIC_URL,
+} from '../../core/business';
+import type {
+  CategoryNode,
+  Material,
+  ProductListResponse,
+  SiteSettings,
+} from '../../core/models/catalog.model';
 import { environment } from '../../../environments/environment';
 
 interface Faq {
@@ -14,39 +26,75 @@ interface Faq {
   a: string;
 }
 
+/**
+ * Seis preguntas, dos lineas cada una. Son las que hoy se resuelven por WhatsApp:
+ * contestarlas antes baja el trabajo del chat (design/PROMPT-2-home.md). El texto es el
+ * del mockup aprobado.
+ */
 const FAQS: Faq[] = [
   {
     q: '¿Fabrican a la medida?',
-    a: 'Sí. La mayoría de los muebles se hacen por encargo: defines medidas, número de puestos, color del tejido o el acabado de la madera.',
+    a: 'Sí, casi todo. Nos dices el espacio que tienes y ajustamos el mueble. El precio depende de las medidas finales.',
   },
   {
     q: '¿En cuánto tiempo entregan?',
-    a: 'Depende del mueble y de la carga del taller. Lo confirmamos por WhatsApp cuando cerramos la cotización.',
+    a: 'Entre 2 y 5 semanas según la pieza y la medida. Al cotizar te damos la fecha concreta.',
   },
   {
     q: '¿Envían fuera de Cali?',
-    a: 'Sí. El costo del flete se acuerda en la conversación según la ciudad y el tamaño del mueble.',
+    a: 'Sí. El flete se cotiza aparte según la ciudad y el tamaño del mueble.',
   },
   {
     q: '¿El tejido aguanta el exterior?',
-    a: 'Trabajamos fibras sintéticas para exterior y fibras naturales para interior. Te decimos cuál conviene según dónde va el mueble.',
+    a: 'Bajo techo sí, en terraza o corredor. A sol y lluvia directos la fibra se resiente; para eso te recomendamos madera o guadua.',
   },
   {
     q: '¿Dan garantía?',
-    a: 'Sí, sobre la estructura y el tejido. El detalle queda por escrito al confirmar el pedido.',
+    a: '12 meses en estructura y tejido. Si algo se suelta, lo reparamos en el taller.',
+  },
+  {
+    q: '¿Puedo ir al local?',
+    a: 'Claro. Ahí ves los tejidos, las maderas y los acabados en vivo antes de encargar.',
   },
 ];
 
-const PILARES = [
-  { title: 'Se fabrica a la medida', text: 'Cada mueble sale del taller con las medidas de tu espacio, no de un molde.' },
-  { title: 'Tejido a mano', text: 'Mimbre, ratán y fibra sintética tejidos a mano, pieza por pieza.' },
-  { title: 'Atención directa', text: 'Hablas con quien fabrica el mueble, no con un intermediario.' },
+interface Pilar {
+  material: Material | 'ambos';
+  title: string;
+  text: string;
+  photo: string;
+  alt: string;
+}
+
+/** Tres, no cuatro, y cada uno con foto propia: nunca iconos genéricos de stock. */
+const PILARES: Pilar[] = [
+  {
+    material: 'tejido',
+    title: 'Tejido a mano',
+    text: 'Mimbre, ratán y fibra natural, tejidos pieza por pieza. No hay dos exactamente iguales.',
+    photo: '/fotos/lamparas-tejidas/lamparas-tejidas-02.webp',
+    alt: 'Pantalla de lámpara tejida a mano en fibra natural, vista de cerca',
+  },
+  {
+    material: 'madera',
+    title: 'Madera y guadua',
+    text: 'Madera maciza y guadua trabajadas en el taller, con acabados que aguantan el clima de aquí.',
+    photo: '/fotos/muebles-guadua/muebles-guadua-01.webp',
+    alt: 'Muebles en guadua terminados en el taller',
+  },
+  {
+    material: 'ambos',
+    title: 'A la medida',
+    text: 'Dinos el espacio que tienes y lo fabricamos con esas medidas, en el material y el acabado que escojas.',
+    photo: '/fotos/comedores-rusticos/comedores-rusticos-01.webp',
+    alt: 'Comedor en madera maciza fabricado a la medida, exhibido en el local',
+  },
 ];
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, ProductCard],
+  imports: [RouterLink, NgOptimizedImage, ProductCard, MaterialTag],
   templateUrl: './home.html',
 })
 export class Home {
@@ -57,8 +105,16 @@ export class Home {
   readonly faqs = FAQS;
   readonly pilares = PILARES;
   readonly filesUrl = environment.filesUrl;
+  readonly whatsappUrl = WHATSAPP_GENERIC_URL;
+  readonly hours = BUSINESS_HOURS;
 
-  readonly tree = toSignal(
+  /**
+   * PENDIENTE — sin el año de fundación la frase se arma sin él. "Fabricamos desde 2011"
+   * pesa mucho más que "fabricamos muebles" (docs/pendientes-diseno.md).
+   */
+  readonly foundingYear = FOUNDING_YEAR;
+
+  private tree = toSignal(
     this.catalog.getCategoryTree().pipe(catchError(() => of([] as CategoryNode[]))),
     { initialValue: [] as CategoryNode[] },
   );
@@ -70,30 +126,53 @@ export class Home {
 
   private featuredResponse = toSignal(
     this.catalog
-      .getProducts({ sort: 'destacados', pageSize: 8 })
+      .getProducts({ sort: 'destacados', pageSize: 9 })
       .pipe(catchError(() => of<ProductListResponse | null>(null))),
     { initialValue: null as ProductListResponse | null },
   );
 
-  readonly featured = computed(() => this.featuredResponse()?.items.filter((p) => p.featured) ?? []);
+  /** El muestrario del home: nueve piezas. */
+  readonly featured = computed(
+    () => this.featuredResponse()?.items.filter((p) => p.featured).slice(0, 9) ?? [],
+  );
 
-  /** Grilla de categorías del home: solo los tipos de primer nivel. */
-  readonly typeCategories = computed(() => this.tree());
+  /**
+   * Cuenta de categorías hoja por material, para las dos mitades del hero: cuántas tienen
+   * fotos y cuántas están en camino. Sale del árbol real, no de un número escrito a mano.
+   */
+  private leaves = computed(() => {
+    const out: CategoryNode[] = [];
+    const walk = (nodes: CategoryNode[]) => {
+      for (const n of nodes) {
+        if (n.children.length) walk(n.children);
+        else out.push(n);
+      }
+    };
+    walk(this.tree());
+    return out;
+  });
+
+  readonly tejidoCount = computed(() => this.countBy('tejido'));
+  readonly maderaCount = computed(() => this.countBy('madera'));
+
+  private countBy(material: Material) {
+    const own = this.leaves().filter((c) => c.material === material);
+    return {
+      conFotos: own.filter((c) => c.productCount > 0).length,
+      enCamino: own.filter((c) => c.productCount === 0).length,
+    };
+  }
 
   constructor() {
     this.seo.setPage({
-      title: 'Muebles campestres y tejidos en Cali',
+      title: 'Muebles tejidos y de madera en Cali',
       description:
-        'Fabricantes de muebles campestres y tejidos en Cali. Mecedoras, salas, comedores y más, hechos a la medida. Cotiza por WhatsApp.',
+        'Fabricamos muebles tejidos y de madera en Cali: salas, comedores, mecedoras, camas, ' +
+        'lámparas y espejos, a la medida de tu espacio. Cotiza por WhatsApp.',
       path: '/',
       type: 'website',
     });
     effect(() => this.jsonLd.setLocalBusiness(this.settings()));
     inject(DestroyRef).onDestroy(() => this.jsonLd.clear());
-  }
-
-  /** Subcategorías con corte de material (las que se muestran como Tejido / Madera). */
-  materialChildren(parent: CategoryNode): CategoryNode[] {
-    return parent.children.filter((c) => c.material);
   }
 }

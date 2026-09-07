@@ -55,6 +55,9 @@ export class AdminProductForm {
     description: [''],
     material: [''],
     finish: [''],
+    spaceNote: [''],
+    // La misma pieza en el otro material. '' = ninguna.
+    twinProduct: [''],
     personalizable: [false],
     customizationNotes: [''],
     status: ['MADE_TO_ORDER'],
@@ -71,9 +74,21 @@ export class AdminProductForm {
     return this.form.controls.customFields;
   }
 
+  /** Los demás muebles del catálogo, para elegir la pieza gemela. */
+  twinCandidates = signal<{ _id: string; name: string }[]>([]);
+
   constructor() {
     this.catalog.getCategoryTree().subscribe((tree) => {
       this.leafCategories.set(this.flattenLeaves(tree));
+    });
+
+    // Un mueble no puede ser su propia gemela.
+    this.service.list({ pageSize: 60 }).subscribe((list) => {
+      this.twinCandidates.set(
+        list.items
+          .filter((p) => p._id !== this.productId())
+          .map((p) => ({ _id: p._id, name: p.name })),
+      );
     });
 
     const id = this.productId();
@@ -120,6 +135,7 @@ export class AdminProductForm {
       widthCm: [v.widthCm ?? null],
       heightCm: [v.heightCm ?? null],
       depthCm: [v.depthCm ?? null],
+      seatHeightCm: [v.seatHeightCm ?? null],
       colorName: [v.colorName ?? ''],
       isDefault: [v.isDefault ?? false],
       active: [v.active ?? true],
@@ -214,6 +230,8 @@ export class AdminProductForm {
       description: p.description ?? '',
       material: p.material ?? '',
       finish: p.finish ?? '',
+      spaceNote: p.spaceNote ?? '',
+      twinProduct: p.twinProduct ?? '',
       personalizable: p.personalizable,
       customizationNotes: p.customizationNotes ?? '',
       status: p.status,
@@ -249,6 +267,7 @@ export class AdminProductForm {
       widthCm: num(v['widthCm']),
       heightCm: num(v['heightCm']),
       depthCm: num(v['depthCm']),
+      seatHeightCm: num(v['seatHeightCm']),
       colorName: str(v['colorName']),
       isDefault: Boolean(v['isDefault']),
       active: v['active'] === undefined ? true : Boolean(v['active']),
@@ -284,6 +303,9 @@ export class AdminProductForm {
       description: str(raw.description),
       material: str(raw.material),
       finish: str(raw.finish),
+      spaceNote: str(raw.spaceNote),
+      // null desengancha la gemela; undefined la dejaria como esta.
+      twinProduct: raw.twinProduct ? raw.twinProduct : null,
       personalizable: raw.personalizable,
       customizationNotes: raw.personalizable ? str(raw.customizationNotes) : undefined,
       customizationFields,

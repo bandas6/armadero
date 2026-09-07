@@ -7,20 +7,32 @@ import { PLATFORM_ID } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ProductService } from '../../core/services/product.service';
+import { CatalogService } from '../../core/services/catalog.service';
 import { QuoteService } from '../../core/services/quote.service';
 import { CartService } from '../../core/services/cart.service';
 import { SeoService } from '../../core/services/seo.service';
 import { StructuredDataService } from '../../core/services/structured-data.service';
 import { CopCurrencyPipe } from '../../shared/pipes/cop-currency.pipe';
 import { CustomizationFields } from '../../shared/customization-fields/customization-fields';
+import { MaterialTag } from '../../shared/material-tag';
+import { measureCard } from '../../shared/measure-label';
+import { BUSINESS_HOURS } from '../../core/business';
 import type { Product, ProductVariant } from '../../core/models/product.model';
+import type { CategoryNode } from '../../core/models/catalog.model';
 
 type LoadState = { product: Product | null; notFound: boolean };
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [NgOptimizedImage, ReactiveFormsModule, CopCurrencyPipe, RouterLink, CustomizationFields],
+  imports: [
+    NgOptimizedImage,
+    ReactiveFormsModule,
+    CopCurrencyPipe,
+    RouterLink,
+    CustomizationFields,
+    MaterialTag,
+  ],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',
 })
@@ -33,6 +45,13 @@ export class ProductDetail {
   private cart = inject(CartService);
   private seo = inject(SeoService);
   private jsonLd = inject(StructuredDataService);
+  private catalogService = inject(CatalogService);
+
+  /** El arbol solo hace falta para armar las migas: Catalogo · Tipo · Subcategoria. */
+  private tree = toSignal(
+    this.catalogService.getCategoryTree().pipe(catchError(() => of([] as CategoryNode[]))),
+    { initialValue: [] as CategoryNode[] },
+  );
 
   addedToCart = signal(false);
   private customFields = viewChild(CustomizationFields);
@@ -119,20 +138,61 @@ export class ProductDetail {
     return product.variants.find((v) => v._id === id) ?? product.variants.find((v) => v.isDefault) ?? product.variants[0];
   });
 
+  readonly hours = BUSINESS_HOURS;
+
+  /**
+   * La cedula de medidas de la ficha: una celda por cifra, con el numero grande y la
+   * unidad debajo. Las medidas son contenido principal, nunca letra chica en un acordeon
+   * (design/PROMPT-4-ficha.md). El alto del asiento solo entra cuando el mueble lo tiene.
+   */
+  readonly measureCells = computed(() => {
+    const v = this.selectedVariant();
+    if (!v) return [];
+    const cells: { value: number; label: string }[] = [];
+    if (v.seats) cells.push({ value: v.seats, label: v.seats === 1 ? 'puesto' : 'puestos' });
+    if (v.widthCm) cells.push({ value: v.widthCm, label: 'cm de ancho' });
+    if (v.heightCm) cells.push({ value: v.heightCm, label: 'cm de alto' });
+    if (v.depthCm) cells.push({ value: v.depthCm, label: 'cm de fondo' });
+    if (v.seatHeightCm) cells.push({ value: v.seatHeightCm, label: 'cm el asiento' });
+    return cells;
+  });
+
+  /** Una linea con las medidas, para el resumen del carrito y los mensajes. */
   measureLabel = computed(() => {
     const product = this.product();
     const variant = this.selectedVariant();
     if (!product || !variant) return '';
-    if (product.personalizable) return 'Se fabrica a la medida';
+    const { headline, detail } = measureCard(variant, product.personalizable);
+    return detail ? `${headline} · ${detail}` : headline;
+  });
 
-    const dims =
-      variant.widthCm && variant.heightCm && variant.depthCm
-        ? `${variant.widthCm} × ${variant.heightCm} × ${variant.depthCm} cm`
-        : null;
+  /**
+   * Migas de pan: Catalogo · Tipo · Subcategoria. El tipo sale del arbol, porque la ficha
+   * solo trae el id del padre. Si el arbol no cargo, quedan las migas que si se pueden
+   * armar en vez de una miga inventada.
+   */
+  readonly breadcrumbs = computed(() => {
+    const p = this.product();
+    if (!p) return [];
+    const parent = this.tree().find((node) =>
+      node.children.some((child) => child.slug === p.category.slug),
+    );
+    const crumbs = parent ? [{ name: parent.name, slug: parent.slug }] : [];
+    crumbs.push({ name: p.category.name, slug: p.category.slug });
+    return crumbs;
+  });
 
-    if (variant.seats && dims) return `${variant.seats} puestos · ${dims}`;
-    if (variant.seats) return `${variant.seats} puestos`;
-    return dims ?? 'Medidas a confirmar';
+  readonly leadTimeLabel = computed(() => {
+    const days = this.product()?.leadTimeDays;
+    if (!days) return 'Se confirma al cotizar';
+    if (days < 14) return `${days} días`;
+    const weeks = Math.round(days / 7);
+    return `${weeks} semanas`;
+  });
+
+  readonly warrantyLabel = computed(() => {
+    const months = this.product()?.warrantyMonths;
+    return months ? `${months} meses en estructura y tejido` : 'Se confirma al cotizar';
   });
 
   quoteForm = this.fb.nonNullable.group({
@@ -151,6 +211,11 @@ export class ProductDetail {
 
   selectVariant(id: string) {
     this.selectedVariantId.set(id);
+    // El selector de variantes cambia la foto, no solo el texto: si la variante tiene
+    // foto propia, la galeria salta a ella (design/PROMPT-4-ficha.md).
+    const images = this.product()?.images ?? [];
+    const index = images.findIndex((img) => img.variantId === id);
+    if (index >= 0) this.selectedImageIndex.set(index);
   }
 
   submitQuote() {

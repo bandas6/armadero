@@ -23,6 +23,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "{logotipo.svg,logotipo-tinta.svg,logotipo-mono.svg,guirnalda.png,guirnalda-2x.png,guirnalda-espejo.png,guirnalda-espejo-2x.png,trenza-modulo.png,divisor-trenza.png}",
+                "input": "marca",
+                "output": "marca"
               }
             ],
             "styles": [

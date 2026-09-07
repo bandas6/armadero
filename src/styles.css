@@ -1,22 +1,63 @@
 @import 'tailwindcss';
 
 /*
- * Tokens de la Direccion 01 - "Taller Abierto" (design/direccion-01-taller-abierto/),
- * la dirección elegida. Ver docs/plan-direcciones-diseno.md antes de tocar estos
- * valores: cambian la identidad visual aprobada por la clienta.
+ * Sistema visual de la Direccion 03 - "Tejido o madera", la direccion aprobada por la
+ * clienta. La referencia es design/direccion-03-tejido-o-madera/index.html y las reglas
+ * estan en design/IMPLEMENTACION.md. Antes de tocar un valor de aqui, lee ese mockup:
+ * estos tokens son la identidad visual aprobada, no preferencias.
+ *
+ * El codigo de material es FUNCIONAL, no decorativo: --tejido identifica siempre lo
+ * tejido y --madera siempre lo de madera, en toda la aplicacion. --hoja es para acciones
+ * y para "Precio segun medidas". No se usan para otra cosa ni se inventan colores nuevos.
  */
 :root {
-  --lino: #f1ede4;
-  --grafito: #262420;
-  --verde-guadua: #4b5d45;
-  --ocre-cana: #c68a3d;
-  --blanco-taller: #fbfaf7;
-  --musgo: #8b9186; /* solo para bordes y detalles decorativos */
-  --texto-suave: #556356; /* texto secundario: cumple contraste AA sobre lino y blanco-taller */
+  --hueso: #f7f6f2; /* fondo general */
+  --hueso-alt: #f2f1ec; /* superficie secundaria: mitad de madera, notas, celdas */
+  --tinta: #191c1e; /* texto y bordes fuertes */
+  --tinta-suave: #43484b; /* texto de parrafo dentro de las secciones */
+  --gris: #5e6467; /* texto secundario */
+  --tejido: #a8641e; /* codigo de material: tejido */
+  --madera: #3a5a6b; /* codigo de material: madera */
+  --hoja: #42604b; /* acciones, enlaces, "Precio segun medidas" */
 
-  --font-display: 'Fraunces', ui-serif, Georgia, serif;
-  --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'Space Mono', ui-monospace, monospace;
+  /* Lineas: los dos niveles de borde del mockup, sobre fondo hueso. */
+  --linea: #191c1e1f;
+  --linea-fuerte: #191c1e33;
+
+  /* Pie oscuro: el logotipo dorado no alcanza AA sobre el hueso, por eso el pie va en
+     tinta y el encabezado claro. Es deliberado (design/PROMPT-1-arranque.md). */
+  --pie-texto: #c9c6be;
+  --pie-tenue: #9a968d;
+  --pie-linea: #ffffff26;
+
+  /* Unico color fuera de la paleta: el rojo de error del panel, que ya existia en el
+     proyecto. No aparece nunca en el catalogo publico. */
+  --alerta: #8c4a34;
+
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+ * Los mismos tokens expuestos a Tailwind (v4 configura por CSS). `inline` hace que las
+ * utilidades resuelvan la variable de :root en vez de copiar el valor, asi hay una sola
+ * fuente de verdad: bg-hueso, text-tinta, border-linea, font-display...
+ */
+@theme inline {
+  --color-hueso: var(--hueso);
+  --color-hueso-alt: var(--hueso-alt);
+  --color-tinta: var(--tinta);
+  --color-tinta-suave: var(--tinta-suave);
+  --color-gris: var(--gris);
+  --color-tejido: var(--tejido);
+  --color-madera: var(--madera);
+  --color-hoja: var(--hoja);
+  --color-linea: var(--linea);
+  --color-linea-fuerte: var(--linea-fuerte);
+  --color-alerta: var(--alerta);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
 }
 
 html,
@@ -25,34 +66,69 @@ body {
 }
 
 /*
- * Desplazamiento suave al navegar a un ancla del menú (#categorias, #taller...).
- * scroll-padding-top deja aire para el header sticky (barra de anuncio + nav)
- * para que el título de la sección no quede tapado.
+ * Desplazamiento suave al navegar a un ancla del menu. scroll-padding-top deja aire para
+ * el encabezado sticky para que el titulo de la seccion no quede tapado.
  */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 6rem;
+  scroll-padding-top: 5.5rem;
 }
 
 body {
-  background: var(--lino);
-  color: var(--grafito);
+  margin: 0;
+  background: var(--hueso);
+  color: var(--tinta);
   font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
 }
 
+/* Instrument Serif solo en titulares grandes. El resto es IBM Plex Sans. */
 h1,
 h2,
 h3 {
   font-family: var(--font-display);
+  font-weight: 400;
 }
 
-.font-mono-precio {
-  font-family: var(--font-mono);
+a {
+  color: var(--hoja);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--tinta);
 }
 
 :focus-visible {
-  outline: 2px solid var(--verde-guadua);
-  outline-offset: 2px;
+  outline: 3px solid var(--hoja);
+  outline-offset: 3px;
+}
+
+/* La sombra del logotipo va por CSS, no incrustada en el SVG (marca/LEEME.md). */
+.marca-sombra {
+  filter: drop-shadow(2px 3px 4px rgb(0 0 0 / 0.45));
+}
+
+/* Trenza del pie: el modulo central del divisor, repetido en horizontal. */
+.trenza-repetida {
+  height: 41px;
+  background-image: url('/marca/trenza-modulo.png');
+  background-repeat: repeat-x;
+  background-position: left center;
+  background-size: auto 41px;
+}
+
+/*
+ * Decoracion del aviso (la guirnalda). Nunca captura el puntero ni entra en el orden de
+ * lectura: en las plantillas va con alt="" y aria-hidden="true".
+ */
+.guirnalda {
+  position: absolute;
+  z-index: 2;
+  width: 208px;
+  max-width: 38%;
+  height: auto;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -68,18 +144,17 @@ h3 {
   }
 }
 
-/* ---- Panel de administración: botones y controles con área de toque cómoda ---- */
+/* ---- Panel de administracion: botones y controles con area de toque comoda ---- */
 .admin-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  min-height: 2.5rem;
+  min-height: 2.75rem;
   padding: 0.5rem 0.85rem;
-  border-radius: 0.375rem;
-  border: 1px solid var(--musgo);
-  background: var(--blanco-taller);
-  color: var(--grafito);
+  border: 1px solid var(--linea-fuerte);
+  background: var(--hueso-alt);
+  color: var(--tinta);
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.1;
@@ -91,25 +166,24 @@ h3 {
   cursor: default;
 }
 .admin-btn--primary {
-  background: var(--verde-guadua);
-  border-color: var(--verde-guadua);
-  color: var(--blanco-taller);
+  background: var(--hoja);
+  border-color: var(--hoja);
+  color: #fff;
 }
 .admin-btn--sm {
-  min-height: 2rem;
+  min-height: 2.25rem;
   padding: 0.3rem 0.6rem;
   font-size: 0.8rem;
 }
 .admin-btn--danger {
-  color: #8c4a34;
-  border-color: #c9a08c;
+  color: var(--alerta);
+  border-color: var(--alerta);
 }
 .admin-input {
   width: 100%;
-  border-radius: 0.375rem;
-  border: 1px solid var(--musgo);
-  background: var(--blanco-taller);
-  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--linea-fuerte);
+  background: #fff;
+  padding: 0.6rem 0.75rem;
   font-size: 0.95rem;
 }
 .admin-label {

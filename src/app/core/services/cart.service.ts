@@ -39,6 +39,15 @@ export class CartService {
   );
   readonly hasCustomItems = computed(() => this._items().some((i) => i.unitPrice == null));
 
+  /**
+   * Cuantos muebles del carrito se cotizan segun medidas. El total no puede quedar roto
+   * cuando hay piezas sin precio: se muestra el subtotal de lo que si tiene precio y
+   * aparte cuantos items se cotizan aparte (design/PROMPT-4-ficha.md).
+   */
+  readonly customItemCount = computed(() =>
+    this._items().filter((i) => i.unitPrice == null).reduce((n, i) => n + i.quantity, 0),
+  );
+
   constructor() {
     // Persistencia: cada cambio del arreglo se guarda. Solo en el navegador.
     effect(() => {

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artemadero — Dirección A · Puestos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="../image-slot.js"></script>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F5F6F3;color:#14181A;font-family:'Source Sans 3',system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+  a{color:#1E3B32;text-underline-offset:3px}
+  a:hover{color:#14181A}
+  :focus-visible{outline:3px solid #1E3B32;outline-offset:3px}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div style="--monte:#1E3B32;--cal:#F5F6F3;--tinta:#14181A;--arena:#D8DAD2;--senal:#E4B33C;--gris:#5C6360;background:var(--cal);overflow-x:hidden">
+
+<header data-screen-label="Cabecera" style="position:sticky;top:0;z-index:30;background:var(--monte);color:var(--cal)">
+  <div style="max-width:1280px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+    <a href="#a-home" style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:23px;letter-spacing:0.03em;text-transform:uppercase;color:var(--cal);text-decoration:none">Artemadero</a>
+    <nav style="display:flex;gap:16px;font-size:15px">
+      <a href="#a-home" style="color:var(--cal);text-decoration:none">Inicio</a>
+      <a href="#a-catalogo" style="color:var(--cal);text-decoration:none">Catálogo</a>
+      <a href="#a-ficha" style="color:var(--cal);text-decoration:none">Ficha</a>
+    </nav>
+    <span style="margin-left:auto;font-size:14px;color:var(--arena)">Cali · fabricación bajo pedido</span>
+    <a href="https://wa.me/573162542637?text=Hola%20Artemadero%2C%20quiero%20cotizar%20un%20mueble." style="display:inline-flex;align-items:center;min-height:44px;padding:11px 16px;background:var(--senal);color:var(--tinta);text-decoration:none;font-weight:600;font-size:15px">Cotizar por WhatsApp</a>
+  </div>
+</header>
+
+<section id="a-home" data-screen-label="Home">
+  <div style="max-width:1280px;margin:0 auto;padding:44px 20px 0">
+    <div style="display:flex;flex-wrap:wrap;gap:36px;align-items:center;min-height:340px">
+      <div style="flex:1 1 340px;min-width:0">
+        <p style="margin:0 0 14px;font-family:'Archivo Narrow',sans-serif;font-size:15px;letter-spacing:0.16em;text-transform:uppercase;color:var(--monte)">Taller propio en Cali</p>
+        <h1 style="font-family:'Archivo Narrow',sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(34px,5.6vw,62px);line-height:0.98;letter-spacing:0.01em;margin:0 0 18px;text-wrap:balance">Fabricamos muebles campestres y tejidos</h1>
+        <p style="margin:0 0 24px;font-size:18px;line-height:1.6;color:#3A423F;max-width:52ch">Mimbre, ratán, guadua y madera, trabajados a mano. Cada sala y cada comedor te dice de cuántos puestos es antes de decirte cuánto mide, y casi todo se fabrica con las medidas de tu espacio.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+          <a href="#a-catalogo" style="display:inline-flex;align-items:center;min-height:48px;padding:13px 22px;background:var(--monte);color:var(--cal);text-decoration:none;font-weight:600;font-size:16px">Ver el catálogo</a>
+          <a href="https://wa.me/573162542637?text=Hola%20Artemadero%2C%20quiero%20cotizar%20un%20mueble." style="display:inline-flex;align-items:center;min-height:48px;padding:13px 22px;border:2px solid var(--monte);color:var(--monte);text-decoration:none;font-weight:600;font-size:16px">Cotizar por WhatsApp</a>
+          <span style="font-size:14px;color:var(--gris);line-height:1.5">Lunes a viernes 8:30 a. m. – 5:30 p. m.<br>Sábado 7:30 a. m. – 3:00 p. m.</span>
+        </div>
+      </div>
+      <div style="flex:1 1 260px;max-width:340px;min-width:0;position:relative;aspect-ratio:3/4;border:2px solid var(--monte)">
+        <image-slot id="a-hero" shape="rect" fit="cover" placeholder="Foto de portada — una sala tejida completa, así sea la del andén"></image-slot>
+      </div>
+    </div>
+    <div style="display:flex;gap:0;flex-wrap:wrap;margin-top:32px;border-top:2px solid var(--monte);border-bottom:2px solid var(--monte)">
+      <a href="#a-catalogo" style="flex:1 1 220px;text-decoration:none;color:var(--tinta);display:flex;flex-direction:column;gap:3px;padding:18px 20px 18px 0">
+        <strong style="font-family:'Archivo Narrow',sans-serif;font-size:32px;font-weight:700;text-transform:uppercase;line-height:1">Tejido</strong>
+        <span style="font-size:15px;color:var(--gris)">Mimbre, ratán y fibra natural</span>
+      </a>
+      <a href="#a-catalogo" style="flex:1 1 220px;text-decoration:none;color:var(--tinta);display:flex;flex-direction:column;gap:3px;padding:18px 20px;border-left:2px solid var(--arena)">
+        <strong style="font-family:'Archivo Narrow',sans-serif;font-size:32px;font-weight:700;text-transform:uppercase;line-height:1">Madera</strong>
+        <span style="font-size:15px;color:var(--gris)">Maciza y rústica, y guadua</span>
+      </a>
+    </div>
+  </div>
+
+  <div style="max-width:1280px;margin:0 auto;padding:52px 20px 0">
+    <div style="margin-bottom:22px">
+      <h2 style="font-family:'Archivo Narrow',sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(28px,4vw,44px);margin:0 0 6px;line-height:1">Un mueble para cada espacio</h2>
+      <p style="margin:0;font-size:17px;color:var(--gris)">Cada tipo lo hacemos tejido y en madera. Entra por donde quieras.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px">
+
+      <div style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:16/10;border-bottom:1px solid var(--arena)"><image-slot id="a-cat1" shape="rect" fit="cover" placeholder="Categoría Sala — una sala tejida"></image-slot></div>
+        <div style="padding:13px;display:flex;flex-direction:column;gap:10px;flex:1">
+          <strong style="font-family:'Archivo Narrow',sans-serif;font-size:21px;text-transform:uppercase">Sala</strong>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:auto">
+            <a href="#a-catalogo" style="min-height:44px;display:inline-flex;align-items:center;padding:10px 14px;background:var(--monte);color:var(--cal);text-decoration:none;font-weight:600;font-size:15px">Tejidas</a>
+            <a href="#a-catalogo" style="min-height:44px;display:inline-flex;align-items:center;padding:10px 14px;border:1px solid var(--monte);color:var(--monte);text-decoration:none;font-weight:600;font-size:15px">Rústicas</a>
+            <a href="#a-catalogo" style="min-height:44px;display:inline-flex;align-items:center;padding:10px 14px;border:1px solid var(--monte);color:var(--monte);text-decoration:none;font-weight:600;font-size:15px">Mesas de centro</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:16/10;border-bottom:1px solid var(--arena)"><image-slot id="a-cat2" shape="rect" fit="cover" placeholder="Categoría Comedor — un comedor tejido"></image-slot></div>
+        <div style="padding:13px;display:flex;flex-direction:column;gap:10px;flex:1">
+          <strong style="font-family:'Archivo Narrow',sans-serif;font-size:21px;text-transform:uppercase">Comedor</strong>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:auto">
+            <a href="#a-catalogo" style="min-height:44px;display:inline-flex;align-items:center;padding:10px 14px;background:var(--monte);color:var(--cal);text-decoration:none;font-weight:600;font-size:15px">Tejidos</a>
+            <a href="#a-catalogo" style="min-height:44px;display:inline-flex;align-items:center;padding:10px 14px;border:1px solid var(--monte);color:var(--monte);text-decoration:none;font-weight:600;font-size:15px">Rústicos</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:16/10;border-bottom:1px solid var(--arena)"><image-slot id="a-cat3" shape="rect" fit="cover" placeholder="Categoría Mecedoras — la del andén sirve"></image-slot></div>
+        <div style="padding:13px;display:flex;flex-direction:column;gap:10px;flex:1">
+          <strong style="font-family:'Archivo Narrow',sans-serif;font-size:21px;text-transform:uppercase">Mecedoras</strong>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:auto">
+            <a href="#a-catalogo" style="min-height:44px;display:inline-flex;align-items:center;padding:10px 14px;background:var(--monte);color:var(--cal);text-decoration:none;font-weight:600;font-size:15px">Tejidas</a>
+            <a href="#a-catalogo" style="min-height:44px;display:inline-flex;align-items:center;padding:10px 14px;border:1px solid var(--monte);color:var(--monte);text-decoration:none;font-weight:600;font-size:15px">De madera</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:16/10;border-bottom:1px solid var(--arena)"><image-slot id="a-cat4" shape="rect" fit="cover" placeholder="Categoría Butacos — tejidos"></image-slot></div>
+        <div style="padding:13px;display:flex;flex-direction:column;gap:10px;flex:1">
+          <strong style="font-family:'Archivo Narrow',sans-serif;font-size:21px;text-transform:uppercase">Butacos</strong>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:auto">
+            <a href="#a-catalogo" style="min-height:44px;display:inline-flex;align-items:center;padding:10px 14px;background:var(--monte);color:var(--cal);text-decoration:none;font-weight:600;font-size:15px">Tejidos</a>
+            <a href="https://wa.me/573162542637?text=Hola%20Artemadero%2C%20quiero%20ver%20butacos%20de%20madera." style="min-height:44px;display:inline-flex;align-items:center;padding:10px 14px;border:1px dashed #8E9691;color:var(--gris);text-decoration:none;font-size:15px">De madera — pídelos por WhatsApp</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:16/10;border-bottom:1px solid var(--arena)"><image-slot id="a-cat5" shape="rect" fit="cover" placeholder="Categoría Alcoba — la cama flotante"></image-slot></div>
+        <div style="padding:13px;display:flex;flex-direction:column;gap:10px;flex:1">
+          <strong style="font-family:'Archivo Narrow',sans-serif;font-size:21px;text-transform:uppercase">Alcoba</strong>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:auto">
+            <a href="#a-catalogo" style="min-height:44px;display:inline-flex;align-items:center;padding:10px 14px;background:var(--monte);color:var(--cal);text-decoration:none;font-weight:600;font-size:15px">Camas</a>
+            <a href="#a-catalogo" style="min-height:44px;display:inline-flex;align-items:center;padding:10px 14px;border:1px solid var(--monte);color:var(--monte);text-decoration:none;font-weight:600;font-size:15px">Camarotes</a>
+            <a href="#a-catalogo" style="min-height:44px;display:inline-flex;align-items:center;padding:10px 14px;border:1px solid var(--monte);color:var(--monte);text-decoration:none;font-weight:600;font-size:15px">Nocheros</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:16/10;border-bottom:1px solid var(--arena)"><image-slot id="a-cat6" shape="rect" fit="cover" placeholder="Categoría Decoración — lámpara o espejo"></image-slot></div>
+        <div style="padding:13px;display:flex;flex-direction:column;gap:10px;flex:1">
+          <strong style="font-family:'Archivo Narrow',sans-serif;font-size:21px;text-transform:uppercase">Decoración</strong>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:auto">
+            <a href="#a-catalogo" style="min-height:44px;display:inline-flex;align-items:center;padding:10px 14px;background:var(--monte);color:var(--cal);text-decoration:none;font-weight:600;font-size:15px">Lámparas tejidas</a>
+            <a href="#a-catalogo" style="min-height:44px;display:inline-flex;align-items:center;padding:10px 14px;background:var(--monte);color:var(--cal);text-decoration:none;font-weight:600;font-size:15px">Espejos tejidos</a>
+            <a href="https://wa.me/573162542637?text=Hola%20Artemadero%2C%20quiero%20ver%20espejos%20de%20madera." style="min-height:44px;display:inline-flex;align-items:center;padding:10px 14px;border:1px dashed #8E9691;color:var(--gris);text-decoration:none;font-size:15px">Espejos de madera — por WhatsApp</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--monte);color:var(--cal);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:16/10;border-bottom:1px solid #FFFFFF33"><image-slot id="a-cat7" shape="rect" fit="cover" placeholder="Guadua — cualquier pieza en guadua"></image-slot></div>
+        <div style="padding:13px;display:flex;flex-direction:column;gap:10px;flex:1">
+          <strong style="font-family:'Archivo Narrow',sans-serif;font-size:21px;text-transform:uppercase">Guadua</strong>
+          <p style="margin:0;font-size:14px;color:var(--arena);line-height:1.5">Atraviesa todas las categorías: la usamos en salas, comedores y estructuras.</p>
+          <a href="#a-catalogo" style="margin-top:auto;min-height:44px;display:inline-flex;align-items:center;align-self:flex-start;padding:10px 14px;background:var(--senal);color:var(--tinta);text-decoration:none;font-weight:600;font-size:15px">Ver la línea</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="max-width:1280px;margin:0 auto;padding:48px 20px 0">
+    <div style="margin-bottom:22px">
+      <h2 style="font-family:'Archivo Narrow',sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(28px,4vw,44px);margin:0 0 6px;line-height:1">Del muestrario</h2>
+      <p style="margin:0;font-size:17px;color:var(--gris)">Un punto por puesto. Las medidas van en centímetros: ancho × alto × profundidad.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:12px">
+
+      <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)">
+          <image-slot id="a-p1" shape="rect" fit="cover" placeholder="Sala Guadalajara — salas tejidas"></image-slot>
+        </div>
+        <div style="padding:13px;display:flex;flex-direction:column;gap:9px;flex:1">
+          <div style="display:flex;gap:5px;align-items:center;min-height:16px">
+            <span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span>
+            <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:16px;margin-left:4px">5 puestos</span>
+          </div>
+          <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:20px;text-transform:uppercase">Sala Guadalajara</h3>
+          <p style="margin:0;font-size:14px;color:var(--gris);line-height:1.4">Salas tejidas</p>
+          <div style="margin-top:auto;padding-top:10px;border-top:1px solid var(--arena)">
+            <p style="margin:0 0 3px;font-size:13px;color:var(--gris)">Se fabrica a la medida · referencia 240 × 75 × 85</p>
+            <strong style="font-family:'Archivo Narrow',sans-serif;font-size:19px;font-weight:700;color:var(--monte)">Precio según medidas</strong>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)">
+          <image-slot id="a-p2" shape="rect" fit="cover" placeholder="Comedor Roldanillo — comedores tejidos"></image-slot>
+        </div>
+        <div style="padding:13px;display:flex;flex-direction:column;gap:9px;flex:1">
+          <div style="display:flex;gap:5px;align-items:center;min-height:16px">
+            <span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span>
+            <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:16px;margin-left:4px">6 puestos</span>
+          </div>
+          <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:20px;text-transform:uppercase">Comedor Roldanillo</h3>
+          <p style="margin:0;font-size:14px;color:var(--gris);line-height:1.4">Comedores tejidos</p>
+          <div style="margin-top:auto;padding-top:10px;border-top:1px solid var(--arena)">
+            <p style="margin:0 0 3px;font-size:13px;color:var(--gris)">Diámetro 140 · alto 76</p>
+            <strong style="font-family:'Archivo Narrow',sans-serif;font-size:19px;font-weight:700">$ 3.900.000</strong>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)">
+          <image-slot id="a-p3" shape="rect" fit="cover" placeholder="Comedor Sevilla — comedores rústicos"></image-slot>
+        </div>
+        <div style="padding:13px;display:flex;flex-direction:column;gap:9px;flex:1">
+          <div style="display:flex;gap:5px;align-items:center;min-height:16px">
+            <span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span>
+            <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:16px;margin-left:4px">8 puestos</span>
+          </div>
+          <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:20px;text-transform:uppercase">Comedor Sevilla</h3>
+          <p style="margin:0;font-size:14px;color:var(--gris);line-height:1.4">Comedores rústicos</p>
+          <div style="margin-top:auto;padding-top:10px;border-top:1px solid var(--arena)">
+            <p style="margin:0 0 3px;font-size:13px;color:var(--gris)">Se fabrica a la medida · referencia 240 × 76 × 100</p>
+            <strong style="font-family:'Archivo Narrow',sans-serif;font-size:19px;font-weight:700;color:var(--monte)">Precio según medidas</strong>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)">
+          <image-slot id="a-p4" shape="rect" fit="cover" placeholder="Mecedora Buga — mecedoras tejidas (sirve una del andén)"></image-slot>
+        </div>
+        <div style="padding:13px;display:flex;flex-direction:column;gap:9px;flex:1">
+          <div style="display:flex;gap:8px;align-items:center;min-height:16px">
+            <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:16px;color:var(--senal);background:var(--tinta);padding:1px 7px">↔ 68 cm</span>
+            <span style="font-size:13px;color:var(--gris)">de ancho</span>
+          </div>
+          <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:20px;text-transform:uppercase">Mecedora Buga</h3>
+          <p style="margin:0;font-size:14px;color:var(--gris);line-height:1.4">Mecedoras tejidas</p>
+          <div style="margin-top:auto;padding-top:10px;border-top:1px solid var(--arena)">
+            <p style="margin:0 0 3px;font-size:13px;color:var(--gris)">68 × 105 × 92</p>
+            <strong style="font-family:'Archivo Narrow',sans-serif;font-size:19px;font-weight:700">$ 1.150.000</strong>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)">
+          <image-slot id="a-p5" shape="rect" fit="cover" placeholder="Sala esquinera Pance — salas tejidas"></image-slot>
+        </div>
+        <div style="padding:13px;display:flex;flex-direction:column;gap:9px;flex:1">
+          <div style="display:flex;gap:5px;align-items:center;min-height:16px">
+            <span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--monte)"></span>
+            <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:16px;margin-left:4px">5 puestos</span>
+          </div>
+          <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:20px;text-transform:uppercase">Sala esquinera Pance</h3>
+          <p style="margin:0;font-size:14px;color:var(--gris);line-height:1.4">Salas tejidas</p>
+          <div style="margin-top:auto;padding-top:10px;border-top:1px solid var(--arena)">
+            <p style="margin:0 0 3px;font-size:13px;color:var(--gris)">260 × 72 × 180</p>
+            <strong style="font-family:'Archivo Narrow',sans-serif;font-size:19px;font-weight:700">$ 4.800.000</strong>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)">
+          <image-slot id="a-p6" shape="rect" fit="cover" placeholder="Mecedora Palmira — mecedoras de madera (pendiente)"></image-slot>
+        </div>
+        <div style="padding:13px;display:flex;flex-direction:column;gap:9px;flex:1">
+          <div style="display:flex;gap:8px;align-items:center;min-height:16px">
+            <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:16px;color:var(--senal);background:var(--tinta);padding:1px 7px">↔ 62 cm</span>
+            <span style="font-size:13px;color:var(--gris)">de ancho</span>
+          </div>
+          <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:20px;text-transform:uppercase">Mecedora Palmira</h3>
+          <p style="margin:0;font-size:14px;color:var(--gris);line-height:1.4">Mecedoras de madera</p>
+          <div style="margin-top:auto;padding-top:10px;border-top:1px solid var(--arena)">
+            <p style="margin:0 0 3px;font-size:13px;color:var(--gris)">62 × 102 × 88</p>
+            <strong style="font-family:'Archivo Narrow',sans-serif;font-size:19px;font-weight:700">$ 980.000</strong>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)">
+          <image-slot id="a-p7" shape="rect" fit="cover" placeholder="Cama flotante Cañasgordas — camas"></image-slot>
+        </div>
+        <div style="padding:13px;display:flex;flex-direction:column;gap:9px;flex:1">
+          <div style="display:flex;gap:8px;align-items:center;min-height:16px">
+            <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:16px;color:var(--senal);background:var(--tinta);padding:1px 7px">↔ 160 cm</span>
+            <span style="font-size:13px;color:var(--gris)">de ancho</span>
+          </div>
+          <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:20px;text-transform:uppercase">Cama flotante Cañasgordas</h3>
+          <p style="margin:0;font-size:14px;color:var(--gris);line-height:1.4">Camas</p>
+          <div style="margin-top:auto;padding-top:10px;border-top:1px solid var(--arena)">
+            <p style="margin:0 0 3px;font-size:13px;color:var(--gris)">Se fabrica a la medida · ref. 160 × 110 × 200</p>
+            <strong style="font-family:'Archivo Narrow',sans-serif;font-size:19px;font-weight:700;color:var(--monte)">Precio según medidas</strong>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)">
+          <image-slot id="a-p8" shape="rect" fit="cover" placeholder="Lámpara Guacarí — lámparas tejidas"></image-slot>
+        </div>
+        <div style="padding:13px;display:flex;flex-direction:column;gap:9px;flex:1">
+          <div style="display:flex;gap:8px;align-items:center;min-height:16px">
+            <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:16px;color:var(--senal);background:var(--tinta);padding:1px 7px">⌀ 45 cm</span>
+            <span style="font-size:13px;color:var(--gris)">de diámetro</span>
+          </div>
+          <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:20px;text-transform:uppercase">Lámpara Guacarí</h3>
+          <p style="margin:0;font-size:14px;color:var(--gris);line-height:1.4">Lámparas tejidas</p>
+          <div style="margin-top:auto;padding-top:10px;border-top:1px solid var(--arena)">
+            <p style="margin:0 0 3px;font-size:13px;color:var(--gris)">⌀ 35 · 45 · 60 · alto 40</p>
+            <strong style="font-family:'Archivo Narrow',sans-serif;font-size:19px;font-weight:700">$ 340.000</strong>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)">
+          <image-slot id="a-p9" shape="rect" fit="cover" placeholder="Espejo Sol de Buga — foto del andén"></image-slot>
+        </div>
+        <div style="padding:13px;display:flex;flex-direction:column;gap:9px;flex:1">
+          <div style="display:flex;gap:8px;align-items:center;min-height:16px">
+            <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:16px;color:var(--senal);background:var(--tinta);padding:1px 7px">⌀ 80 cm</span>
+            <span style="font-size:13px;color:var(--gris)">de diámetro</span>
+          </div>
+          <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:20px;text-transform:uppercase">Espejo Sol de Buga</h3>
+          <p style="margin:0;font-size:14px;color:var(--gris);line-height:1.4">Espejos tejidos</p>
+          <div style="margin-top:auto;padding-top:10px;border-top:1px solid var(--arena)">
+            <p style="margin:0 0 3px;font-size:13px;color:var(--gris)">⌀ 80 · fondo 3</p>
+            <strong style="font-family:'Archivo Narrow',sans-serif;font-size:19px;font-weight:700">$ 420.000</strong>
+          </div>
+        </div>
+      </article>
+
+    </div>
+    <div style="display:flex;justify-content:center;margin-top:22px">
+      <a href="#a-catalogo" style="display:inline-flex;align-items:center;min-height:52px;padding:14px 30px;border:2px solid var(--monte);color:var(--monte);text-decoration:none;font-weight:600;font-size:17px;font-family:'Archivo Narrow',sans-serif;text-transform:uppercase;letter-spacing:0.03em">Ver todo el catálogo</a>
+    </div>
+  </div>
+
+  <div style="max-width:1280px;margin:52px auto 0;padding:0 20px">
+    <div style="background:var(--monte);color:var(--cal);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+      <div style="padding:clamp(24px,3.4vw,44px);display:flex;flex-direction:column;justify-content:center;gap:16px">
+        <h2 style="font-family:'Archivo Narrow',sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(26px,3.6vw,40px);line-height:1.02;margin:0">Lo hacemos<br>nosotros mismos</h2>
+        <p style="margin:0;font-size:17px;line-height:1.65;color:#DFE3DF;max-width:44ch">Taller y local propios en Cali. El tejido lo hace a mano la misma persona desde hace años, y la madera se trabaja aquí mismo. Cuando escribes por WhatsApp hablas con quien va a fabricar tu mueble, no con un intermediario.</p>
+        <p style="margin:0;font-size:15px;color:var(--arena);border-left:3px solid var(--senal);padding-left:12px">Puedes venir al local a ver los acabados y las fibras antes de encargar.</p>
+      </div>
+      <div style="position:relative;min-height:260px"><image-slot id="a-historia" shape="rect" fit="cover" placeholder="El taller o el local — sirve una foto de celular"></image-slot></div>
+    </div>
+  </div>
+
+  <div style="max-width:1280px;margin:0 auto;padding:52px 20px 0">
+    <div style="margin-bottom:22px">
+      <h2 style="font-family:'Archivo Narrow',sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(28px,4vw,44px);margin:0 0 6px;line-height:1">Cómo trabajamos</h2>
+      <p style="margin:0;font-size:17px;color:var(--gris)">Tres cosas que hacemos nosotros mismos, no un proveedor.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px">
+      <div style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:3/2;border-bottom:1px solid var(--arena)"><image-slot id="a-pilar1" shape="rect" fit="cover" placeholder="Alguien tejiendo — manos trabajando la fibra"></image-slot></div>
+        <div style="padding:14px">
+          <h3 style="margin:0 0 6px;font-family:'Archivo Narrow',sans-serif;font-size:19px;text-transform:uppercase">Tejido a mano</h3>
+          <p style="margin:0;font-size:15px;color:#3A423F;line-height:1.55">Mimbre, ratán y fibra natural, tejidos pieza por pieza. No hay dos exactamente iguales.</p>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:3/2;border-bottom:1px solid var(--arena)"><image-slot id="a-pilar2" shape="rect" fit="cover" placeholder="Madera o guadua en el taller"></image-slot></div>
+        <div style="padding:14px">
+          <h3 style="margin:0 0 6px;font-family:'Archivo Narrow',sans-serif;font-size:19px;text-transform:uppercase">Madera y guadua</h3>
+          <p style="margin:0;font-size:15px;color:#3A423F;line-height:1.55">Madera maciza y guadua trabajadas en el taller, con acabados que aguantan el clima de aquí.</p>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:3/2;border-bottom:1px solid var(--arena)"><image-slot id="a-pilar3" shape="rect" fit="cover" placeholder="Un mueble hecho a la medida, instalado"></image-slot></div>
+        <div style="padding:14px">
+          <h3 style="margin:0 0 6px;font-family:'Archivo Narrow',sans-serif;font-size:19px;text-transform:uppercase">A la medida</h3>
+          <p style="margin:0;font-size:15px;color:#3A423F;line-height:1.55">Dinos el espacio que tienes y lo fabricamos con esas medidas, en el tejido y el acabado que escojas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1280px;margin:0 auto;padding:52px 20px 0">
+    <div style="border:2px solid var(--monte);background:#fff;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+      <div style="position:relative;min-height:240px;border-right:1px solid var(--arena)"><image-slot id="a-cta" shape="rect" fit="cover" placeholder="Foto para el llamado a cotizar"></image-slot></div>
+      <div style="padding:clamp(22px,3vw,38px);display:flex;flex-direction:column;justify-content:center;gap:14px">
+        <h2 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(26px,3.4vw,38px);line-height:1.02">¿Tienes las<br>medidas a mano?</h2>
+        <p style="margin:0;font-size:17px;line-height:1.6;color:#3A423F;max-width:42ch">Mándanos el ancho de la pared o el tamaño del comedor y te decimos qué te cabe, cuánto cuesta y en cuánto tiempo lo tienes.</p>
+        <a href="https://wa.me/573162542637?text=Hola%20Artemadero%2C%20quiero%20cotizar%20un%20mueble." style="align-self:flex-start;display:inline-flex;align-items:center;min-height:56px;padding:15px 22px;background:var(--senal);color:var(--tinta);text-decoration:none;font-weight:700;font-size:18px;font-family:'Archivo Narrow',sans-serif;text-transform:uppercase;letter-spacing:0.02em">Cotizar por WhatsApp</a>
+        <p style="margin:0;font-size:15px;color:#3A423F;line-height:1.6"><strong>Te respondemos</strong> de lunes a viernes de 8:30 a. m. a 5:30 p. m., y sábados de 7:30 a. m. a 3:00 p. m.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1280px;margin:0 auto;padding:52px 20px 0">
+    <div style="margin-bottom:22px">
+      <h2 style="font-family:'Archivo Narrow',sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(28px,4vw,44px);margin:0 0 6px;line-height:1">Preguntas frecuentes</h2>
+      <p style="margin:0;font-size:17px;color:var(--gris)">Lo que más nos preguntan por WhatsApp.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px">
+      <div style="background:#fff;border:1px solid var(--arena);padding:16px">
+        <h3 style="margin:0 0 7px;font-size:17px;font-weight:600">¿Fabrican a la medida?</h3>
+        <p style="margin:0;font-size:15px;color:#3A423F;line-height:1.6">Sí, casi todo. Nos dices el espacio que tienes y ajustamos el mueble. El precio depende de las medidas finales.</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--arena);padding:16px">
+        <h3 style="margin:0 0 7px;font-size:17px;font-weight:600">¿En cuánto tiempo entregan?</h3>
+        <p style="margin:0;font-size:15px;color:#3A423F;line-height:1.6">Entre 2 y 5 semanas según la pieza y la medida. Al cotizar te damos la fecha concreta.</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--arena);padding:16px">
+        <h3 style="margin:0 0 7px;font-size:17px;font-weight:600">¿Envían fuera de Cali?</h3>
+        <p style="margin:0;font-size:15px;color:#3A423F;line-height:1.6">Sí. El flete se cotiza aparte según la ciudad y el tamaño del mueble.</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--arena);padding:16px">
+        <h3 style="margin:0 0 7px;font-size:17px;font-weight:600">¿El tejido aguanta el exterior?</h3>
+        <p style="margin:0;font-size:15px;color:#3A423F;line-height:1.6">Bajo techo sí, en terraza o corredor. A sol y lluvia directos la fibra natural se resiente; para eso te recomendamos madera o guadua.</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--arena);padding:16px">
+        <h3 style="margin:0 0 7px;font-size:17px;font-weight:600">¿Dan garantía?</h3>
+        <p style="margin:0;font-size:15px;color:#3A423F;line-height:1.6">12 meses en estructura y tejido. Si algo se suelta, lo reparamos en el taller.</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--arena);padding:16px">
+        <h3 style="margin:0 0 7px;font-size:17px;font-weight:600">¿Puedo ir al local?</h3>
+        <p style="margin:0;font-size:15px;color:#3A423F;line-height:1.6">Claro. Ahí ves los tejidos, las maderas y los acabados en vivo antes de encargar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="a-catalogo" data-screen-label="Catálogo" style="max-width:1280px;margin:0 auto;padding:64px 20px 0">
+  <h2 style="font-family:'Archivo Narrow',sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(28px,4vw,42px);margin:0 0 6px">Catálogo</h2>
+  <p style="margin:0 0 22px;font-size:16px;color:var(--gris);max-width:56ch">Es un muestrario, no una lista cerrada: casi todo se puede pedir en otra medida, otro tejido u otro acabado.</p>
+
+  <div style="background:var(--monte);color:var(--cal);padding:16px 18px;margin-bottom:4px">
+    <p style="margin:0 0 10px;font-family:'Archivo Narrow',sans-serif;text-transform:uppercase;font-size:14px;letter-spacing:0.08em;color:var(--arena)">Material</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <span style="min-height:44px;display:inline-flex;align-items:center;padding:11px 20px;background:var(--senal);color:var(--tinta);font-weight:700;font-family:'Archivo Narrow',sans-serif;font-size:17px;text-transform:uppercase">Todo</span>
+      <span style="min-height:44px;display:inline-flex;align-items:center;padding:11px 20px;border:2px solid var(--cal);font-weight:600;font-family:'Archivo Narrow',sans-serif;font-size:17px;text-transform:uppercase">Tejido</span>
+      <span style="min-height:44px;display:inline-flex;align-items:center;padding:11px 20px;border:2px solid var(--cal);font-weight:600;font-family:'Archivo Narrow',sans-serif;font-size:17px;text-transform:uppercase">Madera</span>
+      <span style="min-height:44px;display:inline-flex;align-items:center;padding:11px 20px;border:2px solid var(--cal);font-weight:600;font-family:'Archivo Narrow',sans-serif;font-size:17px;text-transform:uppercase">Guadua</span>
+    </div>
+  </div>
+
+  <div style="background:#fff;border:1px solid var(--arena);padding:14px 18px;display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start;margin-bottom:18px">
+    <div>
+      <p style="margin:0 0 8px;font-size:13px;color:var(--gris);letter-spacing:0.06em">PUESTOS</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span style="min-height:40px;display:inline-flex;align-items:center;padding:9px 14px;border:1px solid var(--tinta);font-size:15px;font-weight:600">Todos</span>
+        <span style="min-height:40px;display:inline-flex;align-items:center;padding:9px 14px;border:1px solid #C9CEC9;font-size:15px">1</span>
+        <span style="min-height:40px;display:inline-flex;align-items:center;padding:9px 14px;border:1px solid #C9CEC9;font-size:15px">5</span>
+        <span style="min-height:40px;display:inline-flex;align-items:center;padding:9px 14px;border:1px solid #C9CEC9;font-size:15px">6</span>
+        <span style="min-height:40px;display:inline-flex;align-items:center;padding:9px 14px;border:1px solid #C9CEC9;font-size:15px">8</span>
+      </div>
+    </div>
+    <div>
+      <p style="margin:0 0 8px;font-size:13px;color:var(--gris);letter-spacing:0.06em">CATEGORÍA</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span style="min-height:40px;display:inline-flex;align-items:center;padding:9px 14px;border:1px solid #C9CEC9;font-size:15px">Salas tejidas</span>
+        <span style="min-height:40px;display:inline-flex;align-items:center;padding:9px 14px;border:1px solid #C9CEC9;font-size:15px">Comedores tejidos</span>
+        <span style="min-height:40px;display:inline-flex;align-items:center;padding:9px 14px;border:1px solid #C9CEC9;font-size:15px">Comedores rústicos</span>
+        <span style="min-height:40px;display:inline-flex;align-items:center;padding:9px 14px;border:1px solid #C9CEC9;font-size:15px">Mecedoras tejidas</span>
+        <span style="min-height:40px;display:inline-flex;align-items:center;padding:9px 14px;border:1px solid #C9CEC9;font-size:15px">Mecedoras de madera</span>
+        <span style="min-height:40px;display:inline-flex;align-items:center;padding:9px 14px;border:1px solid #C9CEC9;font-size:15px">Camas</span>
+        <span style="min-height:40px;display:inline-flex;align-items:center;padding:9px 14px;border:1px solid #C9CEC9;font-size:15px">Lámparas tejidas</span>
+        <span style="min-height:40px;display:inline-flex;align-items:center;padding:9px 14px;border:1px solid #C9CEC9;font-size:15px">Espejos tejidos</span>
+      </div>
+    </div>
+    <label style="display:flex;gap:9px;align-items:center;font-size:15px;min-height:40px;cursor:pointer"><input type="checkbox" style="accent-color:#1E3B32;width:18px;height:18px">Solo los que se fabrican a la medida</label>
+  </div>
+
+  <p style="margin:0 0 12px;font-size:14px;color:var(--gris)">9 muebles</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:12px">
+
+    <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+      <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)"><image-slot id="a-c1" shape="rect" fit="cover" placeholder="Sala Guadalajara"></image-slot></div>
+      <div style="padding:12px;display:flex;flex-direction:column;gap:7px;flex:1">
+        <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:15px;color:var(--monte)">● ● ● ● ●&nbsp; 5 puestos</span>
+        <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:18px;text-transform:uppercase">Sala Guadalajara</h3>
+        <p style="margin:0;font-size:13px;color:var(--gris)">Tejido en fibra natural</p>
+        <div style="margin-top:auto;padding-top:8px"><p style="margin:0 0 2px;font-size:12px;color:var(--gris)">A la medida · ref. 240 × 75 × 85</p><strong style="font-size:16px;color:var(--monte)">Precio según medidas</strong></div>
+      </div>
+    </article>
+
+    <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+      <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)"><image-slot id="a-c2" shape="rect" fit="cover" placeholder="Sala esquinera Pance"></image-slot></div>
+      <div style="padding:12px;display:flex;flex-direction:column;gap:7px;flex:1">
+        <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:15px;color:var(--monte)">● ● ● ● ●&nbsp; 5 puestos</span>
+        <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:18px;text-transform:uppercase">Sala esquinera Pance</h3>
+        <p style="margin:0;font-size:13px;color:var(--gris)">Modular en L con puf, tejido miel</p>
+        <div style="margin-top:auto;padding-top:8px"><p style="margin:0 0 2px;font-size:12px;color:var(--gris)">260 × 72 × 180</p><strong style="font-size:16px">$ 4.800.000</strong></div>
+      </div>
+    </article>
+
+    <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+      <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)"><image-slot id="a-c3" shape="rect" fit="cover" placeholder="Comedor Roldanillo"></image-slot></div>
+      <div style="padding:12px;display:flex;flex-direction:column;gap:7px;flex:1">
+        <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:15px;color:var(--monte)">● ● ● ● ● ●&nbsp; 6 puestos</span>
+        <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:18px;text-transform:uppercase">Comedor Roldanillo</h3>
+        <p style="margin:0;font-size:13px;color:var(--gris)">Redondo, tejido sol en la cubierta</p>
+        <div style="margin-top:auto;padding-top:8px"><p style="margin:0 0 2px;font-size:12px;color:var(--gris)">⌀ 140 · alto 76</p><strong style="font-size:16px">$ 3.900.000</strong></div>
+      </div>
+    </article>
+
+    <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+      <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)"><image-slot id="a-c4" shape="rect" fit="cover" placeholder="Comedor Sevilla — rústico, madera maciza"></image-slot></div>
+      <div style="padding:12px;display:flex;flex-direction:column;gap:7px;flex:1">
+        <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:15px;color:var(--monte)">● ● ● ● ● ● ● ●&nbsp; 8 puestos</span>
+        <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:18px;text-transform:uppercase">Comedor Sevilla</h3>
+        <p style="margin:0;font-size:13px;color:var(--gris)">Madera maciza</p>
+        <div style="margin-top:auto;padding-top:8px"><p style="margin:0 0 2px;font-size:12px;color:var(--gris)">A la medida · ref. 240 × 76 × 100</p><strong style="font-size:16px;color:var(--monte)">Precio según medidas</strong></div>
+      </div>
+    </article>
+
+    <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+      <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)"><image-slot id="a-c5" shape="rect" fit="cover" placeholder="Mecedora Buga — foto del andén, con carro al fondo"></image-slot></div>
+      <div style="padding:12px;display:flex;flex-direction:column;gap:7px;flex:1">
+        <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:15px;color:var(--senal);background:var(--tinta);padding:0 6px;align-self:flex-start">↔ 68 cm</span>
+        <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:18px;text-transform:uppercase">Mecedora Buga</h3>
+        <p style="margin:0;font-size:13px;color:var(--gris)">Tejido en mimbre, cojín en lino</p>
+        <div style="margin-top:auto;padding-top:8px"><p style="margin:0 0 2px;font-size:12px;color:var(--gris)">68 × 105 × 92</p><strong style="font-size:16px">$ 1.150.000</strong></div>
+      </div>
+    </article>
+
+    <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+      <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)"><image-slot id="a-c6" shape="rect" fit="cover" placeholder="Mecedora Palmira — de madera (pendiente: Vanessa la sube después)"></image-slot></div>
+      <div style="padding:12px;display:flex;flex-direction:column;gap:7px;flex:1">
+        <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:15px;color:var(--senal);background:var(--tinta);padding:0 6px;align-self:flex-start">↔ 62 cm</span>
+        <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:18px;text-transform:uppercase">Mecedora Palmira</h3>
+        <p style="margin:0;font-size:13px;color:var(--gris)">Madera maciza, respaldo de varillas</p>
+        <div style="margin-top:auto;padding-top:8px"><p style="margin:0 0 2px;font-size:12px;color:var(--gris)">62 × 102 × 88</p><strong style="font-size:16px">$ 980.000</strong></div>
+      </div>
+    </article>
+
+    <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+      <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)"><image-slot id="a-c7" shape="rect" fit="cover" placeholder="Cama flotante Cañasgordas"></image-slot></div>
+      <div style="padding:12px;display:flex;flex-direction:column;gap:7px;flex:1">
+        <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:15px;color:var(--senal);background:var(--tinta);padding:0 6px;align-self:flex-start">↔ 160 cm</span>
+        <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:18px;text-transform:uppercase">Cama Cañasgordas</h3>
+        <p style="margin:0;font-size:13px;color:var(--gris)">Cabecero en madera, base flotante</p>
+        <div style="margin-top:auto;padding-top:8px"><p style="margin:0 0 2px;font-size:12px;color:var(--gris)">A la medida · ref. 160 × 110 × 200</p><strong style="font-size:16px;color:var(--monte)">Precio según medidas</strong></div>
+      </div>
+    </article>
+
+    <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+      <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)"><image-slot id="a-c8" shape="rect" fit="cover" placeholder="Lámpara Guacarí"></image-slot></div>
+      <div style="padding:12px;display:flex;flex-direction:column;gap:7px;flex:1">
+        <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:15px;color:var(--senal);background:var(--tinta);padding:0 6px;align-self:flex-start">⌀ 45 cm</span>
+        <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:18px;text-transform:uppercase">Lámpara Guacarí</h3>
+        <p style="margin:0;font-size:13px;color:var(--gris)">Colgante en fibra, tres tamaños</p>
+        <div style="margin-top:auto;padding-top:8px"><p style="margin:0 0 2px;font-size:12px;color:var(--gris)">⌀ 35 · 45 · 60 · alto 40</p><strong style="font-size:16px">$ 340.000</strong></div>
+      </div>
+    </article>
+
+    <article style="background:#fff;border:1px solid var(--arena);display:flex;flex-direction:column">
+      <div style="position:relative;aspect-ratio:1/1;border-bottom:1px solid var(--arena)"><image-slot id="a-c9" shape="rect" fit="cover" placeholder="Espejo Sol de Buga — foto del andén"></image-slot></div>
+      <div style="padding:12px;display:flex;flex-direction:column;gap:7px;flex:1">
+        <span style="font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:15px;color:var(--senal);background:var(--tinta);padding:0 6px;align-self:flex-start">⌀ 80 cm</span>
+        <h3 style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:18px;text-transform:uppercase">Espejo Sol de Buga</h3>
+        <p style="margin:0;font-size:13px;color:var(--gris)">Redondo, marco tejido en fibra</p>
+        <div style="margin-top:auto;padding-top:8px"><p style="margin:0 0 2px;font-size:12px;color:var(--gris)">⌀ 80 · fondo 3</p><strong style="font-size:16px">$ 420.000</strong></div>
+      </div>
+    </article>
+
+  </div>
+
+  <div style="margin-top:34px;border-top:2px dashed #A9AFAB;padding-top:14px">
+    <p style="margin:0 0 10px;font-size:13px;letter-spacing:0.08em;color:var(--gris)">NOTA DE DISEÑO — NO ES PARTE DE LA PÁGINA</p>
+    <p style="margin:0 0 12px;font-size:15px;color:var(--gris);max-width:60ch">Así se ve el catálogo cuando un filtro no devuelve nada:</p>
+    <div style="border:1px solid var(--arena);background:#fff;padding:22px;opacity:0.85">
+      <p style="margin:0;font-size:16px;color:#3A423F;max-width:60ch">No hay muebles en este rango de precio. Prueba ampliándolo o mira toda la categoría. <a href="#a-catalogo">Ver todo el catálogo</a></p>
+    </div>
+  </div>
+</section>
+
+<section id="a-ficha" data-screen-label="Ficha de producto" style="max-width:1280px;margin:0 auto;padding:64px 20px 0">
+  <p style="margin:0 0 14px;font-size:14px;color:var(--gris)"><a href="#a-catalogo" style="color:var(--gris)">Catálogo</a> · <a href="#a-catalogo" style="color:var(--gris)">Comedor</a> · <a href="#a-catalogo" style="color:var(--gris)">Comedores tejidos</a></p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:36px;align-items:start">
+    <div>
+      <div style="position:relative;aspect-ratio:4/3;border:2px solid var(--monte)">
+        <image-slot id="a-f1" shape="rect" fit="cover" placeholder="Comedor Roldanillo — foto principal"></image-slot>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px">
+        <div style="position:relative;aspect-ratio:1/1;border:1px solid var(--arena)"><image-slot id="a-f2" shape="rect" fit="cover" placeholder="Detalle del tejido"></image-slot></div>
+        <div style="position:relative;aspect-ratio:1/1;border:1px solid var(--arena)"><image-slot id="a-f3" shape="rect" fit="cover" placeholder="La mesa con las sillas"></image-slot></div>
+        <div style="position:relative;aspect-ratio:1/1;border:1px solid var(--arena)"><image-slot id="a-f4" shape="rect" fit="cover" placeholder="Foto del andén, sirve"></image-slot></div>
+      </div>
+    </div>
+
+    <div>
+      <h1 style="margin:0 0 10px;font-family:'Archivo Narrow',sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(30px,4.6vw,50px);line-height:1">Comedor Roldanillo</h1>
+      <p style="margin:0 0 22px;font-size:18px;line-height:1.6;color:#3A423F;max-width:48ch">Mesa redonda con tejido sol en la cubierta, sobre base en madera. Se fabrica en el taller de Cali y se puede pedir en otro diámetro o con otro tejido.</p>
+
+      <div style="border:2px solid var(--monte);background:#fff;margin-bottom:22px">
+        <div style="background:var(--monte);color:var(--cal);padding:9px 16px;font-family:'Archivo Narrow',sans-serif;text-transform:uppercase;font-size:14px;letter-spacing:0.08em">Cuántos se sientan</div>
+        <div style="padding:20px 16px;display:flex;gap:26px;flex-wrap:wrap;align-items:center">
+          <div style="position:relative;width:150px;height:150px;flex:0 0 auto">
+            <div style="position:absolute;inset:26px;border:2px solid var(--monte);border-radius:50%;background:#F0F2EE;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--gris)">⌀ 140</div>
+            <span style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:17px;height:17px;border-radius:50%;background:var(--senal);border:2px solid var(--tinta)"></span>
+            <span style="position:absolute;top:34px;right:2px;width:17px;height:17px;border-radius:50%;background:var(--senal);border:2px solid var(--tinta)"></span>
+            <span style="position:absolute;bottom:34px;right:2px;width:17px;height:17px;border-radius:50%;background:var(--senal);border:2px solid var(--tinta)"></span>
+            <span style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:17px;height:17px;border-radius:50%;background:var(--senal);border:2px solid var(--tinta)"></span>
+            <span style="position:absolute;bottom:34px;left:2px;width:17px;height:17px;border-radius:50%;background:var(--senal);border:2px solid var(--tinta)"></span>
+            <span style="position:absolute;top:34px;left:2px;width:17px;height:17px;border-radius:50%;background:var(--senal);border:2px solid var(--tinta)"></span>
+          </div>
+          <div>
+            <p style="margin:0;font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:46px;line-height:1">6 puestos</p>
+            <p style="margin:6px 0 0;font-size:15px;color:#3A423F;max-width:26ch">Con 8 puestos hay que subir a 160 cm de diámetro. Te lo hacemos así si lo pides.</p>
+          </div>
+        </div>
+        <div style="border-top:2px solid var(--monte);padding:16px;display:flex;gap:24px;flex-wrap:wrap">
+          <div><p style="margin:0;font-family:'Archivo Narrow',sans-serif;font-size:27px;font-weight:700">140</p><p style="margin:0;font-size:13px;color:var(--gris)">cm de diámetro</p></div>
+          <div><p style="margin:0;font-family:'Archivo Narrow',sans-serif;font-size:27px;font-weight:700">76</p><p style="margin:0;font-size:13px;color:var(--gris)">cm de alto</p></div>
+          <div><p style="margin:0;font-family:'Archivo Narrow',sans-serif;font-size:27px;font-weight:700">45</p><p style="margin:0;font-size:13px;color:var(--gris)">cm de alto la silla</p></div>
+          <div style="display:flex;align-items:flex-end;gap:8px;padding-left:8px;border-left:1px solid var(--arena)">
+            <span style="width:12px;height:64px;background:var(--monte)"></span>
+            <span style="font-size:13px;color:var(--gris);line-height:1.4">La cubierta te<br>queda a la cintura<br>si mides 1,70 m</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:20px">
+        <p style="margin:0 0 9px;font-size:13px;color:var(--gris);letter-spacing:0.06em">TEJIDO DE LA CUBIERTA</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" style="min-height:44px;padding:10px 15px;background:#fff;border:2px solid var(--monte);font:inherit;font-size:15px;font-weight:600;cursor:pointer">Tejido sol</button>
+          <button type="button" style="min-height:44px;padding:10px 15px;background:#fff;border:1px solid #C9CEC9;font:inherit;font-size:15px;cursor:pointer">Tejido cruzado</button>
+          <button type="button" style="min-height:44px;padding:10px 15px;background:#fff;border:1px solid #C9CEC9;font:inherit;font-size:15px;cursor:pointer">Cubierta en madera</button>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:6px">
+        <strong style="font-family:'Archivo Narrow',sans-serif;font-size:34px;font-weight:700;white-space:nowrap">$ 3.900.000</strong>
+        <span style="font-size:14px;color:var(--gris)">valor estimado · precio provisional</span>
+      </div>
+      <p style="margin:0 0 20px;font-size:15px;color:#3A423F">El flete se acuerda por WhatsApp. Si lo quieres en otro diámetro, el precio cambia según las medidas.</p>
+
+      <dl style="margin:0 0 24px;display:grid;grid-template-columns:auto 1fr;gap:0;border-top:1px solid var(--arena)">
+        <dt style="padding:11px 22px 11px 0;font-size:14px;color:var(--gris);border-bottom:1px solid var(--arena)">Material</dt>
+        <dd style="padding:11px 0;margin:0;font-size:16px;border-bottom:1px solid var(--arena)">Fibra natural tejida sobre base en madera</dd>
+        <dt style="padding:11px 22px 11px 0;font-size:14px;color:var(--gris);border-bottom:1px solid var(--arena)">Fabricación</dt>
+        <dd style="padding:11px 0;margin:0;font-size:16px;border-bottom:1px solid var(--arena)">De 3 a 4 semanas</dd>
+        <dt style="padding:11px 22px 11px 0;font-size:14px;color:var(--gris);border-bottom:1px solid var(--arena)">Garantía</dt>
+        <dd style="padding:11px 0;margin:0;font-size:16px;border-bottom:1px solid var(--arena)">12 meses en estructura y tejido</dd>
+        <dt style="padding:11px 22px 11px 0;font-size:14px;color:var(--gris);border-bottom:1px solid var(--arena)">Personalización</dt>
+        <dd style="padding:11px 0;margin:0;font-size:16px;border-bottom:1px solid var(--arena)">Diámetro, tejido y acabado de la base</dd>
+      </dl>
+
+      <a href="https://wa.me/573162542637?text=Hola%20Artemadero%2C%20me%20interesa%20el%20Comedor%20Roldanillo%20(6%20puestos%2C%20%E2%8C%80140).%20%C2%BFMe%20cuentas%20precio%20y%20tiempo%3F" style="display:flex;align-items:center;justify-content:center;min-height:58px;background:var(--senal);color:var(--tinta);text-decoration:none;font-weight:700;font-size:18px;padding:15px 20px;font-family:'Archivo Narrow',sans-serif;text-transform:uppercase;letter-spacing:0.02em">Cotizar por WhatsApp</a>
+      <div style="border:1px solid var(--arena);border-top:none;background:#fff;padding:12px 14px;font-size:14px;color:#3A423F;line-height:1.6">
+        <strong style="color:var(--tinta)">Te respondemos</strong> de lunes a viernes de 8:30 a. m. a 5:30 p. m., y sábados de 7:30 a. m. a 3:00 p. m.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer data-screen-label="Pie" style="margin-top:64px;background:var(--monte);color:var(--arena)">
+  <div style="max-width:1280px;margin:0 auto;padding:34px 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px;font-size:15px">
+    <div>
+      <p style="margin:0 0 8px;font-family:'Archivo Narrow',sans-serif;font-size:21px;font-weight:700;color:var(--cal);text-transform:uppercase;letter-spacing:0.03em">Artemadero</p>
+      <p style="margin:0;line-height:1.6">Muebles campestres y tejidos. Diseños personalizados para hogar, finca o negocio. Cali, Colombia.</p>
+    </div>
+    <div>
+      <p style="margin:0 0 8px;color:var(--cal);font-weight:600">Horario de atención</p>
+      <p style="margin:0;line-height:1.7">Lunes a viernes: 8:30 a. m. – 5:30 p. m.<br>Sábado: 7:30 a. m. – 3:00 p. m.</p>
+    </div>
+    <div>
+      <p style="margin:0 0 8px;color:var(--cal);font-weight:600">Escríbenos</p>
+      <p style="margin:0 0 10px;line-height:1.6">+57 316 254 2637</p>
+      <a href="https://wa.me/573162542637?text=Hola%20Artemadero%2C%20quiero%20cotizar%20un%20mueble." style="display:inline-flex;align-items:center;min-height:44px;padding:11px 16px;background:var(--senal);color:var(--tinta);text-decoration:none;font-weight:600">Cotizar por WhatsApp</a>
+      <p style="margin:12px 0 0;display:flex;gap:16px;flex-wrap:wrap"><a href="https://wa.me/573162542637" style="color:var(--cal)">Instagram</a><a href="https://wa.me/573162542637" style="color:var(--cal)">Facebook</a></p>
+    </div>
+    <div>
+      <p style="margin:0 0 8px;color:var(--cal);font-weight:600">El local</p>
+      <p style="margin:0;line-height:1.7">Dirección pendiente de confirmar<br>Cali, Valle del Cauca</p>
+    </div>
+  </div>
+  <div style="border-top:1px solid #FFFFFF26"><p style="max-width:1280px;margin:0 auto;padding:14px 20px;font-size:13px">Dirección A · Puestos — mockup de presentación. Precios provisionales.</p></div>
+</footer>
+
+</div>
+</body>
+</html>

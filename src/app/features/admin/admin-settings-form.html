@@ -1,20 +1,20 @@
 <h1 class="text-xl">Ajustes del sitio</h1>
 
 @if (loading()) {
-  <p class="mt-6" style="color: var(--texto-suave);">Cargando…</p>
+  <p class="mt-6" style="color: var(--gris);">Cargando…</p>
 } @else {
   @if (error()) {
     <p class="mt-3 rounded-sm border px-3 py-2 text-sm" style="border-color: #c98; color: #8c4a34;">{{ error() }}</p>
   }
   @if (saved()) {
-    <p class="mt-3 rounded-sm border px-3 py-2 text-sm" style="border-color: var(--verde-guadua); color: var(--verde-guadua);">Ajustes guardados.</p>
+    <p class="mt-3 rounded-sm border px-3 py-2 text-sm" style="border-color: var(--hoja); color: var(--hoja);">Ajustes guardados.</p>
   }
 
   <form class="mt-4 space-y-5" [formGroup]="form" (ngSubmit)="save()">
     <div>
       <label for="wa" class="block text-sm font-medium">Número de WhatsApp</label>
-      <input id="wa" formControlName="whatsappNumber" inputmode="numeric" placeholder="573001234567" class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--musgo);" />
-      <p class="mt-1 text-xs" style="color: var(--texto-suave);">
+      <input id="wa" formControlName="whatsappNumber" inputmode="numeric" placeholder="573001234567" class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--linea-fuerte);" />
+      <p class="mt-1 text-xs" style="color: var(--gris);">
         Formato internacional sin el signo +. Déjalo vacío para usar el del servidor.
         @if (whatsappSource() === 'panel') { Activo: este número. }
         @else if (whatsappSource() === 'env') { Activo: el del servidor ({{ effectiveWhatsapp() }}). }
@@ -24,36 +24,36 @@
 
     <div>
       <label for="hours" class="block text-sm font-medium">Horario de atención</label>
-      <input id="hours" formControlName="businessHours" class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--musgo);" />
+      <input id="hours" formControlName="businessHours" class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--linea-fuerte);" />
     </div>
 
     <div>
       <label for="ann" class="block text-sm font-medium">Anuncio (franja superior del sitio)</label>
-      <input id="ann" formControlName="announcement" placeholder="Vacío = sin franja" class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--musgo);" />
+      <input id="ann" formControlName="announcement" placeholder="Vacío = sin franja" class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--linea-fuerte);" />
     </div>
 
     <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
       <div>
         <label for="ig" class="block text-sm font-medium">Instagram (URL)</label>
-        <input id="ig" formControlName="instagramUrl" class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--musgo);" />
+        <input id="ig" formControlName="instagramUrl" class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--linea-fuerte);" />
       </div>
       <div>
         <label for="fb" class="block text-sm font-medium">Facebook (URL)</label>
-        <input id="fb" formControlName="facebookUrl" class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--musgo);" />
+        <input id="fb" formControlName="facebookUrl" class="mt-1 w-full rounded border px-3 py-2" style="border-color: var(--linea-fuerte);" />
       </div>
     </div>
 
     <div>
       <label for="tpl" class="block text-sm font-medium">Plantilla del mensaje de WhatsApp</label>
-      <textarea id="tpl" formControlName="quoteMessageTemplate" rows="6" class="mt-1 w-full rounded border px-3 py-2 font-mono-precio text-sm" style="border-color: var(--musgo);" placeholder="Vacío = plantilla por defecto"></textarea>
-      <p class="mt-1 text-xs" style="color: var(--texto-suave);">
+      <textarea id="tpl" formControlName="quoteMessageTemplate" rows="6" class="mt-1 w-full rounded border px-3 py-2 text-sm" style="border-color: var(--linea-fuerte);" placeholder="Vacío = plantilla por defecto"></textarea>
+      <p class="mt-1 text-xs" style="color: var(--gris);">
         Marcadores: <code>{{ '{items}' }}</code>, <code>{{ '{customerName}' }}</code>,
         <code>{{ '{customerCity}' }}</code>, <code>{{ '{customizationRequest}' }}</code>,
         <code>{{ '{notes}' }}</code>, <code>{{ '{code}' }}</code>. Las líneas con un marcador vacío se omiten.
       </p>
     </div>
 
-    <button type="submit" [disabled]="saving()" class="rounded px-4 py-2.5 font-medium disabled:opacity-60" style="background: var(--verde-guadua); color: var(--blanco-taller);">
+    <button type="submit" [disabled]="saving()" class="rounded px-4 py-2.5 font-medium disabled:opacity-60" style="background: var(--hoja); color: #fff;">
       {{ saving() ? 'Guardando…' : 'Guardar ajustes' }}
     </button>
   </form>

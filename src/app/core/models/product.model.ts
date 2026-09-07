@@ -1,3 +1,5 @@
+import type { Material, ProductCard } from './catalog.model';
+
 /**
  * Espejo, del lado del cliente, de lo que expone GET /api/products/:slug. No es el
  * esquema de Mongoose (ese vive en api/src/models/, no se toca) — es la forma que
@@ -17,6 +19,8 @@ export interface ProductVariant {
   widthCm?: number;
   heightCm?: number;
   depthCm?: number;
+  /** Alto del asiento: en sillas, mecedoras y butacos decide si el mueble sirve. */
+  seatHeightCm?: number;
   isDefault: boolean;
   active: boolean;
 }
@@ -35,6 +39,7 @@ export interface ProductCategoryRef {
   name: string;
   slug: string;
   parent?: string | null;
+  material?: Material;
 }
 
 export type ProductStatus = 'AVAILABLE' | 'MADE_TO_ORDER' | 'OUT_OF_STOCK' | 'DISCONTINUED';
@@ -70,6 +75,8 @@ export interface Product {
   material?: string;
   finish?: string;
   careNotes?: string;
+  /** El espacio que el mueble necesita alrededor, debajo de la cedula de medidas. */
+  spaceNote?: string;
   warrantyMonths?: number;
   leadTimeDays?: number;
   status: ProductStatus;
@@ -82,4 +89,9 @@ export interface Product {
   priceFrom?: number;
   priceTo?: number;
   hasPrice: boolean;
+  /**
+   * La misma pieza en el otro material, resumida como tarjeta. null cuando no la hay: la
+   * ficha omite el bloque limpiamente en vez de dejar un hueco.
+   */
+  twin?: ProductCard | null;
 }

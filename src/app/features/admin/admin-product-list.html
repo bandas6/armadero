@@ -25,32 +25,32 @@
 }
 
 @if (loading()) {
-  <p class="mt-6" style="color: var(--texto-suave);">Cargando…</p>
+  <p class="mt-6" style="color: var(--gris);">Cargando…</p>
 } @else {
   <ul class="mt-4 space-y-3">
     @for (p of filtered(); track p._id; let i = $index) {
-      <li class="rounded-lg border p-3" style="border-color: color-mix(in srgb, var(--musgo) 35%, transparent); background: var(--blanco-taller);">
+      <li class="rounded-lg border p-3" style="border-color: var(--linea); background: var(--hueso-alt);">
         <div class="flex gap-3">
-          <a [routerLink]="['/admin/productos', p._id]" class="h-20 w-20 shrink-0 overflow-hidden rounded-md border" style="border-color: color-mix(in srgb, var(--musgo) 30%, transparent);">
+          <a [routerLink]="['/admin/productos', p._id]" class="h-20 w-20 shrink-0 overflow-hidden rounded-md border" style="border-color: color-mix(in srgb, var(--linea-fuerte) 30%, transparent);">
             @if (p.primaryImageUrl) {
               <img [src]="p.primaryImageUrl" [alt]="p.name" class="h-full w-full object-cover" width="80" height="80" />
             } @else {
-              <span class="flex h-full w-full items-center justify-center bg-[color-mix(in_srgb,var(--lino)_60%,var(--blanco-taller))] text-center text-[0.65rem]" style="color: var(--texto-suave);">Sin<br />foto</span>
+              <span class="flex h-full w-full items-center justify-center bg-[var(--hueso-alt)] text-center text-[0.65rem]" style="color: var(--gris);">Sin<br />foto</span>
             }
           </a>
 
           <div class="min-w-0 flex-1">
             <a [routerLink]="['/admin/productos', p._id]" class="block font-medium leading-tight hover:underline">{{ p.name }}</a>
-            <p class="text-xs" style="color: var(--texto-suave);">{{ p.category?.name || 'Sin categoría' }}</p>
-            <p class="mt-0.5 font-mono-precio text-sm" style="color: var(--ocre-cana);">
+            <p class="text-xs" style="color: var(--gris);">{{ p.category?.name || 'Sin categoría' }}</p>
+            <p class="mt-0.5 text-sm" style="color: var(--tinta);">
               {{ p.hasPrice ? ((p.priceTo && p.priceTo !== p.priceFrom ? 'Desde ' : '') + (p.priceFrom | copCurrency)) : 'Según medidas' }}
             </p>
             <div class="mt-1.5 flex flex-wrap gap-1 text-[0.7rem]">
-              <span class="rounded-full px-2 py-0.5" [style.background]="p.active ? 'color-mix(in srgb, var(--verde-guadua) 20%, transparent)' : 'color-mix(in srgb, var(--musgo) 25%, transparent)'">
+              <span class="rounded-full px-2 py-0.5" [style.background]="p.active ? 'color-mix(in srgb, var(--hoja) 20%, transparent)' : 'var(--linea)'">
                 {{ p.active ? 'Publicado' : 'Oculto' }}
               </span>
               @if (p.featured) {
-                <span class="rounded-full px-2 py-0.5" style="background: color-mix(in srgb, var(--ocre-cana) 28%, transparent);">En el inicio</span>
+                <span class="rounded-full px-2 py-0.5" style="background: var(--hueso-alt);">En el inicio</span>
               }
               @if (p.imageCount === 0) {
                 <span class="rounded-full px-2 py-0.5 font-medium" style="background: #f0d8c8; color: #8c4a34;">⚠ Sin fotos</span>
@@ -75,7 +75,7 @@
         </div>
       </li>
     } @empty {
-      <li style="color: var(--texto-suave);">No hay muebles que coincidan.</li>
+      <li style="color: var(--gris);">No hay muebles que coincidan.</li>
     }
   </ul>
 }

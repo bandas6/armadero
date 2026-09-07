@@ -1,5 +1,5 @@
 <div class="flex flex-wrap items-center justify-between gap-2">
-  <a routerLink="/admin" class="text-sm underline" style="color: var(--verde-guadua);">← Volver a Muebles</a>
+  <a routerLink="/admin" class="text-sm underline" style="color: var(--hoja);">← Volver a Muebles</a>
   @if (!isNew()) {
     <button
       type="button"
@@ -15,19 +15,19 @@
 <h1 class="mt-2 text-xl">{{ isNew() ? 'Nuevo mueble' : (form.controls.name.value || 'Editar mueble') }}</h1>
 
 @if (loading()) {
-  <p class="mt-6" style="color: var(--texto-suave);">Cargando…</p>
+  <p class="mt-6" style="color: var(--gris);">Cargando…</p>
 } @else {
   @if (notice()) {
-    <p class="mt-3 rounded-md border px-3 py-2 text-sm font-medium" style="border-color: var(--verde-guadua); color: var(--verde-guadua); background: color-mix(in srgb, var(--verde-guadua) 8%, transparent);">{{ notice() }}</p>
+    <p class="mt-3 rounded-md border px-3 py-2 text-sm font-medium" style="border-color: var(--hoja); color: var(--hoja); background: color-mix(in srgb, var(--hoja) 8%, transparent);">{{ notice() }}</p>
   }
   @if (error()) {
     <p class="mt-3 rounded-md border px-3 py-2 text-sm" style="border-color: #c98; color: #8c4a34;">{{ error() }}</p>
   }
 
   <!-- ===== FOTOS (arriba: es lo primero que importa) ===== -->
-  <section class="mt-4 rounded-lg border p-3" style="border-color: color-mix(in srgb, var(--musgo) 35%, transparent); background: var(--blanco-taller);">
+  <section class="mt-4 rounded-lg border p-3" style="border-color: var(--linea); background: var(--hueso-alt);">
     <h2 class="text-base font-semibold">Fotos</h2>
-    <p class="mt-0.5 text-sm" style="color: var(--texto-suave);">
+    <p class="mt-0.5 text-sm" style="color: var(--gris);">
       La primera foto es la que se ve en el catálogo. Sin al menos una foto, el mueble no se puede publicar.
     </p>
 
@@ -38,7 +38,7 @@
         (changed)="onImagesChanged($event)"
       />
     } @else {
-      <label class="mt-3 flex cursor-pointer items-center justify-center rounded-md border border-dashed px-4 py-6 text-sm font-medium" style="border-color: var(--verde-guadua); color: var(--verde-guadua);">
+      <label class="mt-3 flex cursor-pointer items-center justify-center rounded-md border border-dashed px-4 py-6 text-sm font-medium" style="border-color: var(--hoja); color: var(--hoja);">
         📷 Tomar o elegir fotos
         <input type="file" accept="image/*" capture="environment" multiple class="hidden" (change)="addPending($event)" />
       </label>
@@ -51,12 +51,12 @@
                 class="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full text-xs"
                 style="background: #8c4a34; color: #fff;">✕</button>
               @if (i === 0) {
-                <span class="absolute bottom-1 left-1 rounded-sm px-1 text-[0.6rem]" style="background: var(--ocre-cana); color: #fff;">Principal</span>
+                <span class="absolute bottom-1 left-1 rounded-sm px-1 text-[0.6rem]" style="background: var(--hoja); color: #fff;">Principal</span>
               }
             </li>
           }
         </ul>
-        <p class="mt-1 text-xs" style="color: var(--texto-suave);">
+        <p class="mt-1 text-xs" style="color: var(--gris);">
           Se subirán al crear el mueble. La primera queda como principal (se puede cambiar después).
         </p>
       }
@@ -88,7 +88,7 @@
     <div>
       <label for="shortDescription" class="admin-label">Descripción corta</label>
       <input id="shortDescription" formControlName="shortDescription" class="admin-input" placeholder="Tejido en fibra natural, 5 puestos" />
-      <p class="mt-1 text-xs" style="color: var(--texto-suave);">Una línea. Aparece en las tarjetas del catálogo.</p>
+      <p class="mt-1 text-xs" style="color: var(--gris);">Una línea. Aparece en las tarjetas del catálogo.</p>
     </div>
 
     <div>
@@ -108,6 +108,33 @@
     </div>
 
     <div>
+      <label for="spaceNote" class="admin-label">Espacio que necesita</label>
+      <input
+        id="spaceNote"
+        formControlName="spaceNote"
+        class="admin-input"
+        placeholder="Al mecerse necesita 20 cm libres por detrás."
+      />
+      <p class="mt-1 text-xs" style="color: var(--gris);">
+        Va debajo de las medidas en la ficha. Ahorra media conversación de WhatsApp.
+      </p>
+    </div>
+
+    <div>
+      <label for="twinProduct" class="admin-label">La misma pieza, en el otro material</label>
+      <select id="twinProduct" formControlName="twinProduct" class="admin-input">
+        <option value="">Ninguna</option>
+        @for (candidate of twinCandidates(); track candidate._id) {
+          <option [value]="candidate._id">{{ candidate.name }}</option>
+        }
+      </select>
+      <p class="mt-1 text-xs" style="color: var(--gris);">
+        Si este mueble existe tejido y en madera, engancha aquí la otra versión: la ficha
+        muestra el enlace a la pieza gemela.
+      </p>
+    </div>
+
+    <div>
       <label for="status" class="admin-label">Disponibilidad</label>
       <select id="status" formControlName="status" class="admin-input">
         <option value="AVAILABLE">Disponible</option>
@@ -118,7 +145,7 @@
 
     <label class="flex items-start gap-2 text-sm">
       <input type="checkbox" formControlName="personalizable" class="mt-0.5 h-4 w-4" />
-      <span>Se fabrica a la medida <span style="color: var(--texto-suave);">(el precio queda como "según medidas")</span></span>
+      <span>Se fabrica a la medida <span style="color: var(--gris);">(el precio queda como "según medidas")</span></span>
     </label>
 
     @if (form.controls.personalizable.value) {
@@ -130,17 +157,17 @@
 
     <label class="flex items-start gap-2 text-sm">
       <input type="checkbox" formControlName="featured" class="mt-0.5 h-4 w-4" />
-      <span>Mostrar en la página de inicio <span style="color: var(--texto-suave);">(máximo 8 muebles)</span></span>
+      <span>Mostrar en la página de inicio <span style="color: var(--gris);">(máximo 8 muebles)</span></span>
     </label>
 
     <!-- Opciones del mueble (variantes) -->
-    <fieldset class="rounded-lg border p-3" style="border-color: color-mix(in srgb, var(--musgo) 35%, transparent);">
+    <fieldset class="rounded-lg border p-3" style="border-color: var(--linea);">
       <legend class="px-1 text-sm font-semibold">Opciones del mueble</legend>
-      <p class="text-xs" style="color: var(--texto-suave);">Colores o tamaños de este mueble. Deja solo "Estándar" si no tiene variaciones.</p>
+      <p class="text-xs" style="color: var(--gris);">Colores o tamaños de este mueble. Deja solo "Estándar" si no tiene variaciones.</p>
 
       <div class="mt-3 space-y-4" formArrayName="variants">
         @for (v of variants.controls; track $index; let i = $index) {
-          <div class="rounded-md border p-2" [formGroupName]="i" style="border-color: color-mix(in srgb, var(--musgo) 30%, transparent);">
+          <div class="rounded-md border p-2" [formGroupName]="i" style="border-color: color-mix(in srgb, var(--linea-fuerte) 30%, transparent);">
             <div class="flex items-center gap-2">
               <input formControlName="name" placeholder="Nombre de la opción" class="admin-input flex-1" />
               @if (variants.length > 1) {
@@ -154,6 +181,7 @@
               <input formControlName="widthCm" type="number" min="0" placeholder="Ancho cm" class="admin-input" />
               <input formControlName="heightCm" type="number" min="0" placeholder="Alto cm" class="admin-input" />
               <input formControlName="depthCm" type="number" min="0" placeholder="Fondo cm" class="admin-input" />
+              <input formControlName="seatHeightCm" type="number" min="0" placeholder="Alto del asiento cm" class="admin-input" />
             </div>
             <label class="mt-2 flex items-center gap-2 text-xs">
               <input type="checkbox" formControlName="isDefault" class="h-4 w-4" /> Mostrar esta opción primero
@@ -166,9 +194,9 @@
     </fieldset>
 
     <!-- Qué puede pedir el cliente al cotizar -->
-    <fieldset class="rounded-lg border p-3" style="border-color: color-mix(in srgb, var(--musgo) 35%, transparent);">
+    <fieldset class="rounded-lg border p-3" style="border-color: var(--linea);">
       <legend class="px-1 text-sm font-semibold">Qué puede pedir el cliente</legend>
-      <p class="text-xs" style="color: var(--texto-suave);">
+      <p class="text-xs" style="color: var(--gris);">
         Campos que el cliente responde al cotizar (medidas, color, sí/no…). Útil sobre todo si el mueble se fabrica a la medida.
         Déjalo vacío si no aplica.
       </p>
@@ -183,7 +211,7 @@
 
       <div class="mt-3 space-y-3" formArrayName="customFields">
         @for (f of customFields.controls; track $index; let i = $index) {
-          <div class="rounded-md border p-2" [formGroupName]="i" style="border-color: color-mix(in srgb, var(--musgo) 30%, transparent);">
+          <div class="rounded-md border p-2" [formGroupName]="i" style="border-color: color-mix(in srgb, var(--linea-fuerte) 30%, transparent);">
             <div class="flex items-center gap-2">
               <input formControlName="label" placeholder="Nombre del campo (ej: Ancho)" class="admin-input flex-1" />
               <select formControlName="type" class="admin-input" style="width: auto;">
@@ -214,7 +242,7 @@
             </div>
           </div>
         } @empty {
-          <p class="text-xs" style="color: var(--texto-suave);">Sin campos. Usa los botones de arriba o "+ Agregar campo".</p>
+          <p class="text-xs" style="color: var(--gris);">Sin campos. Usa los botones de arriba o "+ Agregar campo".</p>
         }
       </div>
 

@@ -17,7 +17,7 @@ import type { CustomizationAnswer, CustomizationField } from '../../core/models/
         <div>
           <label class="block text-sm font-medium">
             {{ f.label }}
-            @if (f.required) { <span style="color: var(--ocre-cana);">*</span> }
+            @if (f.required) { <span style="color: var(--alerta);">*</span> }
           </label>
 
           @switch (f.type) {
@@ -30,9 +30,9 @@ import type { CustomizationAnswer, CustomizationField } from '../../core/models/
                   [ngModel]="get(f.label)"
                   (ngModelChange)="set(f.label, $event)"
                   class="w-32 rounded border px-3 py-2"
-                  style="border-color: var(--musgo);"
+                  style="border-color: var(--linea-fuerte);"
                 />
-                @if (f.unit) { <span class="text-sm" style="color: var(--texto-suave);">{{ f.unit }}</span> }
+                @if (f.unit) { <span class="text-sm" style="color: var(--gris);">{{ f.unit }}</span> }
               </div>
             }
             @case ('select') {
@@ -40,7 +40,7 @@ import type { CustomizationAnswer, CustomizationField } from '../../core/models/
                 [ngModel]="get(f.label)"
                 (ngModelChange)="set(f.label, $event)"
                 class="mt-1 w-full rounded border px-3 py-2"
-                style="border-color: var(--musgo); background: var(--blanco-taller);"
+                style="border-color: var(--linea-fuerte); background: var(--hueso-alt);"
               >
                 <option value="">Elige…</option>
                 @for (o of f.options ?? []; track o) { <option [value]="o">{{ o }}</option> }
@@ -63,12 +63,12 @@ import type { CustomizationAnswer, CustomizationField } from '../../core/models/
                 [ngModel]="get(f.label)"
                 (ngModelChange)="set(f.label, $event)"
                 class="mt-1 w-full rounded border px-3 py-2"
-                style="border-color: var(--musgo);"
+                style="border-color: var(--linea-fuerte);"
               />
             }
           }
 
-          @if (f.hint) { <p class="mt-1 text-xs" style="color: var(--texto-suave);">{{ f.hint }}</p> }
+          @if (f.hint) { <p class="mt-1 text-xs" style="color: var(--gris);">{{ f.hint }}</p> }
           @if (touched() && f.required && !get(f.label).trim()) {
             <p class="mt-1 text-xs" style="color: #8c4a34;">Este dato es obligatorio.</p>
           }
@@ -83,7 +83,7 @@ import type { CustomizationAnswer, CustomizationField } from '../../core/models/
           (ngModelChange)="otros.set($event)"
           placeholder="Cualquier otro cambio o pedido especial"
           class="mt-1 w-full rounded border px-3 py-2"
-          style="border-color: var(--musgo);"
+          style="border-color: var(--linea-fuerte);"
         ></textarea>
       </div>
     </div>

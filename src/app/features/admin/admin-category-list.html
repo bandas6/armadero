@@ -3,7 +3,7 @@
   <button type="button" (click)="newRoot()" class="admin-btn admin-btn--primary">+ Nueva categoría</button>
 </div>
 
-<p class="mt-1 text-sm" style="color: var(--texto-suave);">
+<p class="mt-1 text-sm" style="color: var(--gris);">
   Dos niveles: el tipo de mueble (Sala, Comedor…) y, dentro, la versión tejida o en madera.
   La foto de cada categoría es la que se ve en la sección "Elige el tipo de mueble" del inicio.
 </p>
@@ -14,7 +14,7 @@
 
 <!-- Editor (crear / editar nombre, descripción, material) -->
 @if (draft(); as d) {
-  <div class="mt-4 rounded-lg border p-4" style="border-color: var(--verde-guadua); background: var(--blanco-taller);">
+  <div class="mt-4 rounded-lg border p-4" style="border-color: var(--hoja); background: var(--hueso-alt);">
     <h2 class="text-sm font-semibold">
       {{ d.id ? 'Editar categoría' : (d.parentId ? 'Nueva subcategoría' : 'Nueva categoría') }}
     </h2>
@@ -74,25 +74,25 @@
 }
 
 @if (loading()) {
-  <p class="mt-6" style="color: var(--texto-suave);">Cargando…</p>
+  <p class="mt-6" style="color: var(--gris);">Cargando…</p>
 } @else {
   <ul class="mt-4 space-y-4">
     @for (root of roots(); track root._id; let i = $index) {
-      <li class="overflow-hidden rounded-lg border" style="border-color: color-mix(in srgb, var(--musgo) 40%, transparent); background: var(--blanco-taller);">
+      <li class="overflow-hidden rounded-lg border" style="border-color: var(--linea); background: var(--hueso-alt);">
 
         <!-- ===== CATEGORÍA (padre) — su foto es la del inicio ===== -->
         <div class="p-3">
           <div class="flex gap-3">
-            <div class="h-24 w-24 shrink-0 overflow-hidden rounded-md border" style="border-color: color-mix(in srgb, var(--musgo) 30%, transparent);">
+            <div class="h-24 w-24 shrink-0 overflow-hidden rounded-md border" style="border-color: color-mix(in srgb, var(--linea-fuerte) 30%, transparent);">
               @if (root.imageUrl) {
                 <img [src]="root.imageUrl" alt="" class="h-full w-full object-cover" />
               } @else {
-                <span class="flex h-full w-full items-center justify-center px-1 text-center text-[0.65rem]" style="background: color-mix(in srgb, var(--lino) 55%, var(--blanco-taller)); color: var(--texto-suave);">Sin foto para el inicio</span>
+                <span class="flex h-full w-full items-center justify-center px-1 text-center text-[0.65rem]" style="background: var(--hueso-alt); color: var(--gris);">Sin foto para el inicio</span>
               }
             </div>
             <div class="min-w-0 flex-1">
               <p class="text-lg font-semibold leading-tight" [style.opacity]="root.active ? 1 : 0.5">{{ root.name }}</p>
-              <p class="text-xs" style="color: var(--texto-suave);">
+              <p class="text-xs" style="color: var(--gris);">
                 Categoría · {{ root.productCount }} muebles{{ root.active ? '' : ' · oculta' }}
               </p>
               <label class="admin-btn admin-btn--sm admin-btn--primary mt-2 cursor-pointer" [class.opacity-50]="busyId() === root._id">
@@ -112,16 +112,16 @@
         </div>
 
         <!-- ===== SUBCATEGORÍAS (tejido / madera) — sin foto propia ===== -->
-        <div class="border-t px-3 py-2" style="border-color: color-mix(in srgb, var(--musgo) 25%, transparent); background: color-mix(in srgb, var(--lino) 45%, var(--blanco-taller));">
-          <p class="text-[0.7rem] font-semibold uppercase tracking-wide" style="color: var(--texto-suave);">Subcategorías de {{ root.name }}</p>
-          <ul class="mt-1 divide-y" style="border-color: color-mix(in srgb, var(--musgo) 20%, transparent);">
+        <div class="border-t px-3 py-2" style="border-color: var(--linea); background: var(--hueso-alt);">
+          <p class="text-[0.7rem] font-semibold uppercase tracking-wide" style="color: var(--gris);">Subcategorías de {{ root.name }}</p>
+          <ul class="mt-1 divide-y" style="border-color: color-mix(in srgb, var(--linea-fuerte) 20%, transparent);">
             @for (child of childrenOf(root._id); track child._id; let ci = $index) {
               <li class="flex flex-wrap items-center gap-x-2 gap-y-1 py-2">
                 <span class="text-sm" [style.opacity]="child.active ? 1 : 0.5">{{ child.name }}</span>
                 @if (child.material) {
-                  <span class="rounded-full px-2 py-0.5 text-[0.65rem]" style="background: color-mix(in srgb, var(--ocre-cana) 25%, transparent);">{{ child.material }}</span>
+                  <span class="rounded-full px-2 py-0.5 text-[0.65rem]" style="background: var(--hueso-alt);">{{ child.material }}</span>
                 }
-                <span class="text-xs" style="color: var(--texto-suave);">{{ child.productCount }} muebles{{ child.active ? '' : ' · oculta' }}</span>
+                <span class="text-xs" style="color: var(--gris);">{{ child.productCount }} muebles{{ child.active ? '' : ' · oculta' }}</span>
                 <span class="ml-auto flex gap-1">
                   <button type="button" (click)="edit(child)" class="admin-btn admin-btn--sm">Editar</button>
                   <button type="button" (click)="toggleActive(child)" [disabled]="busyId() === child._id" class="admin-btn admin-btn--sm">
@@ -130,7 +130,7 @@
                 </span>
               </li>
             } @empty {
-              <li class="py-2 text-xs" style="color: var(--texto-suave);">Sin subcategorías.</li>
+              <li class="py-2 text-xs" style="color: var(--gris);">Sin subcategorías.</li>
             }
           </ul>
           <button type="button" (click)="newChild(root._id)" class="admin-btn admin-btn--sm mt-2">+ Agregar subcategoría</button>

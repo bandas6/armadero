@@ -28,6 +28,19 @@ export interface CategoryNode {
   children: CategoryNode[];
 }
 
+/**
+ * Medidas que la tarjeta muestra, resueltas por la API a partir de la variante por
+ * defecto. En esta direccion de diseno la cedula de medidas va en TODAS las tarjetas: es
+ * el dato que el comprador mira primero, no letra chica (design/PROMPT-3-catalogo.md).
+ */
+export interface CardMeasures {
+  seats?: number;
+  widthCm?: number;
+  heightCm?: number;
+  depthCm?: number;
+  sizeLabel?: string;
+}
+
 /** Tarjeta del listado: solo campos planos, sin variantes ni arreglo de imagenes. */
 export interface ProductCard {
   _id: string;
@@ -42,6 +55,7 @@ export interface ProductCard {
   status: ProductStatus;
   featured?: boolean;
   category: CategoryRef;
+  measures?: CardMeasures | null;
 }
 
 export interface ProductListResponse {
@@ -59,6 +73,9 @@ export interface ProductFilters {
   q?: string;
   minPrice?: number;
   maxPrice?: number;
+  seats?: number;
+  personalizable?: boolean;
+  disponible?: boolean;
   sort?: ProductSort;
   page?: number;
   pageSize?: number;

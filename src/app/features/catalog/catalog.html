@@ -1,125 +1,324 @@
-<section class="mx-auto max-w-6xl px-4 py-10 sm:py-14">
-  @let cat = activeCategory();
-  <h1 class="text-2xl sm:text-3xl">{{ cat ? cat.name : 'Catálogo' }}</h1>
-  <p class="mt-2 max-w-xl" style="color: color-mix(in srgb, var(--grafito) 80%, transparent);">
+@let f = filters();
+@let cat = activeCategory();
+
+<section class="mx-auto max-w-[1360px] px-5 pt-15">
+  <h1 class="font-display m-0 mb-2 leading-none" style="font-size: clamp(34px, 5vw, 56px);">
+    {{ cat ? cat.name : 'Catálogo' }}
+  </h1>
+  <p class="m-0 mb-[22px] max-w-[56ch] text-[17px]" style="color: var(--tinta-suave);">
     @if (cat?.description) {
       {{ cat!.description }}
     } @else {
-      Primero el material, después el tipo de mueble. Todo se fabrica a la medida.
+      Escoge el material y el catálogo se reordena. Es como está organizado el taller.
     }
   </p>
 
-  <!-- Filtro por material: de primer nivel (docs/cliente.md) -->
-  <div class="mt-6 flex flex-wrap gap-2" role="group" aria-label="Filtrar por material">
-    <button
-      type="button"
-      (click)="setMaterial(null)"
-      [attr.aria-pressed]="!filters().material"
-      class="rounded-sm border px-5 py-2 text-sm font-medium"
-      [style.background]="!filters().material ? 'var(--verde-guadua)' : 'transparent'"
-      [style.color]="!filters().material ? 'var(--blanco-taller)' : 'var(--verde-guadua)'"
-      style="border-color: var(--verde-guadua);"
-    >
-      Todos
-    </button>
+  <!--
+    El conmutador tejido / madera. Va de primer nivel, arriba de la retícula y visible sin
+    desplazarse: es el eje del catálogo, nunca un checkbox en una barra lateral
+    (design/PROMPT-3-catalogo.md).
+  -->
+  <div
+    class="mb-[18px] flex max-w-[520px]"
+    style="border: 1.5px solid var(--tinta);"
+    role="group"
+    aria-label="Material"
+  >
     <button
       type="button"
       (click)="setMaterial('tejido')"
-      [attr.aria-pressed]="filters().material === 'tejido'"
-      class="rounded-sm border px-5 py-2 text-sm font-medium"
-      [style.background]="filters().material === 'tejido' ? 'var(--verde-guadua)' : 'transparent'"
-      [style.color]="filters().material === 'tejido' ? 'var(--blanco-taller)' : 'var(--verde-guadua)'"
-      style="border-color: var(--verde-guadua);"
+      [attr.aria-pressed]="f.material === 'tejido'"
+      class="inline-flex min-h-[52px] flex-1 cursor-pointer items-center justify-center gap-[9px] p-3 text-[17px]"
+      [style.background]="f.material === 'tejido' ? 'var(--tejido)' : 'transparent'"
+      [style.color]="f.material === 'tejido' ? '#fff' : 'var(--gris)'"
+      [style.font-weight]="f.material === 'tejido' ? 600 : 400"
     >
+      <span
+        class="h-3 w-3"
+        [style.background]="f.material === 'tejido' ? '#fff' : 'transparent'"
+        [style.border]="f.material === 'tejido' ? 'none' : '1.5px solid var(--gris)'"
+      ></span>
       Tejido
     </button>
     <button
       type="button"
       (click)="setMaterial('madera')"
-      [attr.aria-pressed]="filters().material === 'madera'"
-      class="rounded-sm border px-5 py-2 text-sm font-medium"
-      [style.background]="filters().material === 'madera' ? 'var(--verde-guadua)' : 'transparent'"
-      [style.color]="filters().material === 'madera' ? 'var(--blanco-taller)' : 'var(--verde-guadua)'"
-      style="border-color: var(--verde-guadua);"
+      [attr.aria-pressed]="f.material === 'madera'"
+      class="inline-flex min-h-[52px] flex-1 cursor-pointer items-center justify-center gap-[9px] p-3 text-[17px]"
+      style="border-left: 1.5px solid var(--tinta);"
+      [style.background]="f.material === 'madera' ? 'var(--madera)' : 'transparent'"
+      [style.color]="f.material === 'madera' ? '#fff' : 'var(--gris)'"
+      [style.font-weight]="f.material === 'madera' ? 600 : 400"
     >
+      <span
+        class="h-3 w-3"
+        [style.background]="f.material === 'madera' ? '#fff' : 'transparent'"
+        [style.border]="f.material === 'madera' ? 'none' : '1.5px solid var(--gris)'"
+      ></span>
       Madera
     </button>
   </div>
 
-  <!-- Chips de tipo de mueble -->
-  <div class="mt-4 flex flex-wrap gap-2 font-mono-precio text-xs">
-    <button
-      type="button"
-      (click)="setCategory(null)"
-      class="rounded-full border px-3 py-1"
-      [style.border-color]="!filters().category ? 'var(--verde-guadua)' : 'color-mix(in srgb, var(--musgo) 60%, transparent)'"
-      [style.color]="!filters().category ? 'var(--verde-guadua)' : 'var(--musgo)'"
+  @if (!f.material && cat) {
+    <p class="mb-[18px] text-[15px]" style="color: var(--gris);">
+      {{ cat.name }} no se parte en tejido y madera: es una línea que atraviesa las dos.
+    </p>
+  }
+
+  @if (!cat) {
+    <!--
+      La retícula de categorías. El conmutador la reestructura: en tejido salen unas
+      categorías y en madera otras, cada una con su conteo.
+    -->
+    <div
+      class="mb-7 grid gap-3.5"
+      style="grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));"
     >
-      Todos los muebles
-    </button>
-    @for (parent of parentCategories(); track parent._id) {
+      @for (category of categoriesWithPhotos(); track category._id) {
+        <button
+          type="button"
+          (click)="setCategory(category)"
+          class="flex cursor-pointer flex-col text-left"
+        >
+          <span class="relative block aspect-[4/3] w-full" style="border: 1px solid var(--linea);">
+            @if (category.imageUrl) {
+              <img
+                [src]="category.imageUrl"
+                [alt]="category.name + ' de Artemadero'"
+                loading="lazy"
+                class="absolute inset-0 h-full w-full object-cover"
+              />
+            } @else {
+              <span
+                class="absolute inset-0 flex items-center justify-center text-sm"
+                style="background: var(--hueso-alt); color: var(--gris);"
+                >Foto pronto</span
+              >
+            }
+          </span>
+          <span class="font-display mt-2.5 block text-[20px] leading-tight">{{ category.name }}</span>
+          <span class="mt-0.5 block text-[13px]" style="color: var(--gris);">
+            {{ category.productCount }}
+            {{ category.productCount === 1 ? 'mueble' : 'muebles' }}
+          </span>
+        </button>
+      }
+
+      <!--
+        Las categorías que se fabrican pero todavía no tienen fotos no se ocultan y no
+        dejan un recuadro vacío: pasan de hueco a decisión, con enlace directo a WhatsApp.
+      -->
+      @for (category of categoriesPending(); track category._id) {
+        <article
+          class="relative flex flex-col justify-center gap-[9px] p-4"
+          [style.border]="'1px dashed ' + (f.material === 'madera' ? '#3A5A6B80' : '#A8641E80')"
+        >
+          <img
+            src="/marca/guirnalda-espejo.png"
+            srcset="/marca/guirnalda-espejo.png 1x, /marca/guirnalda-espejo-2x.png 2x"
+            alt=""
+            aria-hidden="true"
+            width="208"
+            height="119"
+            class="guirnalda top-0 right-0 max-w-[36%]"
+          />
+          <!-- El título deja libre la esquina del follaje: la decoración nunca tapa texto. -->
+          <h3 class="font-display relative m-0 pr-[38%] text-[20px] leading-tight">
+            {{ category.name }}
+          </h3>
+          <p class="relative m-0 text-[14px] leading-snug" style="color: var(--tinta-suave);">
+            Los fabricamos, pero todavía no tenemos fotos. Escríbenos y te las mandamos.
+          </p>
+          <a
+            [href]="pendingCategoryUrl(category)"
+            class="relative inline-flex min-h-11 items-center self-start px-[15px] py-2.5 text-[15px] font-semibold no-underline"
+            [style.background]="f.material === 'madera' ? 'var(--madera)' : 'var(--tejido)'"
+            style="color: #fff;"
+            >Cotizar por WhatsApp</a
+          >
+        </article>
+      }
+    </div>
+
+    @if (crossCategories().length) {
+      <div class="mb-7 border-t pt-4" style="border-color: var(--linea);">
+        <p class="m-0 mb-2.5 text-[13px] font-semibold tracking-[0.08em]" style="color: var(--gris);">
+          TAMBIÉN FABRICAMOS
+        </p>
+        <div class="flex flex-wrap gap-2">
+          @for (category of crossCategories(); track category._id) {
+            <button
+              type="button"
+              (click)="setCategory(category)"
+              class="inline-flex min-h-10 cursor-pointer items-center px-3.5 py-2 text-[14px]"
+              style="border: 1px solid var(--linea-fuerte);"
+            >
+              {{ category.name }}
+              <span class="ml-1.5" style="color: var(--gris);">{{ category.productCount }}</span>
+            </button>
+          }
+        </div>
+      </div>
+    }
+  } @else {
+    <!-- Con una categoría elegida, las demás quedan a un clic en la fila de arriba. -->
+    <div class="mb-5 flex flex-wrap gap-[7px]">
       <button
         type="button"
-        (click)="setCategory(parent.slug)"
-        class="rounded-full border px-3 py-1"
-        [style.border-color]="isCategoryActive(parent.slug) ? 'var(--verde-guadua)' : 'color-mix(in srgb, var(--musgo) 60%, transparent)'"
-        [style.color]="isCategoryActive(parent.slug) ? 'var(--verde-guadua)' : 'var(--musgo)'"
+        (click)="setCategory(null)"
+        class="inline-flex min-h-10 cursor-pointer items-center px-3.5 py-2 text-[14px] font-semibold"
+        style="background: var(--tinta); color: var(--hueso);"
       >
-        {{ parent.name }}
+        Todas las {{ materialLabel() }}
+      </button>
+      @for (category of materialCategories(); track category._id) {
+        <button
+          type="button"
+          (click)="setCategory(category)"
+          [attr.aria-current]="category.slug === f.category ? 'true' : null"
+          class="inline-flex min-h-10 cursor-pointer items-center px-3.5 py-2 text-[14px]"
+          [style.border]="'1px solid ' + (category.slug === f.category ? 'var(--tinta)' : 'var(--linea-fuerte)')"
+          [style.font-weight]="category.slug === f.category ? 600 : 400"
+        >
+          {{ category.name }}
+          <span class="ml-1.5" style="color: var(--gris);">{{ category.productCount }}</span>
+        </button>
+      }
+    </div>
+  }
+
+  <!-- Filtros: una fila densa, visible, con el estado en la URL. -->
+  <div
+    class="mb-5 flex flex-wrap items-center gap-2.5 border-y py-3.5"
+    style="border-color: var(--linea);"
+  >
+    <label class="flex items-center gap-2 text-[14px]" style="color: var(--gris);">
+      Puestos
+      <select
+        class="min-h-10 px-2.5 py-1.5 text-[14px]"
+        style="border: 1px solid var(--linea-fuerte); background: var(--hueso); color: var(--tinta);"
+        [value]="f.seats ?? ''"
+        (change)="setSeats($any($event.target).value)"
+      >
+        <option value="">Cualquiera</option>
+        @for (n of seatOptions; track n) {
+          <option [value]="n">{{ n }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="flex items-center gap-2 text-[14px]" style="color: var(--gris);">
+      Precio
+      <select
+        class="min-h-10 px-2.5 py-1.5 text-[14px]"
+        style="border: 1px solid var(--linea-fuerte); background: var(--hueso); color: var(--tinta);"
+        [value]="f.price"
+        (change)="setPrice($any($event.target).value)"
+      >
+        @for (range of priceRanges; track range.value) {
+          <option [value]="range.value">{{ range.label }}</option>
+        }
+      </select>
+    </label>
+
+    <button
+      type="button"
+      (click)="togglePersonalizable()"
+      [attr.aria-pressed]="f.personalizable"
+      class="inline-flex min-h-10 cursor-pointer items-center px-3.5 py-2 text-[14px]"
+      [style.background]="f.personalizable ? 'var(--hoja)' : 'transparent'"
+      [style.color]="f.personalizable ? '#fff' : 'var(--tinta)'"
+      [style.border]="'1px solid ' + (f.personalizable ? 'var(--hoja)' : 'var(--linea-fuerte)')"
+    >
+      Se fabrica a la medida
+    </button>
+
+    <button
+      type="button"
+      (click)="toggleDisponible()"
+      [attr.aria-pressed]="f.disponible"
+      class="inline-flex min-h-10 cursor-pointer items-center px-3.5 py-2 text-[14px]"
+      [style.background]="f.disponible ? 'var(--hoja)' : 'transparent'"
+      [style.color]="f.disponible ? '#fff' : 'var(--tinta)'"
+      [style.border]="'1px solid ' + (f.disponible ? 'var(--hoja)' : 'var(--linea-fuerte)')"
+    >
+      Entrega inmediata
+    </button>
+
+    <label class="ml-auto flex items-center gap-2 text-[14px]" style="color: var(--gris);">
+      Ordenar por
+      <select
+        class="min-h-10 px-2.5 py-1.5 text-[14px]"
+        style="border: 1px solid var(--linea-fuerte); background: var(--hueso); color: var(--tinta);"
+        [value]="f.sort"
+        (change)="setSort($any($event.target).value)"
+      >
+        @for (s of sorts; track s.value) {
+          <option [value]="s.value">{{ s.label }}</option>
+        }
+      </select>
+    </label>
+
+    @if (hasActiveFilters()) {
+      <button
+        type="button"
+        (click)="clearFilters()"
+        class="inline-flex min-h-10 cursor-pointer items-center px-2 text-[14px] underline"
+        style="color: var(--hoja);"
+      >
+        Quitar filtros
       </button>
     }
   </div>
 
-  <!-- Orden -->
-  <div class="mt-6 flex items-center gap-3 text-sm">
-    <label for="orden" style="color: var(--texto-suave);">Ordenar por</label>
-    <select
-      id="orden"
-      class="rounded-sm border px-3 py-1.5"
-      style="border-color: var(--musgo); background: var(--blanco-taller);"
-      [value]="filters().sort"
-      (change)="setSort($any($event.target).value)"
-    >
-      @for (s of sorts; track s.value) {
-        <option [value]="s.value">{{ s.label }}</option>
-      }
-    </select>
-  </div>
-
-  <!-- Resultados -->
   @if (loading()) {
-    <p class="mt-10" style="color: var(--texto-suave);">Cargando…</p>
+    <p class="py-10" style="color: var(--gris);">Cargando…</p>
   } @else if (response(); as r) {
-    <p class="mt-6 text-sm" style="color: var(--texto-suave);">
-      {{ r.total }} {{ r.total === 1 ? 'mueble' : 'muebles' }}
-    </p>
+    <div
+      class="mb-4 flex flex-wrap items-baseline justify-between gap-4 border-b pb-2.5"
+      style="border-color: var(--linea);"
+    >
+      <p class="m-0 text-[15px]" style="color: var(--gris);">
+        {{ r.total }} {{ r.total === 1 ? 'mueble' : 'muebles' }}
+      </p>
+      <span class="text-[13px]" style="color: var(--gris);">
+        Medidas en cm, ancho × alto × profundidad
+      </span>
+    </div>
 
     @if (r.items.length === 0) {
-      <div class="mt-8 rounded-sm border p-6" style="border-color: color-mix(in srgb, var(--musgo) 40%, transparent);">
-        <p class="text-lg">Todavía no hay fotos de esta selección.</p>
-        <p class="mt-1" style="color: var(--texto-suave);">
-          Sí fabricamos estos muebles. Escríbenos por WhatsApp y te enviamos referencias y precios.
+      <div class="p-[22px]" style="border: 1px solid var(--linea-fuerte); background: var(--hueso-alt);">
+        <p class="m-0 max-w-[60ch] text-[16px]" style="color: var(--tinta-suave);">
+          No hay muebles con estos filtros. Prueba ampliando el rango o mira toda la categoría.
+          <button
+            type="button"
+            (click)="clearFilters()"
+            class="cursor-pointer underline"
+            style="color: var(--hoja);"
+          >
+            Ver todo el catálogo
+          </button>
         </p>
       </div>
     } @else {
-      <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="grid gap-3" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
         @for (product of r.items; track product._id) {
-          <app-product-card [product]="product" [priority]="$index < 3" />
+          <app-product-card [product]="product" [dense]="true" [priority]="$index < 4" />
         }
       </div>
 
       @if (totalPages() > 1) {
-        <nav class="mt-10 flex flex-wrap gap-2" aria-label="Paginación">
+        <nav class="mt-9 flex flex-wrap gap-2" aria-label="Paginación">
           @for (p of [].constructor(totalPages()); track $index) {
             <button
               type="button"
               (click)="goToPage($index + 1)"
               [attr.aria-label]="'Página ' + ($index + 1)"
               [attr.aria-current]="r.page === $index + 1 ? 'page' : null"
-              class="h-9 w-9 rounded-sm border text-sm"
-              [style.background]="r.page === $index + 1 ? 'var(--verde-guadua)' : 'transparent'"
-              [style.color]="r.page === $index + 1 ? 'var(--blanco-taller)' : 'var(--grafito)'"
-              style="border-color: var(--musgo);"
+              class="h-11 min-w-11 cursor-pointer text-[15px]"
+              [style.background]="r.page === $index + 1 ? 'var(--tinta)' : 'transparent'"
+              [style.color]="r.page === $index + 1 ? 'var(--hueso)' : 'var(--tinta)'"
+              style="border: 1px solid var(--linea-fuerte);"
             >
               {{ $index + 1 }}
             </button>

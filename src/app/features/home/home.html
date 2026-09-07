@@ -1,173 +1,277 @@
 @let s = settings();
 
-<!-- 1. Hero -->
-<section class="mx-auto max-w-6xl px-4 py-10 sm:py-16">
-  <div class="grid items-center gap-8 md:grid-cols-2 md:gap-12">
-    <div
-      class="relative aspect-[4/3] overflow-hidden rounded-sm border"
-      style="border-color: color-mix(in srgb, var(--musgo) 50%, transparent); background: var(--blanco-taller);"
-    >
+<!--
+  1. Hero partido en dos mitades: Tejido | Madera.
+  El corte tejido/madera es la idea que sostiene el sitio entero. Aquí aparece por primera
+  vez, como dos mitades; en el catálogo, como el conmutador; en la ficha, como el enlace a
+  la pieza gemela (design/IMPLEMENTACION.md).
+-->
+<section
+  class="relative grid gap-px border-b"
+  style="grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); background: var(--linea); border-color: var(--linea);"
+>
+  <!-- Las hojas del aviso, decorativas: fuera del orden de lectura y sin capturar el puntero. -->
+  <img
+    src="/marca/guirnalda.png"
+    srcset="/marca/guirnalda.png 1x, /marca/guirnalda-2x.png 2x"
+    alt=""
+    aria-hidden="true"
+    width="208"
+    height="119"
+    class="guirnalda top-3.5 right-5"
+  />
+
+  <div class="flex flex-col gap-[22px] p-[clamp(26px,4vw,52px)]" style="background: var(--hueso);">
+    <div>
+      <span class="mb-4 inline-block h-1.5 w-[34px]" style="background: var(--tejido);"></span>
+      <h2 class="font-display m-0 mb-3 leading-[0.95]" style="font-size: clamp(40px, 6vw, 74px);">
+        Tejido
+      </h2>
+      <p class="m-0 max-w-[38ch] text-[17px] leading-relaxed" style="color: var(--tinta-suave);">
+        Mimbre, ratán y fibra natural, tejidos a mano. Salas, comedores, mecedoras, lámparas y
+        espejos. Es más de la mitad de lo que hacemos.
+      </p>
+    </div>
+
+    <div class="relative aspect-[16/10]" style="border: 1px solid var(--linea);">
       <img
-        [src]="filesUrl + '/fotos/salas-tejidas/salas-tejidas-03.webp'"
-        alt="Sala en tejido de fibra natural sobre fondo de piedra, con mesa de centro y cojines en tonos tierra."
-        class="h-full w-full object-cover"
-        width="900"
-        height="675"
+        [ngSrc]="filesUrl + '/fotos/salas-tejidas/salas-tejidas-03.webp'"
+        alt="Sala tejida en fibra natural con mesa de centro y cojines crudos"
+        fill
+        priority
+        sizes="(max-width: 720px) 100vw, 50vw"
+        class="object-cover"
       />
     </div>
-    <div>
-      <p class="font-mono-precio text-xs uppercase tracking-[0.2em]" style="color: var(--verde-guadua);">
-        Cali, Valle del Cauca
+
+    <div class="mt-auto flex flex-wrap items-baseline justify-between gap-3.5">
+      @let t = tejidoCount();
+      <p class="m-0 text-[15px]" style="color: var(--gris);">
+        {{ t.conFotos }} {{ t.conFotos === 1 ? 'categoría' : 'categorías' }} con fotos
+        @if (t.enCamino) { · {{ t.enCamino }} en camino }
       </p>
-      <h1 class="mt-3 text-3xl leading-tight sm:text-4xl md:text-5xl">
-        Muebles campestres y tejidos, fabricados a la medida.
-      </h1>
-      <p class="mt-4 max-w-md text-base leading-relaxed sm:text-lg" style="color: color-mix(in srgb, var(--grafito) 85%, transparent);">
-        Diseños personalizados para hogar, finca o negocio. Madera de calidad y acabados
-        artesanales, tejidos a mano en nuestro taller.
-      </p>
-      @if (s) {
-        <div class="mt-6 rounded-sm border p-4 font-mono-precio text-sm" style="border-color: color-mix(in srgb, var(--musgo) 50%, transparent); background: var(--blanco-taller);">
-          <p>{{ s.businessHours }}</p>
-        </div>
-      }
       <a
         routerLink="/catalogo"
-        class="mt-6 inline-block rounded-sm px-6 py-3 font-medium"
-        style="background: var(--verde-guadua); color: var(--blanco-taller);"
+        [queryParams]="{ material: 'tejido' }"
+        class="inline-flex min-h-11 items-center px-[18px] py-[11px] text-[16px] font-semibold no-underline"
+        style="background: var(--tejido); color: #fff;"
+        >Ver lo tejido</a
       >
-        Ver el catálogo
-      </a>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-[22px] p-[clamp(26px,4vw,52px)]" style="background: var(--hueso-alt);">
+    <div>
+      <span class="mb-4 inline-block h-1.5 w-[34px]" style="background: var(--madera);"></span>
+      <h2 class="font-display m-0 mb-3 leading-[0.95]" style="font-size: clamp(40px, 6vw, 74px);">
+        Madera
+      </h2>
+      <p class="m-0 max-w-[38ch] text-[17px] leading-relaxed" style="color: var(--tinta-suave);">
+        Maciza y rústica, y guadua. Comedores, camas, nocheros, butacos y mecedoras. La línea que
+        estamos ampliando ahora.
+      </p>
+    </div>
+
+    <div class="relative aspect-[16/10]" style="border: 1px solid var(--linea);">
+      <img
+        [ngSrc]="filesUrl + '/fotos/comedores-rusticos/comedores-rusticos-01.webp'"
+        alt="Comedor rústico en madera maciza para ocho puestos, exhibido en el local"
+        fill
+        priority
+        sizes="(max-width: 720px) 100vw, 50vw"
+        class="object-cover"
+      />
+    </div>
+
+    <div class="mt-auto flex flex-wrap items-baseline justify-between gap-3.5">
+      @let m = maderaCount();
+      <p class="m-0 text-[15px]" style="color: var(--gris);">
+        {{ m.conFotos }} {{ m.conFotos === 1 ? 'categoría' : 'categorías' }} con fotos
+        @if (m.enCamino) { · {{ m.enCamino }} en camino }
+      </p>
+      <a
+        routerLink="/catalogo"
+        [queryParams]="{ material: 'madera' }"
+        class="inline-flex min-h-11 items-center px-[18px] py-[11px] text-[16px] font-semibold no-underline"
+        style="background: var(--madera); color: #fff;"
+        >Ver lo de madera</a
+      >
     </div>
   </div>
 </section>
 
-<!-- 2. Grilla de categorías: tipo × material -->
-<section id="categorias" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-10 sm:py-16">
-  <h2 class="text-2xl sm:text-3xl">Elige el tipo de mueble</h2>
-  <p class="mt-2 max-w-xl" style="color: color-mix(in srgb, var(--grafito) 80%, transparent);">
-    Cada tipo tiene su versión tejida y su versión en madera. Elige el tipo y luego el material.
+<!-- 2. Del muestrario -->
+<section class="mx-auto max-w-[1360px] px-5 pt-11">
+  <p
+    class="font-display m-0 mb-[26px] max-w-[30ch] leading-[1.25]"
+    style="font-size: clamp(24px, 3.4vw, 38px);"
+  >
+    Todo lo que hacemos existe en las dos versiones. Empieza por la que te gusta y te mostramos la
+    otra.
   </p>
 
-  <div class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-    @for (parent of typeCategories(); track parent._id) {
-      @let mats = materialChildren(parent);
-      <article class="flex flex-col overflow-hidden rounded-sm border bg-[var(--blanco-taller)]" style="border-color: color-mix(in srgb, var(--musgo) 40%, transparent);">
-        <div class="relative aspect-[4/3]" style="background: color-mix(in srgb, var(--lino) 60%, var(--blanco-taller));">
-          @if (parent.imageUrl) {
-            <img [src]="parent.imageUrl" [alt]="parent.name" class="h-full w-full object-cover" loading="lazy" width="600" height="450" />
-          }
+  <div
+    class="mb-4 flex flex-wrap items-baseline justify-between gap-4 border-b pb-2.5"
+    style="border-color: var(--linea);"
+  >
+    <h2 class="m-0 font-body text-[16px] font-semibold tracking-[0.02em]">Del muestrario</h2>
+    <span class="text-[13px]" style="color: var(--gris);">
+      Medidas en cm, ancho × alto × profundidad
+    </span>
+  </div>
+
+  @if (featured().length) {
+    <div class="grid gap-3.5" style="grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));">
+      @for (product of featured(); track product._id) {
+        <app-product-card [product]="product" [priority]="$index < 3" />
+      }
+    </div>
+  } @else {
+    <p class="py-6" style="color: var(--gris);">
+      Estamos montando el muestrario.
+      <a routerLink="/catalogo">Mira el catálogo completo</a>.
+    </p>
+  }
+
+  <div class="mt-6 flex justify-center">
+    <a
+      routerLink="/catalogo"
+      class="inline-flex min-h-[52px] items-center px-[30px] py-3.5 text-[17px] font-semibold no-underline"
+      style="border: 1.5px solid var(--tinta); color: var(--tinta);"
+      >Ver todo el catálogo</a
+    >
+  </div>
+</section>
+
+<!-- 3. Lo hacemos nosotros mismos -->
+<section id="taller" class="mx-auto mt-13 max-w-[1360px] scroll-mt-24 px-5">
+  <div
+    class="grid gap-px"
+    style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); background: var(--linea); border: 1px solid var(--linea);"
+  >
+    <div
+      class="flex flex-col justify-center gap-4 p-[clamp(24px,3.4vw,46px)]"
+      style="background: var(--hueso);"
+    >
+      <span class="flex items-center gap-1.5">
+        <span class="h-1.5 w-[26px]" style="background: var(--tejido);"></span>
+        <span class="h-1.5 w-[26px]" style="background: var(--madera);"></span>
+      </span>
+      <h2 class="font-display m-0 leading-[1.02]" style="font-size: clamp(30px, 4.2vw, 50px);">
+        Lo hacemos nosotros mismos
+      </h2>
+      <p class="m-0 max-w-[44ch] text-[17px] leading-relaxed" style="color: var(--tinta-suave);">
+        <!-- PENDIENTE: falta el año de fundación; con él la frase abre con "Fabricamos desde ...". -->
+        @if (foundingYear) { Fabricamos desde {{ foundingYear }} en Cali, con taller y local
+        propios. } @else { Taller y local propios en Cali. } El tejido se hace a mano, pieza por
+        pieza, y la madera se trabaja aquí mismo. Cuando escribes por WhatsApp hablas con quien va
+        a fabricar tu mueble.
+      </p>
+      <p
+        class="m-0 pl-3 text-[15px]"
+        style="color: var(--tinta-suave); border-left: 3px solid var(--hoja);"
+      >
+        Puedes venir al local a ver las fibras y los acabados antes de encargar.
+      </p>
+    </div>
+    <div class="relative min-h-[280px]">
+      <img
+        [ngSrc]="filesUrl + '/fotos/lamparas-tejidas/lamparas-tejidas-01.webp'"
+        alt="Lámparas tejidas colgadas en el taller de Artemadero"
+        fill
+        loading="lazy"
+        sizes="(max-width: 720px) 100vw, 50vw"
+        class="object-cover"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- 4. Cómo trabajamos: tres pilares, cada uno con foto propia -->
+<section class="mx-auto max-w-[1360px] px-5 pt-13">
+  <h2 class="font-display m-0 mb-1.5 leading-none" style="font-size: clamp(28px, 4vw, 46px);">
+    Cómo trabajamos
+  </h2>
+  <p class="m-0 mb-[22px] text-[17px]" style="color: var(--gris);">
+    Tres cosas que hacemos nosotros, no un proveedor.
+  </p>
+  <div class="grid gap-3.5" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+    @for (pilar of pilares; track pilar.title) {
+      <div class="flex flex-col gap-[11px]">
+        <div class="relative aspect-[3/2]" style="border: 1px solid var(--linea);">
+          <img
+            [ngSrc]="filesUrl + pilar.photo"
+            [alt]="pilar.alt"
+            fill
+            loading="lazy"
+            sizes="(max-width: 720px) 100vw, 33vw"
+            class="object-cover"
+          />
         </div>
-        <div class="flex flex-1 flex-col p-3">
-          <h3 class="text-base">{{ parent.name }}</h3>
-          <div class="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm">
-            @if (mats.length) {
-              @for (child of mats; track child._id) {
-                @if (child.productCount > 0) {
-                  <a
-                    [routerLink]="['/catalogo']"
-                    [queryParams]="{ categoria: parent.slug, material: child.material }"
-                    class="underline"
-                    style="color: var(--verde-guadua); text-decoration-color: var(--ocre-cana);"
-                  >{{ child.material === 'tejido' ? 'Tejido' : 'Madera' }}</a>
-                } @else {
-                  <span class="font-mono-precio text-xs" style="color: var(--texto-suave);">
-                    {{ child.material === 'tejido' ? 'Tejido' : 'Madera' }}: pronto
-                  </span>
-                }
-              }
-            } @else {
-              <a
-                [routerLink]="['/catalogo']"
-                [queryParams]="{ categoria: parent.slug }"
-                class="underline"
-                style="color: var(--verde-guadua); text-decoration-color: var(--ocre-cana);"
-              >Ver muebles</a>
-            }
-          </div>
+        <div>
+          <app-material-tag [material]="pilar.material" class="mb-[7px] block" />
+          <h3 class="font-display m-0 mb-1.5 text-[22px] leading-tight">{{ pilar.title }}</h3>
+          <p class="m-0 text-[15px] leading-relaxed" style="color: var(--tinta-suave);">
+            {{ pilar.text }}
+          </p>
         </div>
-      </article>
+      </div>
     }
   </div>
 </section>
 
-<!-- 3. Destacados -->
-@if (featured().length) {
-  <section class="mx-auto max-w-6xl px-4 py-10 sm:py-16">
-    <h2 class="text-2xl sm:text-3xl">Destacados</h2>
-    <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      @for (product of featured(); track product._id) {
-        <app-product-card [product]="product" />
-      }
-    </div>
-  </section>
-}
-
-<!-- 4. Historia -->
-<section id="taller" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-10 sm:py-16">
-  <div class="grid items-center gap-8 md:grid-cols-2 md:gap-12">
-    <div class="relative aspect-[4/3] overflow-hidden rounded-sm border" style="border-color: color-mix(in srgb, var(--musgo) 50%, transparent);">
+<!-- 5. ¿Tienes las medidas a mano? -->
+<section class="mx-auto max-w-[1360px] px-5 pt-13">
+  <div class="grid" style="border: 1.5px solid var(--tinta); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+    <div class="relative min-h-[250px]">
       <img
-        [src]="filesUrl + '/fotos/lamparas-tejidas/lamparas-tejidas-01.webp'"
-        alt="Interior del taller de Artemadero con una lámpara tejida colgada y herramientas sobre la mesa de trabajo."
-        class="h-full w-full object-cover"
+        [ngSrc]="filesUrl + '/fotos/salas-rusticas/salas-rusticas-01.webp'"
+        alt="Sala campestre en madera maciza con cojines claros, dentro del local"
+        fill
         loading="lazy"
-        width="900"
-        height="675"
+        sizes="(max-width: 720px) 100vw, 50vw"
+        class="object-cover"
       />
     </div>
-    <div>
-      <h2 class="text-2xl sm:text-3xl">Taller propio, no fábrica en serie</h2>
-      <p class="mt-4 max-w-md text-base leading-relaxed" style="color: color-mix(in srgb, var(--grafito) 85%, transparent);">
-        Taller propio en Cali. Fabricamos a la medida, tejemos a mano y trabajamos madera y
-        guadua todos los días. Cada mueble sale de ahí, no de una fábrica en serie.
+    <div class="flex flex-col justify-center gap-3.5 p-[clamp(22px,3vw,40px)]">
+      <h2 class="font-display m-0 leading-[1.02]" style="font-size: clamp(28px, 3.8vw, 44px);">
+        ¿Tienes las medidas a mano?
+      </h2>
+      <p class="m-0 max-w-[42ch] text-[17px] leading-relaxed" style="color: var(--tinta-suave);">
+        Mándanos el ancho de la pared o el tamaño del comedor y te decimos qué te cabe, cuánto
+        cuesta y en cuánto tiempo lo tienes.
+      </p>
+      <a
+        [href]="s?.whatsappContactUrl || whatsappUrl"
+        class="inline-flex min-h-14 items-center self-start px-6 py-[15px] text-[18px] font-semibold no-underline"
+        style="background: var(--hoja); color: #fff;"
+        >Cotizar por WhatsApp</a
+      >
+      <!-- El horario va inmediatamente debajo del botón: sin él, el botón promete de más. -->
+      <p class="m-0 text-[15px] leading-relaxed" style="color: var(--tinta-suave);">
+        <strong>Te respondemos</strong> {{ s?.businessHours || hours }}
       </p>
     </div>
   </div>
 </section>
 
-<!-- 5. Pilares -->
-<section class="mx-auto max-w-6xl px-4 py-10 sm:py-16">
-  <h2 class="text-2xl sm:text-3xl">Por qué comprar aquí</h2>
-  <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
-    @for (pilar of pilares; track pilar.title) {
-      <article class="rounded-sm border p-5" style="border-color: color-mix(in srgb, var(--musgo) 40%, transparent); background: var(--blanco-taller);">
-        <h3 class="text-lg">{{ pilar.title }}</h3>
-        <p class="mt-2 text-sm" style="color: color-mix(in srgb, var(--grafito) 80%, transparent);">{{ pilar.text }}</p>
-      </article>
-    }
-  </div>
-</section>
-
-<!-- 6. CTA -->
-<section class="py-12 text-[var(--blanco-taller)]" style="background: var(--verde-guadua);">
-  <div class="mx-auto max-w-6xl px-4 text-center">
-    <h2 class="text-2xl sm:text-3xl">¿Ya sabes qué mueble necesitas?</h2>
-    <p class="mx-auto mt-3 max-w-md">
-      Arma tu selección en el catálogo y cotiza por WhatsApp. Te respondemos en horario de atención.
-    </p>
-    @if (s) {
-      <p class="mt-2 font-mono-precio text-sm opacity-90">{{ s.businessHours }}</p>
-    }
-    <a
-      routerLink="/catalogo"
-      class="mt-6 inline-block rounded-sm bg-[var(--blanco-taller)] px-6 py-3 font-medium"
-      style="color: var(--verde-guadua);"
-    >
-      Ir al catálogo
-    </a>
-  </div>
-</section>
-
-<!-- 7. FAQ -->
-<section id="preguntas" class="mx-auto max-w-3xl scroll-mt-24 px-4 py-10 sm:py-16">
-  <h2 class="text-2xl sm:text-3xl">Preguntas frecuentes</h2>
-  <div class="mt-6 divide-y" style="border-color: color-mix(in srgb, var(--musgo) 40%, transparent);">
+<!-- 6. Preguntas frecuentes -->
+<section id="preguntas" class="mx-auto max-w-[1360px] scroll-mt-24 px-5 pt-13 pb-15">
+  <h2 class="font-display m-0 mb-1.5 leading-none" style="font-size: clamp(28px, 4vw, 46px);">
+    Preguntas frecuentes
+  </h2>
+  <p class="m-0 mb-[22px] text-[17px]" style="color: var(--gris);">
+    Lo que más nos preguntan por WhatsApp.
+  </p>
+  <div
+    class="grid gap-px"
+    style="grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); background: var(--linea); border: 1px solid var(--linea);"
+  >
     @for (faq of faqs; track faq.q) {
-      <details class="py-4">
-        <summary class="cursor-pointer text-lg">{{ faq.q }}</summary>
-        <p class="mt-2 text-sm" style="color: color-mix(in srgb, var(--grafito) 80%, transparent);">{{ faq.a }}</p>
-      </details>
+      <div class="p-[18px]" style="background: var(--hueso);">
+        <h3 class="m-0 mb-[7px] font-body text-[17px] font-semibold">{{ faq.q }}</h3>
+        <p class="m-0 text-[15px] leading-relaxed" style="color: var(--tinta-suave);">{{ faq.a }}</p>
+      </div>
     }
   </div>
 </section>
