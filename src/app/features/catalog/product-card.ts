@@ -44,7 +44,7 @@ const SCALE = {
             [alt]="alt()"
             fill
             [priority]="priority()"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 260px"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             class="object-cover"
           />
         } @else {
