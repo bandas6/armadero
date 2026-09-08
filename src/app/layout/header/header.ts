@@ -65,13 +65,13 @@ import type { SiteSettings } from '../../core/models/catalog.model';
         <div class="ml-auto flex items-center gap-2">
           <a
             routerLink="/carrito"
-            class="inline-flex min-h-11 items-center border px-3 text-[15px] no-underline"
+            class="rounded-control inline-flex min-h-11 items-center border px-3 text-[15px] no-underline"
             style="border-color: var(--linea-oscura); color: var(--sobre-oscuro);"
           >
             Mi cotización
             @if (cart.count() > 0) {
               <span
-                class="ml-2 inline-flex h-6 min-w-6 items-center justify-center px-1 text-[13px] font-semibold"
+                class="rounded-pastilla ml-2 inline-flex h-6 min-w-6 items-center justify-center px-1 text-[13px] font-semibold"
                 style="background: var(--sobre-oscuro); color: var(--tinta);"
                 >{{ cart.count() }}</span
               >
@@ -79,7 +79,7 @@ import type { SiteSettings } from '../../core/models/catalog.model';
           </a>
           <a
             [href]="s?.whatsappContactUrl || whatsappUrl"
-            class="inline-flex min-h-11 items-center px-[17px] py-[11px] text-[15px] font-semibold no-underline"
+            class="rounded-control inline-flex min-h-11 items-center px-[17px] py-[11px] text-[15px] font-semibold no-underline"
             style="background: var(--hoja); color: #fff;"
             >Cotizar por WhatsApp</a
           >

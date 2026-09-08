@@ -23,12 +23,35 @@ son obligatorios y están ya resueltos en el mockup:
 
 ## Las siete secciones, en orden
 
-1. **Hero partido en dos mitades: Tejido | Madera.** Cada mitad con su texto, su foto en
-   relación de aspecto fija y su acceso al catálogo filtrado. La mitad de tejido lleva un
-   filete `--tejido`; la de madera, uno `--madera`. En la esquina superior derecha va
-   `marca/guirnalda.png` con su `srcset` a 2x — decorativa: `alt=""`,
-   `aria-hidden="true"`, `pointer-events:none`, 208 px de ancho con tope del 38 % y
-   separada del borde para que el follaje no se corte. En móvil las mitades se apilan.
+1. **Hero con foto de fondo y placa de texto.** Ocupa el 82 % del alto de pantalla, con
+   tope de 760 px. La foto va de fondo a sangre y **casi limpia**: encima solo lleva una
+   sombra suave del 20 al 35 % para dar cohesión, más un degradado que oscurece la base
+   donde viven las franjas de material.
+
+   El texto NO se apoya en el velo: va sobre una **placa** oscura semitransparente
+   (`#12151799`) con `backdrop-filter: blur(3px)`, filete de 5 px en `--hoja` a la
+   izquierda y esquinas asimétricas (recta contra el filete, `--r-bloque` al otro lado).
+   Así el contraste queda garantizado en la placa sin oscurecer el resto de la foto. Dentro
+   de la placa: antetítulo, titular, subtítulo, las cuatro garantías en cuadrícula 2 × 2
+   con su propio fondo, los dos botones con el horario al lado, y la línea de micro-claims
+   con puntos verdes.
+
+   **Cuidado con el orden de capas:** la placa y sus contenedores llevan
+   `pointer-events:none` y solo los enlaces recuperan `pointer-events:auto`. En el mockup
+   eso permite soltar la foto de fondo; en producción evita que la placa bloquee lo que
+   tenga debajo.
+
+   En la esquina superior derecha va `marca/guirnalda.png` con su `srcset` a 2x —
+   decorativa: `alt=""`, `aria-hidden="true"`, `pointer-events:none`, 198 px de ancho con
+   tope del 30 % y separada del borde para que el follaje no se corte.
+
+   Al pie de la banda, el corte **Tejido | Madera** como dos franjas con su filete de
+   color, su conteo de categorías y su flecha. Es la primera de las tres apariciones del
+   corte y no se puede quitar.
+
+   La foto de fondo debe ser la más limpia que tenga la clienta — una sala o un comedor
+   completo, no un primer plano. Al revelarse casi entera, es la única imagen del sitio
+   donde la calidad importa de verdad.
 
 2. **Del muestrario** — nueve productos destacados. Cada tarjeta: foto cuadrada, etiqueta
    de material (naranja o azul), nombre en Instrument Serif, categoría, y la cédula de

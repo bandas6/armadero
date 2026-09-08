@@ -22,7 +22,7 @@ type State = { quote: PublicQuote | null; notFound: boolean };
         </p>
         <a
           routerLink="/catalogo"
-          class="mt-6 inline-flex min-h-11 items-center px-5 py-3 font-semibold no-underline"
+          class="rounded-pieza mt-6 inline-flex min-h-11 items-center px-5 py-3 font-semibold no-underline"
           style="background: var(--hoja); color: #fff;"
           >Ver el catálogo</a
         >
@@ -42,7 +42,7 @@ type State = { quote: PublicQuote | null; notFound: boolean };
         <ul class="mt-6 divide-y" style="border-color: var(--linea);">
           @for (item of quote.items; track item.sku) {
             <li class="flex gap-4 py-4">
-              <div class="h-16 w-16 shrink-0 overflow-hidden" style="border: 1px solid var(--linea);">
+              <div class="rounded-control h-16 w-16 shrink-0 overflow-hidden" style="border: 1px solid var(--linea);">
                 @if (item.imageUrl) {
                   <img [src]="item.imageUrl" [alt]="item.productName" class="h-full w-full object-cover" width="64" height="64" />
                 }
@@ -68,7 +68,7 @@ type State = { quote: PublicQuote | null; notFound: boolean };
           }
         </ul>
 
-        <div class="mt-4 p-4" style="border: 1.5px solid var(--tinta);">
+        <div class="rounded-bloque mt-4 p-5" style="border: 1.5px solid var(--tinta);">
           <div class="flex items-baseline justify-between gap-4">
             <span class="text-[15px]">Subtotal estimado</span>
             <strong class="font-display text-[28px] leading-none font-normal">

@@ -55,6 +55,19 @@
      proyecto. No aparece nunca en el catalogo publico. */
   --alerta: #8c4a34;
 
+  /*
+   * Escala de suavizado. Tres niveles y la pastilla, nada mas: no hay valores
+   * intermedios (design/PROMPT-1-arranque.md). Todo contenedor con foto lleva su radio
+   * mas overflow:hidden, para que la imagen siga la esquina.
+   *
+   * La foto de las tarjetas se mantiene CUADRADA de relacion de aspecto: es lo que le da
+   * densidad y orden a fotos irregulares. Cuadrada de proporcion, no de esquinas.
+   */
+  --r-bloque: 12px; /* bloques grandes: historia, llamado a cotizar, preguntas, cedula de ficha */
+  --r-pieza: 10px; /* fotos, tarjetas de pilar, garantias del hero, botones grandes */
+  --r-control: 8px; /* botones compactos, cedulas de medidas pequenas, campos */
+  --r-pastilla: 999px; /* solo lo que se selecciona: chips, etiquetas de material, conmutador */
+
   --font-display: 'Instrument Serif', Georgia, serif;
   --font-body: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
 }
@@ -82,6 +95,11 @@
   --color-linea: var(--linea);
   --color-linea-fuerte: var(--linea-fuerte);
   --color-alerta: var(--alerta);
+
+  --radius-bloque: var(--r-bloque);
+  --radius-pieza: var(--r-pieza);
+  --radius-control: var(--r-control);
+  --radius-pastilla: var(--r-pastilla);
 
   --font-display: var(--font-display);
   --font-body: var(--font-body);
@@ -173,6 +191,7 @@ a:hover {
 
 /* ---- Panel de administracion: botones y controles con area de toque comoda ---- */
 .admin-btn {
+  border-radius: var(--r-control);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -207,6 +226,7 @@ a:hover {
   border-color: var(--alerta);
 }
 .admin-input {
+  border-radius: var(--r-control);
   width: 100%;
   border: 1px solid var(--linea-fuerte);
   background: #fff;

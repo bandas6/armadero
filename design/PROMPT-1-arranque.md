@@ -48,6 +48,21 @@ Dos familias de Google Fonts, ninguna más:
 
 Cárgalas con `display=swap` y precarga la conexión a Google Fonts.
 
+## Escala de suavizado (radios)
+
+El mockup usa tres niveles y nada más. Defínelos como tokens y no inventes valores
+intermedios:
+
+  --r-bloque   12px   bloques grandes: historia, llamado a cotizar, preguntas, cédula de ficha
+  --r-pieza    10px   fotos, tarjetas de pilar, garantías del hero
+  --r-control   8px   botones, cédulas de medidas pequeñas
+  pastilla    999px   solo lo que se selecciona: chips de filtro, etiquetas de material,
+                      selectores de variante, conmutador tejido/madera
+
+Todo contenedor con foto lleva su radio más `overflow:hidden`, para que la imagen siga la
+esquina. **La retícula de tarjetas del catálogo se queda cuadrada** a propósito: es lo que
+le da densidad y orden a fotos irregulares.
+
 ## Recursos de marca
 
 Están en `marca/`. Cópialos a la carpeta de assets del proyecto.

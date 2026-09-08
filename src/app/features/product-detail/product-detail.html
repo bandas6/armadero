@@ -6,7 +6,7 @@
     </p>
     <a
       routerLink="/catalogo"
-      class="mt-6 inline-flex min-h-11 items-center px-5 py-3 font-semibold no-underline"
+      class="rounded-pieza mt-6 inline-flex min-h-11 items-center px-5 py-3 font-semibold no-underline"
       style="background: var(--hoja); color: #fff;"
       >Ver el catálogo</a
     >
@@ -33,7 +33,7 @@
         bastante más larga; en móvil, apilada, se comporta como un bloque normal.
       -->
       <section aria-label="Fotos del mueble" class="self-start lg:sticky lg:top-24">
-        <div class="relative aspect-[4/3]" style="border: 1px solid var(--linea);">
+        <div class="rounded-pieza relative aspect-[4/3] overflow-hidden" style="border: 1px solid var(--linea);">
           @if (product.images[selectedImageIndex()]; as mainImage) {
             <img
               [ngSrc]="mainImage.url"
@@ -61,7 +61,7 @@
                 (click)="selectImage(i)"
                 [attr.aria-label]="'Ver foto ' + (i + 1) + ' de ' + product.name"
                 [attr.aria-pressed]="i === selectedImageIndex()"
-                class="relative aspect-square cursor-pointer"
+                class="rounded-pieza relative aspect-square cursor-pointer overflow-hidden"
                 [style.border]="
                   i === selectedImageIndex() ? '2px solid var(--tinta)' : '1px solid var(--linea)'
                 "
@@ -82,7 +82,7 @@
 
       <section>
         <!-- 3. Etiqueta de material y nombre -->
-        <app-material-tag [material]="product.category.material" class="mb-3 block" />
+        <app-material-tag [material]="product.category.material" [grande]="true" class="mb-3 block" />
         <h1 class="font-display m-0 mb-3.5 leading-none" style="font-size: clamp(38px, 5.4vw, 64px);">
           {{ product.name }}
         </h1>
@@ -96,7 +96,7 @@
 
         <!-- 5. Cédula de medidas -->
         @if (measureCells().length) {
-          <div class="mb-[22px]" style="border: 1.5px solid var(--tinta);">
+          <div class="rounded-bloque mb-[22px] overflow-hidden" style="border: 1.5px solid var(--tinta);">
             <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));">
               @for (cell of measureCells(); track cell.label; let last = $last) {
                 <div class="p-4" [style.border-right]="last ? 'none' : '1px solid var(--linea)'">
@@ -134,12 +134,15 @@
           @let twinIsMadera = twin.category.material === 'madera';
           <a
             [routerLink]="['/producto', twin.slug]"
-            class="mb-6 flex flex-wrap items-center gap-3.5 p-4 no-underline"
+            class="rounded-pieza mb-6 flex flex-wrap items-center gap-3.5 p-[17px] no-underline"
             [style.border]="'1px solid ' + (twinIsMadera ? 'var(--madera)' : 'var(--tejido)')"
             [style.background]="twinIsMadera ? '#F0F3F5' : '#F7F2EC'"
             style="color: var(--tinta);"
           >
-            <span class="relative block h-18 w-18 shrink-0" style="border: 1px solid var(--linea);">
+            <span
+              class="rounded-control relative block h-18 w-18 shrink-0 overflow-hidden"
+              style="border: 1px solid var(--linea);"
+            >
               @if (twin.primaryImageUrl) {
                 <img
                   [ngSrc]="twin.primaryImageUrl"
@@ -183,7 +186,7 @@
                   type="button"
                   (click)="selectVariant(variant._id)"
                   [attr.aria-pressed]="active"
-                  class="min-h-11 cursor-pointer px-[15px] py-2.5 text-[15px]"
+                  class="rounded-pastilla min-h-11 cursor-pointer px-[15px] py-2.5 text-[15px]"
                   [style.background]="active ? 'var(--tinta)' : 'transparent'"
                   [style.color]="active ? 'var(--hueso)' : 'var(--tinta)'"
                   [style.font-weight]="active ? 600 : 400"
@@ -257,7 +260,10 @@
 
         <!-- Personaliza tu mueble: lo que responda aquí viaja dentro de la cotización. -->
         @if (product.customizationFields?.length) {
-          <section class="mb-6 p-4" style="border: 1px solid var(--linea-fuerte); background: var(--hueso-alt);">
+          <section
+            class="rounded-bloque mb-6 p-5"
+            style="border: 1px solid var(--linea-fuerte); background: var(--hueso-alt);"
+          >
             <h2 class="font-display m-0 text-[22px] leading-tight">Personaliza tu mueble</h2>
             <p class="mt-1 text-[14px]" style="color: var(--gris);">
               Estos datos van en tu cotización. Lo demás se ajusta hablando por WhatsApp.
@@ -267,7 +273,10 @@
             </div>
           </section>
         } @else if (product.personalizable) {
-          <p class="mb-6 p-3 text-[15px]" style="border: 1px solid var(--hoja); color: var(--tinta-suave);">
+          <p
+            class="rounded-control mb-6 p-3.5 text-[15px]"
+            style="border: 1px solid var(--hoja); color: var(--tinta-suave);"
+          >
             Se fabrica a la medida. Cuéntanos tus medidas en el formulario y te damos el precio.
           </p>
         }
@@ -277,13 +286,16 @@
           la única visibilidad del embudo de ventas (design/PROMPT-4-ficha.md).
         -->
         @if (submitted(); as result) {
-          <div class="mt-8 p-4" style="border: 1.5px solid var(--hoja); background: var(--hueso-alt);">
+          <div
+            class="rounded-bloque mt-8 p-5"
+            style="border: 1.5px solid var(--hoja); background: var(--hueso-alt);"
+          >
             <p class="m-0 font-semibold">Listo, tu cotización quedó guardada.</p>
             <p class="mt-1 text-[15px]">Código: <strong>{{ result.code }}</strong></p>
             @if (result.whatsappUrl) {
               <a
                 [href]="result.whatsappUrl"
-                class="mt-3 inline-flex min-h-11 items-center px-4 py-3 font-semibold no-underline"
+                class="rounded-control mt-3 inline-flex min-h-11 items-center px-4 py-3 font-semibold no-underline"
                 style="background: var(--hoja); color: #fff;"
                 >Abrir WhatsApp</a
               >
@@ -307,7 +319,7 @@
                 id="customerName"
                 type="text"
                 formControlName="customerName"
-                class="mt-1 min-h-11 w-full px-3 py-2"
+                class="rounded-control mt-1 min-h-11 w-full px-3 py-2"
                 style="border: 1px solid var(--linea-fuerte); background: #fff;"
               />
               @if (quoteForm.controls.customerName.invalid && quoteForm.controls.customerName.touched) {
@@ -321,7 +333,7 @@
                 id="customerCity"
                 type="text"
                 formControlName="customerCity"
-                class="mt-1 min-h-11 w-full px-3 py-2"
+                class="rounded-control mt-1 min-h-11 w-full px-3 py-2"
                 style="border: 1px solid var(--linea-fuerte); background: #fff;"
               />
               @if (quoteForm.controls.customerCity.invalid && quoteForm.controls.customerCity.touched) {
@@ -337,7 +349,7 @@
                 id="notes"
                 formControlName="notes"
                 rows="2"
-                class="mt-1 w-full px-3 py-2"
+                class="rounded-control mt-1 w-full px-3 py-2"
                 style="border: 1px solid var(--linea-fuerte); background: #fff;"
               ></textarea>
             </div>
@@ -349,7 +361,7 @@
             <button
               type="submit"
               [disabled]="submitting()"
-              class="min-h-[58px] w-full cursor-pointer px-4 py-3 text-[18px] font-semibold disabled:opacity-60"
+              class="rounded-pieza min-h-[58px] w-full cursor-pointer px-4 py-3 text-[18px] font-semibold disabled:opacity-60"
               style="background: var(--hoja); color: #fff;"
             >
               {{ submitting() ? 'Guardando…' : 'Cotizar por WhatsApp' }}
@@ -360,7 +372,7 @@
           <button
             type="button"
             (click)="addToCart()"
-            class="mt-4 w-full cursor-pointer px-4 py-3 text-[16px] font-semibold"
+            class="rounded-pieza mt-4 w-full cursor-pointer px-4 py-3 text-[16px] font-semibold"
             style="border: 1.5px solid var(--tinta); color: var(--tinta);"
           >
             Agregar a mi cotización y seguir viendo

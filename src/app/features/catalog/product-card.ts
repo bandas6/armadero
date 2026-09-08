@@ -8,8 +8,8 @@ import type { ProductCard as ProductCardModel } from '../../core/models/catalog.
 
 /** Las dos escalas de la tarjeta, sacadas del mockup aprobado. */
 const SCALE = {
-  suelta: { gap: 11, name: 22, note: 14, headline: 19, detail: 13, price: 15, pad: '8px 10px' },
-  densa: { gap: 9, name: 20, note: 13, headline: 17, detail: 12, price: 14, pad: '7px 9px' },
+  suelta: { gap: 11, name: 22, note: 14, headline: 19, detail: 13, price: 15, pad: '9px 11px' },
+  densa: { gap: 9, name: 20, note: 13, headline: 17, detail: 12, price: 14, pad: '8px 10px' },
 } as const;
 
 /**
@@ -34,7 +34,7 @@ const SCALE = {
     <article class="flex h-full flex-col" [style.gap.px]="s.gap">
       <a
         [routerLink]="['/producto', p.slug]"
-        class="relative block aspect-square"
+        class="rounded-pieza relative block aspect-square overflow-hidden"
         style="border: 1px solid var(--linea);"
         tabindex="-1"
       >
@@ -74,7 +74,11 @@ const SCALE = {
         }
 
         <!-- Cédula de medidas: el dato grande arriba, los centímetros debajo. -->
-        <div class="mt-auto" [style.padding]="s.pad" style="border: 1px solid var(--tinta); margin-top: 9px;">
+        <div
+          class="rounded-control mt-auto"
+          [style.padding]="s.pad"
+          style="border: 1px solid var(--tinta); margin-top: 9px;"
+        >
           <p class="m-0 font-semibold leading-tight" [style.font-size.px]="s.headline">
             {{ m.headline }}
           </p>

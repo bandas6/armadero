@@ -8,11 +8,11 @@
   </p>
 
   @if (submitted(); as result) {
-    <div class="mt-6 p-5" style="border: 1.5px solid var(--hoja); background: var(--hueso-alt);">
+    <div class="rounded-bloque mt-6 p-5" style="border: 1.5px solid var(--hoja); background: var(--hueso-alt);">
       <p class="font-semibold">¡Listo! Tu cotización quedó guardada.</p>
       <p class="mt-1 text-sm">Código: <strong>{{ result.code }}</strong></p>
       @if (result.whatsappUrl) {
-        <a [href]="result.whatsappUrl" class="mt-3 inline-flex min-h-11 items-center px-4 py-3 font-semibold no-underline" style="background: var(--hoja); color: #fff;">
+        <a [href]="result.whatsappUrl" class="rounded-control mt-3 inline-flex min-h-11 items-center px-4 py-3 font-semibold no-underline" style="background: var(--hoja); color: #fff;">
           Abrir WhatsApp
         </a>
       } @else {
@@ -24,15 +24,15 @@
     </div>
   } @else if (cart.items().length === 0) {
     <p class="mt-6" style="color: var(--gris);">Todavía no has agregado muebles.</p>
-    <a routerLink="/catalogo" class="mt-4 inline-flex min-h-11 items-center px-5 py-3 font-semibold no-underline" style="background: var(--hoja); color: #fff;">
+    <a routerLink="/catalogo" class="rounded-pieza mt-4 inline-flex min-h-11 items-center px-5 py-3 font-semibold no-underline" style="background: var(--hoja); color: #fff;">
       Ir al catálogo
     </a>
   } @else {
     <ul class="mt-6 space-y-4">
       @for (item of cart.items(); track item.variantId) {
-        <li class="p-3" style="border: 1px solid var(--linea); background: var(--hueso-alt);">
+        <li class="rounded-pieza p-3.5" style="border: 1px solid var(--linea); background: var(--hueso-alt);">
           <div class="flex gap-4">
-            <div class="h-20 w-20 shrink-0 overflow-hidden" style="border: 1px solid var(--linea);">
+            <div class="rounded-control h-20 w-20 shrink-0 overflow-hidden" style="border: 1px solid var(--linea);">
               @if (item.imageUrl) {
                 <img [src]="item.imageUrl" [alt]="item.productName" class="h-full w-full object-cover" width="80" height="80" />
               }
@@ -56,7 +56,7 @@
                 max="20"
                 [value]="item.quantity"
                 (change)="setQty(item.variantId, $any($event.target).value)"
-                class="min-h-11 w-16 border px-2 py-1 text-sm"
+                class="rounded-control min-h-11 w-16 border px-2 py-1 text-sm"
                 style="border-color: var(--linea-fuerte);"
               />
               <button type="button" (click)="cart.remove(item.variantId)" class="text-xs underline" style="color: var(--gris);">
@@ -68,7 +68,7 @@
           <!-- Personalización de este ítem -->
           @if (item.customizationFields?.length) {
             @if (editing() === item.variantId) {
-              <div class="mt-3 border p-3" style="border-color: var(--hoja);">
+              <div class="rounded-control mt-3 border p-3" style="border-color: var(--hoja);">
                 <app-customization-fields [fields]="item.customizationFields!" [initial]="item.customization ?? []" />
                 <div class="mt-2 flex gap-2">
                   <button type="button" (click)="saveEditor(item)" class="admin-btn admin-btn--primary admin-btn--sm">Guardar</button>
@@ -76,7 +76,7 @@
                 </div>
               </div>
             } @else {
-              <div class="mt-3 p-2 text-sm" style="background: var(--hueso-alt);">
+              <div class="rounded-control mt-3 p-2.5 text-sm" style="background: var(--hueso-alt);">
                 @if (item.customization?.length) {
                   <ul>
                     @for (a of item.customization; track a.label) {
@@ -100,7 +100,7 @@
       El total no se rompe cuando hay piezas sin precio: se suma lo que sí lo tiene y se
       dice aparte cuántas se cotizan según medidas.
     -->
-    <div class="mt-4 p-4" style="border: 1.5px solid var(--tinta);">
+    <div class="rounded-bloque mt-4 p-5" style="border: 1.5px solid var(--tinta);">
       <div class="flex items-baseline justify-between gap-4">
         <span class="text-[15px]">Subtotal estimado</span>
         <strong class="font-display text-[28px] leading-none font-normal">
@@ -125,7 +125,7 @@
 
       <div>
         <label for="customerName" class="block text-sm font-medium">Nombre</label>
-        <input id="customerName" type="text" formControlName="customerName" class="mt-1 min-h-11 w-full border px-3 py-2" style="border-color: var(--linea-fuerte);" />
+        <input id="customerName" type="text" formControlName="customerName" class="rounded-control mt-1 min-h-11 w-full border px-3 py-2" style="border-color: var(--linea-fuerte);" />
         @if (form.controls.customerName.invalid && form.controls.customerName.touched) {
           <p class="mt-1 text-sm" style="color: var(--alerta);">Escribe tu nombre.</p>
         }
@@ -133,7 +133,7 @@
 
       <div>
         <label for="customerCity" class="block text-sm font-medium">Ciudad</label>
-        <input id="customerCity" type="text" formControlName="customerCity" class="mt-1 min-h-11 w-full border px-3 py-2" style="border-color: var(--linea-fuerte);" />
+        <input id="customerCity" type="text" formControlName="customerCity" class="rounded-control mt-1 min-h-11 w-full border px-3 py-2" style="border-color: var(--linea-fuerte);" />
         @if (form.controls.customerCity.invalid && form.controls.customerCity.touched) {
           <p class="mt-1 text-sm" style="color: var(--alerta);">Cuéntanos desde qué ciudad escribes.</p>
         }
@@ -141,14 +141,14 @@
 
       <div>
         <label for="notes" class="block text-sm font-medium">Algo más que quieras contarnos (opcional)</label>
-        <textarea id="notes" formControlName="notes" rows="2" class="mt-1 min-h-11 w-full border px-3 py-2" style="border-color: var(--linea-fuerte);"></textarea>
+        <textarea id="notes" formControlName="notes" rows="2" class="rounded-control mt-1 min-h-11 w-full border px-3 py-2" style="border-color: var(--linea-fuerte);"></textarea>
       </div>
 
       @if (submitError()) {
         <p class="text-sm" style="color: var(--alerta);">{{ submitError() }}</p>
       }
 
-      <button type="submit" [disabled]="submitting()" class="min-h-[58px] w-full cursor-pointer px-4 py-3 text-[18px] font-semibold disabled:opacity-60" style="background: var(--hoja); color: #fff;">
+      <button type="submit" [disabled]="submitting()" class="rounded-pieza min-h-[58px] w-full cursor-pointer px-4 py-3 text-[18px] font-semibold disabled:opacity-60" style="background: var(--hoja); color: #fff;">
         {{ submitting() ? 'Enviando…' : 'Cotizar por WhatsApp' }}
       </button>
     </form>
