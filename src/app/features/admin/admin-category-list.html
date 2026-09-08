@@ -3,9 +3,10 @@
   <button type="button" (click)="newRoot()" class="admin-btn admin-btn--primary">+ Nueva categoría</button>
 </div>
 
-<p class="mt-1 text-sm" style="color: var(--gris);">
+<p class="mt-1 max-w-[70ch] text-sm" style="color: var(--gris);">
   Dos niveles: el tipo de mueble (Sala, Comedor…) y, dentro, la versión tejida o en madera.
-  La foto de cada categoría es la que se ve en la sección "Elige el tipo de mueble" del inicio.
+  <strong>La foto va en la subcategoría</strong>, que es la que se ve en la retícula del
+  catálogo. Si no le pones una, el sitio usa la foto de uno de sus muebles.
 </p>
 
 @if (error()) {
@@ -50,9 +51,9 @@
         <textarea [(ngModel)]="d.description" rows="2" class="admin-input"></textarea>
       </div>
 
-      @if (!d.parentId) {
+      @if (d.parentId) {
         <div>
-          <label class="admin-label">Foto (la que se ve en el inicio)</label>
+          <label class="admin-label">Foto (la que se ve en el catálogo)</label>
           <div class="flex items-center gap-3">
             @if (d.imageUrl) {
               <img [src]="d.imageUrl" alt="" class="h-14 w-14 rounded-md object-cover" />
@@ -80,26 +81,17 @@
     @for (root of roots(); track root._id; let i = $index) {
       <li class="overflow-hidden rounded-lg border" style="border-color: var(--linea); background: var(--hueso-alt);">
 
-        <!-- ===== CATEGORÍA (padre) — su foto es la del inicio ===== -->
+        <!--
+          CATEGORÍA (padre). No lleva foto: el catálogo muestra las subcategorías, y es
+          ahí donde vive la foto. El padre solo agrupa y ordena.
+        -->
         <div class="p-3">
-          <div class="flex gap-3">
-            <div class="h-24 w-24 shrink-0 overflow-hidden rounded-md border" style="border-color: color-mix(in srgb, var(--linea-fuerte) 30%, transparent);">
-              @if (root.imageUrl) {
-                <img [src]="root.imageUrl" alt="" class="h-full w-full object-cover" />
-              } @else {
-                <span class="flex h-full w-full items-center justify-center px-1 text-center text-[0.65rem]" style="background: var(--hueso-alt); color: var(--gris);">Sin foto para el inicio</span>
-              }
-            </div>
-            <div class="min-w-0 flex-1">
-              <p class="text-lg font-semibold leading-tight" [style.opacity]="root.active ? 1 : 0.5">{{ root.name }}</p>
-              <p class="text-xs" style="color: var(--gris);">
-                Categoría · {{ root.productCount }} muebles{{ root.active ? '' : ' · oculta' }}
-              </p>
-              <label class="admin-btn admin-btn--sm admin-btn--primary mt-2 cursor-pointer" [class.opacity-50]="busyId() === root._id">
-                {{ root.imageUrl ? 'Cambiar foto' : 'Subir foto del inicio' }}
-                <input type="file" accept="image/*" class="hidden" (change)="changePhoto(root, $event)" [disabled]="busyId() === root._id" />
-              </label>
-            </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-lg font-semibold leading-tight" [style.opacity]="root.active ? 1 : 0.5">{{ root.name }}</p>
+            <p class="text-xs" style="color: var(--gris);">
+              Categoría · {{ root.productCount }}
+              {{ root.productCount === 1 ? 'mueble' : 'muebles' }}{{ root.active ? '' : ' · oculta' }}
+            </p>
           </div>
           <div class="mt-2.5 flex flex-wrap gap-2">
             <button type="button" (click)="edit(root)" class="admin-btn admin-btn--sm">Editar nombre</button>
@@ -111,18 +103,40 @@
           </div>
         </div>
 
-        <!-- ===== SUBCATEGORÍAS (tejido / madera) — sin foto propia ===== -->
+        <!-- ===== SUBCATEGORÍAS (tejido / madera) — cada una con su foto ===== -->
         <div class="border-t px-3 py-2" style="border-color: var(--linea); background: var(--hueso-alt);">
           <p class="text-[0.7rem] font-semibold uppercase tracking-wide" style="color: var(--gris);">Subcategorías de {{ root.name }}</p>
           <ul class="mt-1 divide-y" style="border-color: color-mix(in srgb, var(--linea-fuerte) 20%, transparent);">
             @for (child of childrenOf(root._id); track child._id; let ci = $index) {
-              <li class="flex flex-wrap items-center gap-x-2 gap-y-1 py-2">
-                <span class="text-sm" [style.opacity]="child.active ? 1 : 0.5">{{ child.name }}</span>
-                @if (child.material) {
-                  <span class="rounded-full px-2 py-0.5 text-[0.65rem]" style="background: var(--hueso-alt);">{{ child.material }}</span>
-                }
-                <span class="text-xs" style="color: var(--gris);">{{ child.productCount }} muebles{{ child.active ? '' : ' · oculta' }}</span>
-                <span class="ml-auto flex gap-1">
+              <li class="flex flex-wrap items-center gap-x-3 gap-y-2 py-2.5">
+                <span
+                  class="h-14 w-14 shrink-0 overflow-hidden rounded-md border"
+                  style="border-color: color-mix(in srgb, var(--linea-fuerte) 30%, transparent);"
+                >
+                  @if (child.imageUrl) {
+                    <img [src]="child.imageUrl" alt="" class="h-full w-full object-cover" />
+                  } @else {
+                    <span class="block h-full w-full" style="background: var(--hueso-alt);"></span>
+                  }
+                </span>
+                <span class="min-w-0 flex-1">
+                  <span class="flex flex-wrap items-center gap-2">
+                    <span class="text-sm" [style.opacity]="child.active ? 1 : 0.5">{{ child.name }}</span>
+                    @if (child.material) {
+                      <span class="rounded-full px-2 py-0.5 text-[0.65rem]" style="background: var(--hueso-alt);">{{ child.material }}</span>
+                    }
+                  </span>
+                  <span class="block text-xs" style="color: var(--gris);">
+                    {{ child.productCount }} {{ child.productCount === 1 ? 'mueble' : 'muebles' }}
+                    @if (!child.imageUrl) { · usa la foto de un mueble }
+                    {{ child.active ? '' : ' · oculta' }}
+                  </span>
+                </span>
+                <span class="ml-auto flex flex-wrap gap-1">
+                  <label class="admin-btn admin-btn--sm cursor-pointer" [class.opacity-50]="busyId() === child._id">
+                    {{ child.imageUrl ? 'Cambiar foto' : 'Subir foto' }}
+                    <input type="file" accept="image/*" class="hidden" (change)="changePhoto(child, $event)" [disabled]="busyId() === child._id" />
+                  </label>
                   <button type="button" (click)="edit(child)" class="admin-btn admin-btn--sm">Editar</button>
                   <button type="button" (click)="toggleActive(child)" [disabled]="busyId() === child._id" class="admin-btn admin-btn--sm">
                     {{ child.active ? 'Ocultar' : 'Mostrar' }}
