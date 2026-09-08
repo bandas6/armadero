@@ -15,8 +15,9 @@ import type { Material } from '../core/models/catalog.model';
   template: `
     @if (label()) {
       <span
-        class="inline-block px-[7px] py-[2px] text-[11px] tracking-[0.1em]"
+        class="rounded-pastilla inline-block text-[11px] tracking-[0.1em]"
         [style.background]="background()"
+        [style.padding]="grande() ? '4px 11px' : '3px 9px'"
         style="color: #fff;"
         >{{ label() }}</span
       >
@@ -25,6 +26,8 @@ import type { Material } from '../core/models/catalog.model';
 })
 export class MaterialTag {
   material = input<Material | 'ambos' | null | undefined>();
+  /** En la ficha la etiqueta va un punto mas grande que en las tarjetas. */
+  grande = input(false);
 
   readonly label = computed(() => {
     switch (this.material()) {
