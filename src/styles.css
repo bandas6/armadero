@@ -176,6 +176,12 @@ a:hover {
   pointer-events: none;
 }
 
+/* La guirnalda del hero del home va mucho mas grande y pegada a la esquina. */
+.guirnalda--hero {
+  width: 693px;
+  max-width: 70%;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
