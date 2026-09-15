@@ -50,9 +50,13 @@ export class AdminProductService {
     return this.http.post<AdminProduct>(`${this.base}/${id}/featured`, { featured });
   }
 
-  reorder(orderedIds: string[]): Observable<void> {
+  /**
+   * `all`: la lista completa, la posición es el índice. `category` (o cualquier subconjunto):
+   * los muebles intercambian entre sí las posiciones que ya tenían, sin mover al resto.
+   */
+  reorder(orderedIds: string[], scope: 'all' | 'category' = 'all'): Observable<void> {
     return this.http.patch<void>(`${environment.apiUrl}/admin/products/reorder`, {
-      scope: 'all',
+      scope,
       orderedIds,
     });
   }

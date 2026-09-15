@@ -8,6 +8,22 @@ import type { SiteSettings } from '../models/catalog.model';
 import { WHATSAPP_DISPLAY } from '../business';
 
 const SCRIPT_ID = 'ld-json';
+
+/**
+ * "8:30 a. m. – 5:30 p. m." -> "Mo-Fr 08:30-17:30". Tolera espacios duros y guiones
+ * distintos; si no encuentra dos horas, devuelve null y el dato se omite.
+ */
+function toOpeningHours(days: string, text: string | null | undefined): string | null {
+  if (!text) return null;
+  const re = /(\d{1,2}):(\d{2})\s*([ap])\.?\s*m\.?/giu;
+  const times: string[] = [];
+  for (const m of text.replace(/\u00a0/g, ' ').matchAll(re)) {
+    let h = Number(m[1]) % 12;
+    if (m[3].toLowerCase() === 'p') h += 12;
+    times.push(`${String(h).padStart(2, '0')}:${m[2]}`);
+  }
+  return times.length === 2 ? `${days} ${times[0]}-${times[1]}` : null;
+}
 const AVAILABILITY: Record<string, string> = {
   AVAILABLE: 'https://schema.org/InStock',
   MADE_TO_ORDER: 'https://schema.org/PreOrder',
@@ -107,14 +123,21 @@ export class StructuredDataService {
       url: this.origin(),
       address: {
         '@type': 'PostalAddress',
+        ...(settings?.storeAddress ? { streetAddress: settings.storeAddress } : {}),
         addressLocality: 'Cali',
         addressRegion: 'Valle del Cauca',
         addressCountry: 'CO',
       },
       areaServed: 'Colombia',
     };
-    const hours = settings?.businessHours;
-    if (hours) data['openingHours'] = hours;
+    if (settings?.foundingYear) data['foundingDate'] = String(settings.foundingYear);
+    // Formato Schema.org: "Mo-Fr 08:30-17:30". Las horas del panel van en texto humano, así
+    // que se convierten aquí; si no se pueden leer, se omite antes que declarar algo falso.
+    const opening = [
+      toOpeningHours('Mo-Fr', settings?.hoursWeekday),
+      toOpeningHours('Sa', settings?.hoursSaturday),
+    ].filter(Boolean);
+    if (opening.length) data['openingHours'] = opening;
     const sameAs = [settings?.instagramUrl, settings?.facebookUrl].filter(Boolean);
     if (sameAs.length) data['sameAs'] = sameAs;
     this.write(data);

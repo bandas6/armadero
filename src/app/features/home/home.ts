@@ -10,13 +10,14 @@ import { ProductCard } from '../catalog/product-card';
 import { MaterialTag } from '../../shared/material-tag';
 import {
   BUSINESS_HOURS,
-  BUSINESS_HOURS_SATURDAY,
-  BUSINESS_HOURS_WEEKDAY,
-  FOUNDING_YEAR,
+  HOURS_SATURDAY,
+  HOURS_WEEKDAY,
   WHATSAPP_GENERIC_URL,
 } from '../../core/business';
 import type {
+  Banner,
   CategoryNode,
+  CollectionCard,
   Material,
   ProductListResponse,
   SiteSettings,
@@ -30,8 +31,9 @@ interface Faq {
 
 /**
  * Seis preguntas, dos lineas cada una. Son las que hoy se resuelven por WhatsApp:
- * contestarlas antes baja el trabajo del chat (design/PROMPT-2-home.md). El texto es el
- * del mockup aprobado.
+ * contestarlas antes baja el trabajo del chat (design/PROMPT-2-home.md). El texto lo edita
+ * Vanessa en Ajustes; estas son las del mockup aprobado, el respaldo para el primer render.
+ * La cantidad (6) y el lugar no se editan (docs/panel-admin.md).
  */
 const FAQS: Faq[] = [
   {
@@ -122,21 +124,14 @@ export class Home {
   private seo = inject(SeoService);
   private jsonLd = inject(StructuredDataService);
 
-  readonly faqs = FAQS;
   readonly pilares = PILARES;
   readonly datosHero = DATOS_HERO;
   readonly garantiasHero = GARANTIAS_HERO;
   readonly filesUrl = environment.filesUrl;
   readonly whatsappUrl = WHATSAPP_GENERIC_URL;
   readonly hours = BUSINESS_HOURS;
-  readonly hoursWeekday = BUSINESS_HOURS_WEEKDAY;
-  readonly hoursSaturday = BUSINESS_HOURS_SATURDAY;
-
-  /**
-   * PENDIENTE — sin el año de fundación la frase se arma sin él. "Fabricamos desde 2011"
-   * pesa mucho más que "fabricamos muebles" (docs/pendientes-diseno.md).
-   */
-  readonly foundingYear = FOUNDING_YEAR;
+  readonly hoursWeekday = HOURS_WEEKDAY;
+  readonly hoursSaturday = HOURS_SATURDAY;
 
   private tree = toSignal(
     this.catalog.getCategoryTree().pipe(catchError(() => of([] as CategoryNode[]))),
@@ -146,6 +141,36 @@ export class Home {
   readonly settings = toSignal(
     this.catalog.getSettings().pipe(catchError(() => of(null as SiteSettings | null))),
     { initialValue: null as SiteSettings | null },
+  );
+
+  /** Las seis del panel si estan completas; si no, las del mockup. */
+  readonly faqs = computed(() => {
+    const saved = this.settings()?.faqs;
+    return saved?.length === FAQS.length ? saved : FAQS;
+  });
+
+  /**
+   * Sin el año de fundación la frase se arma sin él. "Fabricamos desde 2011" pesa mucho
+   * más que "fabricamos muebles"; Vanessa lo pone en Ajustes.
+   */
+  readonly foundingYear = computed(() => this.settings()?.foundingYear ?? null);
+
+  /**
+   * El primer banner activo y en fecha reemplaza la foto y las frases del hero; sin banners,
+   * la portada de siempre. La estructura del hero no cambia: solo lo que Vanessa edita.
+   */
+  private banners = toSignal(
+    this.catalog.getBanners().pipe(catchError(() => of([] as Banner[]))),
+    { initialValue: [] as Banner[] },
+  );
+  readonly banner = computed(() => this.banners()[0] ?? null);
+  readonly bannerLink = computed(() => this.banner()?.linkUrl || '/catalogo');
+  readonly bannerIsExternal = computed(() => /^https?:\/\//.test(this.bannerLink()));
+
+  /** Ambientes armados desde el panel. La sección solo aparece si hay alguno. */
+  readonly collections = toSignal(
+    this.catalog.getCollections().pipe(catchError(() => of([] as CollectionCard[]))),
+    { initialValue: [] as CollectionCard[] },
   );
 
   private featuredResponse = toSignal(

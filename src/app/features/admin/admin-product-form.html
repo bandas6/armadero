@@ -23,6 +23,15 @@
   @if (error()) {
     <p class="mt-3 rounded-md border px-3 py-2 text-sm" style="border-color: #c98; color: #8c4a34;">{{ error() }}</p>
   }
+  @if (draft()) {
+    <div class="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-md border px-3 py-2 text-sm" style="border-color: var(--tejido); background: color-mix(in srgb, var(--tejido) 8%, transparent);">
+      <span>Tienes cambios sin guardar de {{ draftAge() }}.</span>
+      <span class="flex gap-2">
+        <button type="button" (click)="restoreDraft()" class="admin-btn admin-btn--sm admin-btn--primary">Recuperarlos</button>
+        <button type="button" (click)="discardDraft()" class="admin-btn admin-btn--sm">Descartar</button>
+      </span>
+    </div>
+  }
 
   <!-- ===== FOTOS (arriba: es lo primero que importa) ===== -->
   <section class="mt-4 rounded-lg border p-3" style="border-color: var(--linea); background: var(--hueso-alt);">

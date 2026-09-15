@@ -214,9 +214,7 @@
             >
           }
         </div>
-        <p class="m-0 mb-[18px] text-[15px]" style="color: var(--tinta-suave);">
-          El flete se acuerda por WhatsApp, según la ciudad y el tamaño.
-        </p>
+        <div class="mb-[18px]"><app-shipping-note /></div>
 
         <!-- 9. Tabla de datos -->
         <dl class="m-0 mb-6 grid" style="grid-template-columns: auto 1fr; border-top: 1px solid var(--linea);">
@@ -366,7 +364,7 @@
             >
               {{ submitting() ? 'Guardando…' : 'Cotizar por WhatsApp' }}
             </button>
-            <p class="m-0 text-[14px]" style="color: var(--tinta-suave);">Contestamos {{ hours }}</p>
+            <p class="m-0 text-[14px]" style="color: var(--tinta-suave);">Contestamos {{ settings()?.businessHours || hours }}</p>
           </form>
 
           <button

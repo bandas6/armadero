@@ -3,9 +3,13 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, shareReplay } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import type {
+  Banner,
   CategoryNode,
+  CollectionCard,
+  CollectionDetail,
   ProductFilters,
   ProductListResponse,
+  ShippingZone,
   SiteSettings,
 } from '../models/catalog.model';
 
@@ -40,5 +44,34 @@ export class CatalogService {
 
   getSettings(): Observable<SiteSettings> {
     return this.settings$;
+  }
+
+  // Contenido editable desde el panel: banners del home, colecciones y zonas de envío.
+  private banners$ = this.http
+    .get<Banner[]>(`${this.base}/banners`)
+    .pipe(shareReplay({ bufferSize: 1, refCount: false }));
+
+  private collections$ = this.http
+    .get<CollectionCard[]>(`${this.base}/collections`)
+    .pipe(shareReplay({ bufferSize: 1, refCount: false }));
+
+  private shippingZones$ = this.http
+    .get<ShippingZone[]>(`${this.base}/shipping-zones`)
+    .pipe(shareReplay({ bufferSize: 1, refCount: false }));
+
+  getBanners(): Observable<Banner[]> {
+    return this.banners$;
+  }
+
+  getCollections(): Observable<CollectionCard[]> {
+    return this.collections$;
+  }
+
+  getCollection(slug: string): Observable<CollectionDetail> {
+    return this.http.get<CollectionDetail>(`${this.base}/collections/${slug}`);
+  }
+
+  getShippingZones(): Observable<ShippingZone[]> {
+    return this.shippingZones$;
   }
 }

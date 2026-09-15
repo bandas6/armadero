@@ -6,12 +6,13 @@ import { CartService, type CartItem } from '../../core/services/cart.service';
 import { QuoteService, type CreateQuoteResult } from '../../core/services/quote.service';
 import { SeoService } from '../../core/services/seo.service';
 import { CopCurrencyPipe } from '../../shared/pipes/cop-currency.pipe';
+import { ShippingNote } from '../../shared/shipping-note';
 import { CustomizationFields } from '../../shared/customization-fields/customization-fields';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, CopCurrencyPipe, CustomizationFields],
+  imports: [ReactiveFormsModule, RouterLink, CopCurrencyPipe, CustomizationFields, ShippingNote],
   templateUrl: './cart.html',
 })
 export class Cart {

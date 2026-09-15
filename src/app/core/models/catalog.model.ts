@@ -82,10 +82,54 @@ export interface ProductFilters {
 }
 
 export interface SiteSettings {
+  /** "8:30 a. m. – 5:30 p. m." — las dos lineas del pie y del hero. */
+  hoursWeekday: string;
+  hoursSaturday: string;
+  /** Una frase para poner debajo de un boton de cotizar. */
   businessHours: string;
   announcement: string | null;
   instagramUrl: string | null;
   facebookUrl: string | null;
+  storeAddress: string | null;
+  foundingYear: number | null;
+  faqs: { q: string; a: string }[];
   whatsappConfigured: boolean;
   whatsappContactUrl: string | null;
+}
+
+/** Banner del home (lo edita el panel). */
+export interface Banner {
+  _id: string;
+  title?: string | null;
+  subtitle?: string | null;
+  imageUrl: string;
+  linkUrl?: string | null;
+}
+
+/** Ambiente curado: una seleccion de muebles con nombre propio. */
+export interface CollectionCard {
+  _id: string;
+  name: string;
+  slug: string;
+  description?: string | null;
+  imageUrl?: string | null;
+  productCount: number;
+}
+
+export interface CollectionDetail {
+  _id: string;
+  name: string;
+  slug: string;
+  description?: string | null;
+  imageUrl?: string | null;
+  products: ProductCard[];
+}
+
+/** Flete informativo por ciudad; el valor final se acuerda por WhatsApp. */
+export interface ShippingZone {
+  _id: string;
+  city: string;
+  cost: number;
+  estimatedDays?: number | null;
+  notes?: string | null;
 }

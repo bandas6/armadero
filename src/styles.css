@@ -127,12 +127,23 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Instrument Serif solo en titulares grandes. El resto es IBM Plex Sans. */
-h1,
-h2,
-h3 {
-  font-family: var(--font-display);
-  font-weight: 400;
+/*
+ * Instrument Serif solo en titulares grandes. El resto es IBM Plex Sans.
+ *
+ * Va en @layer base para que las utilidades de Tailwind (font-body, font-semibold) le
+ * ganen: fuera de la capa, esta regla pisaba el peso de "Del muestrario" y del FAQ.
+ *
+ * El peso es 700 porque el mockup aprobado deja el bold por defecto del navegador en los
+ * titulares; como Instrument Serif solo trae 400, el navegador sintetiza la negrita. Es el
+ * grosor que la clienta vio y aprobó, no un descuido.
+ */
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
 }
 
 a {

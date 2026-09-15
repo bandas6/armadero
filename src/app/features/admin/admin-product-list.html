@@ -18,7 +18,20 @@
     <option value="oculto">Ocultos</option>
     <option value="destacado">En el inicio</option>
   </select>
+  <select [(ngModel)]="categoryFilter" (ngModelChange)="load()" class="admin-input" style="width: auto;" aria-label="Categoría">
+    <option value="">Todas las categorías</option>
+    @for (c of leafCategories(); track c._id) {
+      <option [value]="c._id">{{ c.parentName ? c.parentName + ' · ' : '' }}{{ c.name }}</option>
+    }
+  </select>
 </div>
+<p class="mt-2 text-xs" style="color: var(--gris);">
+  @if (canDrag()) {
+    Arrastra un mueble para cambiar el orden{{ categoryFilter ? ' dentro de esta categoría' : ' en el catálogo' }}.
+  } @else {
+    Para reordenar, quita la búsqueda y el filtro de estado.
+  }
+</p>
 
 @if (error()) {
   <p class="mt-3 rounded-sm border px-3 py-2 text-sm" style="border-color: #c98; color: #8c4a34;">{{ error() }}</p>
@@ -27,10 +40,13 @@
 @if (loading()) {
   <p class="mt-6" style="color: var(--gris);">Cargando…</p>
 } @else {
-  <ul class="mt-4 space-y-3">
+  <ul class="mt-4 space-y-3" cdkDropList [cdkDropListDisabled]="!canDrag()" (cdkDropListDropped)="drop($event)">
     @for (p of filtered(); track p._id; let i = $index) {
-      <li class="rounded-lg border p-3" style="border-color: var(--linea); background: var(--hueso-alt);">
+      <li cdkDrag [cdkDragDisabled]="!canDrag()" class="rounded-lg border p-3" style="border-color: var(--linea); background: var(--hueso-alt);">
         <div class="flex gap-3">
+          @if (canDrag()) {
+            <span cdkDragHandle class="flex cursor-grab touch-none items-center px-1 text-lg" style="color: var(--gris);" aria-label="Arrastrar para reordenar">⋮⋮</span>
+          }
           <a [routerLink]="['/admin/productos', p._id]" class="h-20 w-20 shrink-0 overflow-hidden rounded-md border" style="border-color: color-mix(in srgb, var(--linea-fuerte) 30%, transparent);">
             @if (p.primaryImageUrl) {
               <img [src]="p.primaryImageUrl" [alt]="p.name" class="h-full w-full object-cover" width="80" height="80" />
@@ -58,10 +74,12 @@
             </div>
           </div>
 
-          <div class="flex shrink-0 flex-col justify-start gap-1">
-            <button type="button" (click)="move(i, -1)" [disabled]="i === 0" class="admin-btn admin-btn--sm" style="min-width: 2.2rem;" aria-label="Mover arriba">↑</button>
-            <button type="button" (click)="move(i, 1)" [disabled]="i === filtered().length - 1" class="admin-btn admin-btn--sm" style="min-width: 2.2rem;" aria-label="Mover abajo">↓</button>
-          </div>
+          @if (canDrag()) {
+            <div class="flex shrink-0 flex-col justify-start gap-1">
+              <button type="button" (click)="move(i, -1)" [disabled]="i === 0" class="admin-btn admin-btn--sm" style="min-width: 2.2rem;" aria-label="Mover arriba">↑</button>
+              <button type="button" (click)="move(i, 1)" [disabled]="i === filtered().length - 1" class="admin-btn admin-btn--sm" style="min-width: 2.2rem;" aria-label="Mover abajo">↓</button>
+            </div>
+          }
         </div>
 
         <div class="mt-3 grid grid-cols-3 gap-2">

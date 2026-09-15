@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { adminRoleGuard } from '../../core/guards/admin.guard';
 
 export const adminRoutes: Routes = [
   {
@@ -22,6 +23,11 @@ export const adminRoutes: Routes = [
         loadComponent: () => import('./admin-category-list').then((m) => m.AdminCategoryList),
       },
       {
+        path: 'colecciones',
+        loadComponent: () =>
+          import('./admin-collection-list').then((m) => m.AdminCollectionList),
+      },
+      {
         path: 'cotizaciones',
         loadComponent: () => import('./admin-quote-list').then((m) => m.AdminQuoteList),
       },
@@ -30,8 +36,29 @@ export const adminRoutes: Routes = [
         loadComponent: () => import('./admin-quote-detail').then((m) => m.AdminQuoteDetail),
       },
       {
+        path: 'cuenta',
+        loadComponent: () => import('./admin-account').then((m) => m.AdminAccount),
+      },
+      // --- Solo ADMIN (el API también lo exige) ---
+      {
         path: 'ajustes',
+        canActivate: [adminRoleGuard],
         loadComponent: () => import('./admin-settings-form').then((m) => m.AdminSettingsForm),
+      },
+      {
+        path: 'banners',
+        canActivate: [adminRoleGuard],
+        loadComponent: () => import('./admin-banner-list').then((m) => m.AdminBannerList),
+      },
+      {
+        path: 'envios',
+        canActivate: [adminRoleGuard],
+        loadComponent: () => import('./admin-shipping-list').then((m) => m.AdminShippingList),
+      },
+      {
+        path: 'usuarios',
+        canActivate: [adminRoleGuard],
+        loadComponent: () => import('./admin-user-list').then((m) => m.AdminUserList),
       },
     ],
   },

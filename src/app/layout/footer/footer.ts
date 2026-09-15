@@ -3,10 +3,9 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { of, catchError } from 'rxjs';
 import { CatalogService } from '../../core/services/catalog.service';
 import {
-  BUSINESS_HOURS_SATURDAY,
-  BUSINESS_HOURS_WEEKDAY,
   CITY,
-  STORE_ADDRESS,
+  HOURS_SATURDAY,
+  HOURS_WEEKDAY,
   STORE_ADDRESS_FALLBACK,
   WHATSAPP_DISPLAY,
   WHATSAPP_GENERIC_URL,
@@ -23,7 +22,8 @@ import type { SiteSettings } from '../../core/models/catalog.model';
   standalone: true,
   template: `
     @let s = settings();
-    <footer style="background: var(--tinta);">
+    <!-- Aire entre la última sección de cada página y el bloque oscuro del pie. -->
+    <footer class="mt-12" style="background: var(--tinta);">
       <div
         class="mx-auto grid max-w-[1360px] gap-[26px] px-5 py-10 text-[15px]"
         style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); color: var(--pie-texto);"
@@ -46,8 +46,8 @@ import type { SiteSettings } from '../../core/models/catalog.model';
         <div>
           <p class="mb-2 font-semibold" style="color: var(--hueso);">Horario de atención</p>
           <p class="m-0 leading-[1.7]">
-            {{ weekday }}<br />
-            {{ saturday }}
+            Lunes a viernes: {{ s?.hoursWeekday || weekday }}<br />
+            Sábado: {{ s?.hoursSaturday || saturday }}
           </p>
         </div>
 
@@ -69,9 +69,9 @@ import type { SiteSettings } from '../../core/models/catalog.model';
 
         <div>
           <p class="mb-2 font-semibold" style="color: var(--hueso);">El local</p>
-          <!-- PENDIENTE: falta la dirección del local (docs/pendientes-diseno.md). -->
+          <!-- La dirección la pone Vanessa en Ajustes; mientras, el texto de respaldo. -->
           <p class="m-0 leading-[1.7]">
-            {{ address }}<br />
+            {{ s?.storeAddress || addressFallback }}<br />
             {{ city }}
           </p>
         </div>
@@ -95,9 +95,9 @@ export class Footer {
   readonly whatsappUrl = WHATSAPP_GENERIC_URL;
   readonly phone = WHATSAPP_DISPLAY;
   readonly city = CITY;
-  readonly address = STORE_ADDRESS ?? STORE_ADDRESS_FALLBACK;
-  readonly weekday = BUSINESS_HOURS_WEEKDAY;
-  readonly saturday = BUSINESS_HOURS_SATURDAY;
+  readonly addressFallback = STORE_ADDRESS_FALLBACK;
+  readonly weekday = HOURS_WEEKDAY;
+  readonly saturday = HOURS_SATURDAY;
 
   readonly settings = toSignal(
     this.catalog.getSettings().pipe(catchError(() => of(null as SiteSettings | null))),

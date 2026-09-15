@@ -10,9 +10,10 @@
   class="relative isolate flex flex-col overflow-hidden"
   style="background: var(--tinta); color: var(--sobre-oscuro); min-height: min(82vh, 760px);"
 >
+  @let b = banner();
   <img
-    [ngSrc]="filesUrl + '/fotos/salas-tejidas/salas-tejidas-03.webp'"
-    alt="Sala tejida en fibra natural con mesa de centro, en el local de Artemadero"
+    [ngSrc]="b?.imageUrl || filesUrl + '/fotos/salas-tejidas/salas-tejidas-03.webp'"
+    [alt]="b?.title || 'Sala tejida en fibra natural con mesa de centro, en el local de Artemadero'"
     fill
     priority
     sizes="100vw"
@@ -60,14 +61,16 @@
         class="font-display m-0 mb-[18px] max-w-[20ch] leading-[0.94] text-balance"
         style="font-size: clamp(40px, 7.2vw, 90px);"
       >
-        Lo tejemos y lo armamos aquí mismo.
+        {{ b?.title || 'Lo tejemos y lo armamos aquí mismo.' }}
       </h1>
       <p
         class="m-0 mb-[30px] max-w-[48ch] leading-relaxed"
         style="font-size: clamp(17px, 1.9vw, 21px); color: #dee1da;"
       >
-        Taller propio. Casi todo se fabrica con las medidas de tu espacio, en el tejido y el
-        acabado que escojas.
+        {{
+          b?.subtitle ||
+            'Taller propio. Casi todo se fabrica con las medidas de tu espacio, en el tejido y el acabado que escojas.'
+        }}
       </p>
 
       <div
@@ -91,16 +94,18 @@
           <span class="text-[18px] font-semibold">Cotizar por WhatsApp</span>
           <span class="text-[13px]" style="color: #d2dece;">Mándanos tus medidas</span>
         </a>
+        <!-- El banner puede cambiar a dónde lleva el botón: ruta interna o enlace externo. -->
         <a
-          routerLink="/catalogo"
+          [routerLink]="bannerIsExternal() ? null : bannerLink()"
+          [attr.href]="bannerIsExternal() ? bannerLink() : null"
           class="rounded-pieza pointer-events-auto inline-flex min-h-[62px] items-center px-6 py-3 text-[17px] font-semibold no-underline"
           style="border: 1.5px solid #ffffff66; color: var(--sobre-oscuro);"
           >Ver el catálogo</a
         >
         <!-- El horario va junto al botón: sin él, el botón promete de más. -->
         <p class="m-0 max-w-[23ch] text-[15px] leading-relaxed" style="color: var(--sobre-oscuro-2);">
-          {{ hoursWeekday }}<br />
-          {{ hoursSaturday }}
+          Lunes a viernes: {{ s?.hoursWeekday || hoursWeekday }}<br />
+          Sábado: {{ s?.hoursSaturday || hoursSaturday }}
         </p>
       </div>
 
@@ -206,6 +211,39 @@
   </div>
 </section>
 
+<!-- 2b. Ambientes: colecciones armadas desde el panel. Solo aparece si hay alguna. -->
+@if (collections().length) {
+  <section class="mx-auto mt-13 max-w-[1360px] px-5" aria-labelledby="ambientes-titulo">
+    <div class="mb-4 flex flex-wrap items-baseline justify-between gap-3">
+      <h2 id="ambientes-titulo" class="m-0 font-body text-[16px] font-semibold tracking-[0.02em]">
+        Ambientes
+      </h2>
+      <span class="text-[13px]" style="color: var(--gris);">Varios muebles pensados juntos</span>
+    </div>
+    <div class="grid gap-3.5" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
+      @for (c of collections(); track c._id) {
+        <a
+          [routerLink]="['/coleccion', c.slug]"
+          class="rounded-pieza block overflow-hidden no-underline"
+          style="border: 1px solid var(--linea); color: var(--tinta);"
+        >
+          <span class="relative block aspect-[4/3] w-full" style="background: var(--hueso-alt);">
+            @if (c.imageUrl) {
+              <img [ngSrc]="c.imageUrl" [alt]="c.name" fill sizes="(max-width: 640px) 100vw, 33vw" class="object-cover" />
+            }
+          </span>
+          <span class="block px-3.5 py-3">
+            <span class="font-display block text-[22px] leading-tight">{{ c.name }}</span>
+            <span class="mt-0.5 block text-[13px]" style="color: var(--gris);">
+              {{ c.productCount }} {{ c.productCount === 1 ? 'mueble' : 'muebles' }}
+            </span>
+          </span>
+        </a>
+      }
+    </div>
+  </section>
+}
+
 <!-- 3. Lo hacemos nosotros mismos -->
 <section id="taller" class="mx-auto mt-13 max-w-[1360px] scroll-mt-24 px-5">
   <div
@@ -224,8 +262,8 @@
         Lo hacemos nosotros mismos
       </h2>
       <p class="m-0 max-w-[44ch] text-[17px] leading-relaxed" style="color: var(--tinta-suave);">
-        <!-- PENDIENTE: falta el año de fundación; con él la frase abre con "Fabricamos desde ...". -->
-        @if (foundingYear) { Fabricamos desde {{ foundingYear }} en Cali, con taller y local
+        <!-- El año de fundación sale de Ajustes; sin él, la frase se arma igual. -->
+        @if (foundingYear()) { Fabricamos desde {{ foundingYear() }} en Cali, con taller y local
         propios. } @else { Taller y local propios en Cali. } El tejido se hace a mano, pieza por
         pieza, y la madera se trabaja aquí mismo. Cuando escribes por WhatsApp hablas con quien va
         a fabricar tu mueble.
@@ -333,7 +371,7 @@
     class="rounded-bloque grid gap-px overflow-hidden"
     style="grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); background: var(--linea); border: 1px solid var(--linea);"
   >
-    @for (faq of faqs; track faq.q) {
+    @for (faq of faqs(); track faq.q) {
       <div class="px-5 py-[19px]" style="background: var(--hueso);">
         <h3 class="m-0 mb-[7px] font-body text-[17px] font-semibold">{{ faq.q }}</h3>
         <p class="m-0 text-[15px] leading-relaxed" style="color: var(--tinta-suave);">{{ faq.a }}</p>

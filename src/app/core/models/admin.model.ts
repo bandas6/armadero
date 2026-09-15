@@ -82,15 +82,109 @@ export interface QuoteStats {
 }
 
 // --- Ajustes ---
+export interface AdminFaq {
+  q: string;
+  a: string;
+}
+
 export interface AdminSettings {
   whatsappNumber: string;
-  businessHours: string;
+  hoursWeekday: string;
+  hoursSaturday: string;
   announcement: string;
   instagramUrl: string;
   facebookUrl: string;
+  storeAddress: string;
+  foundingYear: number | null;
+  /** Siempre 6: se edita el texto, no la cantidad. */
+  faqs: AdminFaq[];
   quoteMessageTemplate: string;
   effectiveWhatsapp: string | null;
   whatsappSource: 'panel' | 'env' | 'none';
+}
+
+// --- Usuarios del panel ---
+export type AdminRole = 'ADMIN' | 'EDITOR';
+
+export interface AdminUserRow {
+  _id: string;
+  name: string;
+  email: string;
+  role: AdminRole;
+  active: boolean;
+  lastLoginAt: string | null;
+  createdAt: string;
+}
+
+export interface AdminUserInput {
+  name?: string;
+  email?: string;
+  password?: string;
+  role?: AdminRole;
+  active?: boolean;
+}
+
+// --- Banners del home ---
+export interface AdminBanner {
+  _id: string;
+  title?: string | null;
+  subtitle?: string | null;
+  imageUrl: string;
+  imagePublicId?: string | null;
+  linkUrl?: string | null;
+  position: number;
+  active: boolean;
+  startsAt?: string | null;
+  endsAt?: string | null;
+}
+
+export interface AdminBannerInput {
+  title?: string;
+  subtitle?: string;
+  imageUrl?: string;
+  imagePublicId?: string;
+  linkUrl?: string;
+  startsAt?: string | null;
+  endsAt?: string | null;
+}
+
+// --- Colecciones / ambientes ---
+export interface AdminCollection {
+  _id: string;
+  name: string;
+  slug: string;
+  description?: string | null;
+  imageUrl?: string | null;
+  imagePublicId?: string | null;
+  products: string[];
+  position: number;
+  active: boolean;
+}
+
+export interface AdminCollectionInput {
+  name?: string;
+  slug?: string;
+  description?: string;
+  imageUrl?: string;
+  imagePublicId?: string;
+  products?: string[];
+}
+
+// --- Zonas de envío ---
+export interface AdminShippingZone {
+  _id: string;
+  city: string;
+  cost: number;
+  estimatedDays?: number | null;
+  notes?: string | null;
+  active: boolean;
+}
+
+export interface AdminShippingZoneInput {
+  city?: string;
+  cost?: number;
+  estimatedDays?: number | null;
+  notes?: string;
 }
 
 export interface AdminUser {

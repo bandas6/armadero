@@ -29,6 +29,11 @@ export const routes: Routes = [
       import('./features/product-detail/product-detail').then((m) => m.ProductDetail),
   },
   {
+    path: 'coleccion/:slug',
+    loadComponent: () =>
+      import('./features/catalog/collection-page').then((m) => m.CollectionPage),
+  },
+  {
     path: 'carrito',
     loadComponent: () => import('./features/cart/cart').then((m) => m.Cart),
   },

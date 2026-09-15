@@ -1,4 +1,7 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, PLATFORM_ID, computed, inject, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { debounceTime } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   FormArray,
@@ -8,6 +11,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
+import { apiErrorMessage } from './admin-utils';
 import { CatalogService } from '../../core/services/catalog.service';
 import { AdminProductService } from '../../core/services/admin-product.service';
 import { AdminImageManager } from './admin-image-manager';
@@ -47,6 +51,15 @@ export class AdminProductForm {
 
   /** Fotos elegidas en el formulario de "Nuevo mueble", antes de que exista el producto. */
   pending = signal<{ file: File; url: string }[]>([]);
+
+  /**
+   * Autoguardado del borrador en el navegador. Vanessa edita desde el taller y se le corta
+   * la conexión: lo que haya escrito espera en localStorage hasta que guarde o lo descarte.
+   * Las fotos pendientes no se guardan (son archivos), solo los textos y las medidas.
+   */
+  private platformId = inject(PLATFORM_ID);
+  private draftReady = false;
+  draft = signal<{ savedAt: string } | null>(null);
 
   form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.minLength(2)]],
@@ -109,7 +122,104 @@ export class AdminProductForm {
     } else {
       this.addVariant({ name: 'Estándar', isDefault: true });
       this.loading.set(false);
+      this.checkDraft();
     }
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.form.valueChanges
+        .pipe(debounceTime(800), takeUntilDestroyed(inject(DestroyRef)))
+        .subscribe(() => this.storeDraft());
+    }
+  }
+
+  // --- Borrador ---
+  private get draftKey(): string {
+    return `artemadero:borrador:${this.productId() ?? 'nuevo'}`;
+  }
+
+  private storeDraft() {
+    if (!this.draftReady || !isPlatformBrowser(this.platformId)) return;
+    try {
+      localStorage.setItem(
+        this.draftKey,
+        JSON.stringify({ savedAt: new Date().toISOString(), value: this.form.getRawValue() }),
+      );
+    } catch {
+      /* sin espacio o en privado: el autoguardado es un extra, no un requisito */
+    }
+  }
+
+  private clearDraft() {
+    this.draft.set(null);
+    if (!isPlatformBrowser(this.platformId)) return;
+    try {
+      localStorage.removeItem(this.draftKey);
+    } catch {
+      /* idem */
+    }
+  }
+
+  /** Al abrir: si hay un borrador distinto de lo cargado, ofrece restaurarlo. */
+  private checkDraft() {
+    if (!isPlatformBrowser(this.platformId)) return;
+    try {
+      const raw = localStorage.getItem(this.draftKey);
+      if (raw) {
+        const saved = JSON.parse(raw) as { savedAt: string; value: unknown };
+        const same = JSON.stringify(saved.value) === JSON.stringify(this.form.getRawValue());
+        if (same) localStorage.removeItem(this.draftKey);
+        else this.draft.set({ savedAt: saved.savedAt });
+      }
+    } catch {
+      /* borrador ilegible: se ignora */
+    }
+    this.draftReady = true;
+  }
+
+  restoreDraft() {
+    if (!isPlatformBrowser(this.platformId)) return;
+    try {
+      const raw = localStorage.getItem(this.draftKey);
+      if (!raw) return;
+      const { value } = JSON.parse(raw) as {
+        value: Record<string, unknown> & { variants?: unknown[]; customFields?: unknown[] };
+      };
+      const { variants, customFields, ...rest } = value;
+      this.form.patchValue(rest);
+      this.variants.clear();
+      for (const v of variants ?? []) this.addVariant(v as Partial<AdminVariant>);
+      if (!this.variants.length) this.addVariant({ name: 'Estándar', isDefault: true });
+      this.customFields.clear();
+      for (const f of customFields ?? []) {
+        this.addCustomField({
+          ...(f as Partial<CustomizationField>),
+          options: String((f as { options?: string }).options ?? '')
+            .split(',')
+            .map((o) => o.trim())
+            .filter(Boolean),
+        });
+      }
+      this.draft.set(null);
+      this.notice.set('Borrador restaurado. Revísalo y guarda.');
+    } catch {
+      this.error.set('No se pudo leer el borrador.');
+    }
+  }
+
+  discardDraft() {
+    this.clearDraft();
+  }
+
+  /** "hace 5 min", "ayer": suficiente para decidir si vale la pena restaurarlo. */
+  draftAge(): string {
+    const at = this.draft()?.savedAt;
+    if (!at) return '';
+    const mins = Math.round((Date.now() - new Date(at).getTime()) / 60000);
+    if (mins < 1) return 'hace un momento';
+    if (mins < 60) return `hace ${mins} min`;
+    const hours = Math.round(mins / 60);
+    if (hours < 24) return `hace ${hours} h`;
+    return `hace ${Math.round(hours / 24)} día(s)`;
   }
 
   private flattenLeaves(tree: CategoryNode[]) {
@@ -245,6 +355,7 @@ export class AdminProductForm {
     for (const f of p.customizationFields ?? []) this.addCustomField(f);
 
     this.loading.set(false);
+    this.checkDraft();
   }
 
   private buildPayload(): AdminProductInput {
@@ -352,21 +463,18 @@ export class AdminProductForm {
         }
 
         this.pending.set([]);
+        this.clearDraft();
         this.router.navigate(['/admin/productos', created._id], {
           queryParams: { nuevo: subidas > 0 ? 'ok' : 1 },
         });
       } else {
         const updated = await firstValueFrom(this.service.update(this.productId()!, payload));
+        this.clearDraft();
         this.patchFromProduct(updated);
         this.notice.set('Cambios guardados.');
       }
     } catch (e: unknown) {
-      const err = e as { error?: { error?: string; details?: { message: string }[] } };
-      this.error.set(
-        err?.error?.error ??
-          err?.error?.details?.map((d) => d.message).join(' ') ??
-          'No pudimos guardar. Revisa los datos.',
-      );
+      this.error.set(apiErrorMessage(e, 'No pudimos guardar. Revisa los datos.'));
     } finally {
       this.saving.set(false);
     }

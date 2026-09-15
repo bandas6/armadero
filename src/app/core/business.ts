@@ -14,10 +14,11 @@ export const WHATSAPP_NUMBER = '573162542637';
 /** El mismo numero como lo lee una persona. */
 export const WHATSAPP_DISPLAY = '+57 316 254 2637';
 
-// Las abreviaturas llevan espacio duro entre "a." y "m." para que la hora no se parta en
-// dos lineas en la columna angosta del pie.
-export const BUSINESS_HOURS_WEEKDAY = 'Lunes a viernes: 8:30 a. m. – 5:30 p. m.';
-export const BUSINESS_HOURS_SATURDAY = 'Sábado: 7:30 a. m. – 3:00 p. m.';
+// Horario de respaldo hasta que llega /api/settings (Vanessa lo edita en el panel). Las
+// abreviaturas llevan espacio duro entre "a." y "m." para que la hora no se parta en dos
+// lineas en la columna angosta del pie.
+export const HOURS_WEEKDAY = '8:30 a. m. – 5:30 p. m.';
+export const HOURS_SATURDAY = '7:30 a. m. – 3:00 p. m.';
 
 /**
  * Una linea, para poner debajo de un boton de cotizar. Empieza en minuscula a proposito:
@@ -29,18 +30,11 @@ export const BUSINESS_HOURS =
 export const CITY = 'Cali, Valle del Cauca';
 
 /**
- * PENDIENTE — falta preguntarle a la clienta la direccion del local. No inventar una:
- * va en el pie y en los datos estructurados del negocio. Ver docs/pendientes-diseno.md.
+ * La direccion del local y el año de fundacion viven en Ajustes del panel
+ * (settings.storeAddress / settings.foundingYear). Mientras no esten, el pie muestra este
+ * texto y el bloque de historia se arma sin el año.
  */
-export const STORE_ADDRESS: string | null = null;
 export const STORE_ADDRESS_FALLBACK = 'Dirección pendiente de confirmar';
-
-/**
- * PENDIENTE — falta el año de fundacion. "Fabricamos desde 2011" es lo que sostiene el
- * bloque de historia del home; sin el dato el bloque funciona, pero mejora mucho con el.
- * Ver docs/pendientes-diseno.md.
- */
-export const FOUNDING_YEAR: number | null = null;
 
 /** Enlace a wa.me con el mensaje ya escrito. */
 export function whatsappUrl(message: string): string {

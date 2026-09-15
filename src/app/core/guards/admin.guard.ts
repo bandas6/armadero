@@ -15,3 +15,13 @@ export const adminGuard: CanActivateFn = async (_route, state) => {
 
   return router.parseUrl(`/admin/login?returnUrl=${encodeURIComponent(state.url)}`);
 };
+
+/** Pantallas que solo ve quien administra todo (ajustes, banners, envíos, usuarios). */
+export const adminRoleGuard: CanActivateFn = async () => {
+  const auth = inject(AuthService);
+  const router = inject(Router);
+
+  await auth.ready;
+  if (auth.user()?.role === 'ADMIN') return true;
+  return router.parseUrl('/admin');
+};

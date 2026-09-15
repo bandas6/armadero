@@ -4,6 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { AdminCategoryService } from '../../core/services/admin-category.service';
 import { AdminProductService } from '../../core/services/admin-product.service';
 import type { AdminCategory, AdminCategoryInput, Material } from '../../core/models/admin.model';
+import { UndoService } from './undo.service';
 
 interface Draft {
   id: string | null; // null = nueva
@@ -24,6 +25,7 @@ interface Draft {
 })
 export class AdminCategoryList {
   private service = inject(AdminCategoryService);
+  private undo = inject(UndoService);
   private products = inject(AdminProductService);
 
   all = signal<AdminCategory[]>([]);
@@ -164,6 +166,13 @@ export class AdminCategoryList {
     try {
       await firstValueFrom(this.service.setActive(c._id, !c.active));
       this.load();
+      // La confirmación avisa la consecuencia; el deshacer cubre el "sí" apurado.
+      if (c.active) {
+        this.undo.offer(`"${c.name}" quedó oculta.`, async () => {
+          await firstValueFrom(this.service.setActive(c._id, true));
+          this.load();
+        });
+      }
     } catch (e: unknown) {
       this.error.set((e as { error?: { error?: string } })?.error?.error ?? 'No se pudo cambiar.');
     } finally {

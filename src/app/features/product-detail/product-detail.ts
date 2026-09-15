@@ -15,10 +15,11 @@ import { StructuredDataService } from '../../core/services/structured-data.servi
 import { CopCurrencyPipe } from '../../shared/pipes/cop-currency.pipe';
 import { CustomizationFields } from '../../shared/customization-fields/customization-fields';
 import { MaterialTag } from '../../shared/material-tag';
+import { ShippingNote } from '../../shared/shipping-note';
 import { measureCard } from '../../shared/measure-label';
 import { BUSINESS_HOURS } from '../../core/business';
 import type { Product, ProductVariant } from '../../core/models/product.model';
-import type { CategoryNode } from '../../core/models/catalog.model';
+import type { CategoryNode, SiteSettings } from '../../core/models/catalog.model';
 
 type LoadState = { product: Product | null; notFound: boolean };
 
@@ -32,6 +33,7 @@ type LoadState = { product: Product | null; notFound: boolean };
     RouterLink,
     CustomizationFields,
     MaterialTag,
+    ShippingNote,
   ],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',
@@ -48,6 +50,12 @@ export class ProductDetail {
   private catalogService = inject(CatalogService);
 
   /** El arbol solo hace falta para armar las migas: Catalogo · Tipo · Subcategoria. */
+  /** Horario y demás ajustes editables desde el panel; `hours` es el respaldo. */
+  readonly settings = toSignal(
+    this.catalogService.getSettings().pipe(catchError(() => of(null as SiteSettings | null))),
+    { initialValue: null as SiteSettings | null },
+  );
+
   private tree = toSignal(
     this.catalogService.getCategoryTree().pipe(catchError(() => of([] as CategoryNode[]))),
     { initialValue: [] as CategoryNode[] },

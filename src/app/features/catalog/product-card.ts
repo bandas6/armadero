@@ -22,20 +22,28 @@ const SCALE = {
  *
  * `dense` es la variante del catalogo: los mismos elementos un punto mas pequenos, para
  * que la reticula quede mas apretada.
+ *
+ * La tarjeta es un subgrid de seis filas de la reticula padre (foto, etiqueta, nombre,
+ * descripcion, cedula, precio). Cada elemento va a su fila fija, de modo que en una misma
+ * linea de la reticula todos los nombres, cedulas y precios quedan al mismo nivel aunque
+ * un nombre ocupe dos lineas o una tarjeta no tenga etiqueta ni descripcion. El host es
+ * `display: contents` para que el <article> sea el hijo directo de la reticula.
  */
 @Component({
   selector: 'app-product-card',
   standalone: true,
   imports: [RouterLink, NgOptimizedImage, CopCurrencyPipe, MaterialTag],
+  host: { class: 'contents' },
   template: `
     @let p = product();
     @let m = measures();
     @let s = scale();
-    <article class="flex h-full flex-col" [style.gap.px]="s.gap">
+    <article class="row-span-6 grid grid-rows-subgrid gap-y-0">
       <a
         [routerLink]="['/producto', p.slug]"
-        class="rounded-pieza relative block aspect-square overflow-hidden"
+        class="rounded-pieza relative row-start-1 block aspect-square overflow-hidden"
         style="border: 1px solid var(--linea);"
+        [style.margin-bottom.px]="s.gap"
         tabindex="-1"
       >
         @if (p.primaryImageUrl) {
@@ -56,51 +64,53 @@ const SCALE = {
         }
       </a>
 
-      <div class="flex flex-1 flex-col">
-        @if (p.category.material) {
-          <app-material-tag [material]="p.category.material" class="mb-[7px] block" />
-        }
+      @if (p.category.material) {
+        <app-material-tag [material]="p.category.material" class="row-start-2 mb-[7px] block" />
+      }
 
-        <h3 class="font-display leading-tight" [style.font-size.px]="s.name">
-          <a [routerLink]="['/producto', p.slug]" class="no-underline" style="color: var(--tinta);">{{
-            p.name
-          }}</a>
-        </h3>
+      <h3 class="font-display row-start-3 leading-tight" [style.font-size.px]="s.name">
+        <a [routerLink]="['/producto', p.slug]" class="no-underline" style="color: var(--tinta);">{{
+          p.name
+        }}</a>
+      </h3>
 
-        @if (p.shortDescription) {
-          <p class="mt-[3px] leading-snug" [style.font-size.px]="s.note" style="color: var(--gris);">
-            {{ p.shortDescription }}
-          </p>
-        }
-
-        <!-- Cédula de medidas: el dato grande arriba, los centímetros debajo. -->
-        <div
-          class="rounded-control mt-auto"
-          [style.padding]="s.pad"
-          style="border: 1px solid var(--tinta); margin-top: 9px;"
-        >
-          <p class="m-0 font-semibold leading-tight" [style.font-size.px]="s.headline">
-            {{ m.headline }}
-          </p>
-          @if (m.detail) {
-            <p class="mt-0.5" [style.font-size.px]="s.detail" style="color: var(--gris);">
-              {{ m.detail }}
-            </p>
-          }
-        </div>
-
+      @if (p.shortDescription) {
         <p
-          class="mt-2 font-semibold"
-          [style.font-size.px]="s.price"
-          [style.color]="p.hasPrice ? 'var(--tinta)' : 'var(--hoja)'"
+          class="row-start-4 mt-[3px] leading-snug"
+          [style.font-size.px]="s.note"
+          style="color: var(--gris);"
         >
-          @if (p.hasPrice) {
-            @if (p.priceTo && p.priceTo !== p.priceFrom) { Desde }{{ p.priceFrom | copCurrency }}
-          } @else {
-            Precio según medidas
-          }
+          {{ p.shortDescription }}
         </p>
+      }
+
+      <!-- Cédula de medidas: el dato grande arriba, los centímetros debajo. -->
+      <div
+        class="rounded-control row-start-5 mt-[9px]"
+        [style.padding]="s.pad"
+        style="border: 1px solid var(--tinta);"
+      >
+        <p class="m-0 font-semibold leading-tight" [style.font-size.px]="s.headline">
+          {{ m.headline }}
+        </p>
+        @if (m.detail) {
+          <p class="mt-0.5" [style.font-size.px]="s.detail" style="color: var(--gris);">
+            {{ m.detail }}
+          </p>
+        }
       </div>
+
+      <p
+        class="row-start-6 mt-2 font-semibold"
+        [style.font-size.px]="s.price"
+        [style.color]="p.hasPrice ? 'var(--tinta)' : 'var(--hoja)'"
+      >
+        @if (p.hasPrice) {
+          @if (p.priceTo && p.priceTo !== p.priceFrom) { Desde }{{ p.priceFrom | copCurrency }}
+        } @else {
+          Precio según medidas
+        }
+      </p>
     </article>
   `,
 })
