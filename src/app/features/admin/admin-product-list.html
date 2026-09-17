@@ -1,99 +1,408 @@
-<div class="flex items-center justify-between gap-3">
-  <h1 class="text-xl">Muebles</h1>
+<div class="flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <h1 class="m-0 text-2xl leading-tight sm:text-3xl">Muebles</h1>
+    <p class="mt-1 text-[15px]" style="color: var(--gris);">
+      {{ products().length }} en el catálogo · {{ visibles().length }} se ven en la página
+    </p>
+  </div>
   <a routerLink="/admin/productos/nuevo" class="admin-btn admin-btn--primary">+ Nuevo mueble</a>
 </div>
 
-<div class="mt-4 flex flex-wrap gap-2">
+<!--
+  Lo pendiente sube al principio: sin foto no se puede publicar, así que estos muebles
+  hoy no los ve nadie. Se cierra y no vuelve en esta sesión.
+-->
+@if (pendientes().length) {
+  <section
+    class="rounded-bloque mt-[18px] px-[18px] py-4"
+    style="border: 1px solid #c9a08a; border-left: 5px solid var(--alerta); background: #fbf1ea;"
+  >
+    <div class="flex items-start justify-between gap-3">
+      <h2 class="m-0 font-body text-[16px] font-semibold" style="color: var(--alerta);">
+        {{ pendientes().length }}
+        {{ pendientes().length === 1 ? 'mueble espera' : 'muebles esperan' }} una foto
+      </h2>
+      <button
+        type="button"
+        (click)="pendingDismissed.set(true)"
+        class="admin-btn admin-btn--sm admin-btn--icono"
+        aria-label="Cerrar este aviso"
+      >
+        ✕
+      </button>
+    </div>
+    <p class="mt-1 mb-3.5 max-w-[62ch] text-[15px] leading-relaxed" style="color: var(--tinta-suave);">
+      Sin foto no se pueden publicar, así que hoy nadie los ve en la página. Tómales la foto
+      desde el celular.
+    </p>
+    <div class="flex flex-col gap-2">
+      @for (p of pendientes(); track p._id) {
+        <div
+          class="rounded-control flex flex-wrap items-center gap-3 px-3 py-2.5"
+          style="background: #fff; border: 1px solid var(--linea-fuerte);"
+        >
+          <span
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-[11px]"
+            style="background: var(--hueso-alt); border: 1px dashed var(--linea-fuerte); color: var(--gris);"
+            aria-hidden="true"
+            >sin<br />foto</span
+          >
+          <span class="min-w-0 flex-1 font-medium">{{ p.name }}</span>
+          <label class="admin-btn admin-btn--sm admin-btn--primary cursor-pointer">
+            {{ busyId() === p._id ? 'Subiendo…' : 'Tomar la foto' }}
+            <input
+              type="file"
+              accept="image/*"
+              capture="environment"
+              class="hidden"
+              (change)="tomarFoto(p, $event)"
+              [disabled]="busyId() === p._id"
+            />
+          </label>
+        </div>
+      }
+    </div>
+  </section>
+}
+
+<div class="mt-[22px] flex flex-wrap gap-2.5">
   <input
     type="search"
     [(ngModel)]="q"
     (keyup.enter)="load()"
     placeholder="Buscar por nombre"
-    class="admin-input flex-1"
-    style="min-width: 12rem;"
+    aria-label="Buscar por nombre"
+    class="admin-input min-w-0 flex-1"
+    style="flex-basis: 15rem;"
   />
-  <select [(ngModel)]="statusFilter" class="admin-input" style="width: auto;">
-    <option value="">Todos</option>
-    <option value="publicado">Publicados</option>
-    <option value="oculto">Ocultos</option>
-    <option value="destacado">En el inicio</option>
-  </select>
-  <select [(ngModel)]="categoryFilter" (ngModelChange)="load()" class="admin-input" style="width: auto;" aria-label="Categoría">
+  <select
+    [(ngModel)]="categoryFilter"
+    (ngModelChange)="load()"
+    class="admin-input"
+    style="width: auto;"
+    aria-label="Categoría"
+  >
     <option value="">Todas las categorías</option>
     @for (c of leafCategories(); track c._id) {
       <option [value]="c._id">{{ c.parentName ? c.parentName + ' · ' : '' }}{{ c.name }}</option>
     }
   </select>
 </div>
-<p class="mt-2 text-xs" style="color: var(--gris);">
+
+<!-- Las pastillas cuentan: así se lee el estado de la sección de un vistazo. -->
+<div class="mt-3.5 flex flex-wrap items-center gap-2" role="group" aria-label="Filtrar muebles">
+  <button
+    type="button"
+    (click)="setFilter('todos')"
+    [attr.aria-pressed]="statusFilter() === 'todos'"
+    class="rounded-pastilla inline-flex min-h-11 cursor-pointer items-center gap-[7px] px-3.5 text-[14px]"
+    [style.background]="statusFilter() === 'todos' ? 'var(--tinta)' : 'var(--hueso-alt)'"
+    [style.color]="statusFilter() === 'todos' ? 'var(--hueso)' : 'var(--tinta)'"
+    [style.font-weight]="statusFilter() === 'todos' ? 600 : 400"
+    style="border: 1px solid var(--linea-fuerte);"
+  >
+    Todos <span class="font-semibold">{{ products().length }}</span>
+  </button>
+
+  @if (sinFoto().length) {
+    <button
+      type="button"
+      (click)="setFilter('sin-foto')"
+      [attr.aria-pressed]="statusFilter() === 'sin-foto'"
+      class="rounded-pastilla inline-flex min-h-11 cursor-pointer items-center gap-[7px] px-3.5 text-[14px] font-semibold"
+      [style.background]="statusFilter() === 'sin-foto' ? 'var(--alerta)' : '#fbf1ea'"
+      [style.color]="statusFilter() === 'sin-foto' ? '#fff' : 'var(--alerta)'"
+      style="border: 1px solid #c9a08a;"
+    >
+      Les falta foto <span>{{ sinFoto().length }}</span>
+    </button>
+  }
+
+  <button
+    type="button"
+    (click)="setFilter('ocultos')"
+    [attr.aria-pressed]="statusFilter() === 'ocultos'"
+    class="rounded-pastilla inline-flex min-h-11 cursor-pointer items-center gap-[7px] px-3.5 text-[14px]"
+    [style.background]="statusFilter() === 'ocultos' ? 'var(--tinta)' : 'var(--hueso-alt)'"
+    [style.color]="statusFilter() === 'ocultos' ? 'var(--hueso)' : 'var(--tinta)'"
+    style="border: 1px solid var(--linea-fuerte);"
+  >
+    Ocultos <span class="font-semibold">{{ ocultos().length }}</span>
+  </button>
+
+  <button
+    type="button"
+    (click)="setFilter('visibles')"
+    [attr.aria-pressed]="statusFilter() === 'visibles'"
+    class="rounded-pastilla inline-flex min-h-11 cursor-pointer items-center gap-[7px] px-3.5 text-[14px]"
+    [style.background]="statusFilter() === 'visibles' ? 'var(--tinta)' : 'var(--hueso-alt)'"
+    [style.color]="statusFilter() === 'visibles' ? 'var(--hueso)' : 'var(--tinta)'"
+    style="border: 1px solid var(--linea-fuerte);"
+  >
+    Se ven en la página <span class="font-semibold">{{ visibles().length }}</span>
+  </button>
+
+  <!-- El tope del inicio se ve antes de chocar con el error del servidor. -->
+  <button
+    type="button"
+    (click)="setFilter('inicio')"
+    [attr.aria-pressed]="statusFilter() === 'inicio'"
+    class="rounded-pastilla inline-flex min-h-11 cursor-pointer items-center gap-[7px] px-3.5 text-[14px]"
+    [style.background]="statusFilter() === 'inicio' ? 'var(--tinta)' : 'var(--hueso-alt)'"
+    [style.color]="statusFilter() === 'inicio' ? 'var(--hueso)' : 'var(--tinta)'"
+    style="border: 1px solid var(--linea-fuerte);"
+  >
+    En el inicio
+    <span class="font-semibold">{{ destacados().length }} de {{ featuredLimit }}</span>
+  </button>
+</div>
+
+<p class="mt-3.5 flex flex-wrap items-center gap-2 text-[14px]" style="color: var(--gris);">
+  <span aria-hidden="true" class="text-[16px]" style="color: var(--linea-fuerte);">⠿</span>
   @if (canDrag()) {
-    Arrastra un mueble para cambiar el orden{{ categoryFilter ? ' dentro de esta categoría' : ' en el catálogo' }}.
+    Arrastra un mueble para cambiar el orden{{
+      categoryFilter ? ' dentro de esta categoría' : ' en que aparece en el catálogo'
+    }}.
   } @else {
-    Para reordenar, quita la búsqueda y el filtro de estado.
+    Para reordenar, quita la búsqueda y vuelve a «Todos».
   }
 </p>
 
 @if (error()) {
-  <p class="mt-3 rounded-sm border px-3 py-2 text-sm" style="border-color: #c98; color: #8c4a34;">{{ error() }}</p>
+  <p
+    class="rounded-control mt-3 px-3 py-2.5 text-sm"
+    style="border: 1px solid #c9a08a; background: #fbf1ea; color: var(--alerta);"
+    role="alert"
+  >
+    {{ error() }}
+  </p>
 }
 
 @if (loading()) {
   <p class="mt-6" style="color: var(--gris);">Cargando…</p>
 } @else {
-  <ul class="mt-4 space-y-3" cdkDropList [cdkDropListDisabled]="!canDrag()" (cdkDropListDropped)="drop($event)">
-    @for (p of filtered(); track p._id; let i = $index) {
-      <li cdkDrag [cdkDragDisabled]="!canDrag()" class="rounded-lg border p-3" style="border-color: var(--linea); background: var(--hueso-alt);">
-        <div class="flex gap-3">
+  <ul
+    class="mt-4 grid list-none gap-3 p-0"
+    style="grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr));"
+    cdkDropList
+    [cdkDropListDisabled]="!canDrag()"
+    (cdkDropListDropped)="drop($event)"
+  >
+    @for (p of visible(); track p._id; let i = $index) {
+      @let faltaFoto = p.imageCount === 0;
+      <li
+        cdkDrag
+        [cdkDragDisabled]="!canDrag()"
+        class="rounded-bloque overflow-hidden"
+        [style.border]="faltaFoto ? '1px solid #c9a08a' : '1px solid var(--linea)'"
+        style="background: #fff;"
+      >
+        <div class="flex gap-3.5 p-3.5">
           @if (canDrag()) {
-            <span cdkDragHandle class="flex cursor-grab touch-none items-center px-1 text-lg" style="color: var(--gris);" aria-label="Arrastrar para reordenar">⋮⋮</span>
+            <span
+              cdkDragHandle
+              class="flex cursor-grab touch-none items-center px-0.5 text-[18px]"
+              style="color: var(--linea-fuerte); min-height: 2.75rem;"
+              [attr.aria-label]="'Arrastrar ' + p.name + ' para reordenar'"
+              >⠿</span
+            >
           }
-          <a [routerLink]="['/admin/productos', p._id]" class="h-20 w-20 shrink-0 overflow-hidden rounded-md border" style="border-color: color-mix(in srgb, var(--linea-fuerte) 30%, transparent);">
+
+          <a
+            [routerLink]="['/admin/productos', p._id]"
+            class="rounded-pieza block h-22 w-22 shrink-0 overflow-hidden"
+            [style.border]="faltaFoto ? '1px dashed var(--linea-fuerte)' : '1px solid var(--linea)'"
+          >
             @if (p.primaryImageUrl) {
-              <img [src]="p.primaryImageUrl" [alt]="p.name" class="h-full w-full object-cover" width="80" height="80" />
+              <img [src]="p.primaryImageUrl" [alt]="p.name" class="h-full w-full object-cover" width="88" height="88" />
             } @else {
-              <span class="flex h-full w-full items-center justify-center bg-[var(--hueso-alt)] text-center text-[0.65rem]" style="color: var(--gris);">Sin<br />foto</span>
+              <span
+                class="flex h-full w-full items-center justify-center text-center text-[11px]"
+                style="background: var(--hueso-alt); color: var(--gris);"
+                >sin<br />foto</span
+              >
             }
           </a>
 
           <div class="min-w-0 flex-1">
-            <a [routerLink]="['/admin/productos', p._id]" class="block font-medium leading-tight hover:underline">{{ p.name }}</a>
-            <p class="text-xs" style="color: var(--gris);">{{ p.category?.name || 'Sin categoría' }}</p>
-            <p class="mt-0.5 text-sm" style="color: var(--tinta);">
-              {{ p.hasPrice ? ((p.priceTo && p.priceTo !== p.priceFrom ? 'Desde ' : '') + (p.priceFrom | copCurrency)) : 'Según medidas' }}
+            <a
+              [routerLink]="['/admin/productos', p._id]"
+              class="block text-[17px] leading-tight font-semibold no-underline"
+              style="color: var(--tinta);"
+              >{{ p.name }}</a
+            >
+            <p class="mt-[3px] text-[13px]" style="color: var(--gris);">
+              {{ p.category?.name || 'Sin categoría' }}
             </p>
-            <div class="mt-1.5 flex flex-wrap gap-1 text-[0.7rem]">
-              <span class="rounded-full px-2 py-0.5" [style.background]="p.active ? 'color-mix(in srgb, var(--hoja) 20%, transparent)' : 'var(--linea)'">
-                {{ p.active ? 'Publicado' : 'Oculto' }}
-              </span>
+            <p
+              class="mt-1.5 text-[15px] font-semibold"
+              [style.color]="p.hasPrice ? 'var(--tinta)' : 'var(--hoja)'"
+            >
+              @if (p.hasPrice) {
+                @if (p.priceTo && p.priceTo !== p.priceFrom) { Desde }{{ p.priceFrom | copCurrency }}
+              } @else {
+                Según medidas
+              }
+            </p>
+            <p class="mt-2 flex flex-wrap items-center gap-[7px] text-[14px]">
+              <span
+                class="h-[9px] w-[9px] shrink-0 rounded-full"
+                [style.background]="p.active ? 'var(--hoja)' : 'transparent'"
+                [style.border]="p.active ? 'none' : '1.5px solid var(--gris)'"
+                aria-hidden="true"
+              ></span>
+              <span [style.color]="p.active ? 'var(--tinta)' : 'var(--gris)'">{{ estado(p) }}</span>
               @if (p.featured) {
-                <span class="rounded-full px-2 py-0.5" style="background: var(--hueso-alt);">En el inicio</span>
+                <span style="color: var(--gris);">Destacado en el inicio</span>
               }
-              @if (p.imageCount === 0) {
-                <span class="rounded-full px-2 py-0.5 font-medium" style="background: #f0d8c8; color: #8c4a34;">⚠ Sin fotos</span>
-              }
-            </div>
+            </p>
           </div>
 
           @if (canDrag()) {
-            <div class="flex shrink-0 flex-col justify-start gap-1">
-              <button type="button" (click)="move(i, -1)" [disabled]="i === 0" class="admin-btn admin-btn--sm" style="min-width: 2.2rem;" aria-label="Mover arriba">↑</button>
-              <button type="button" (click)="move(i, 1)" [disabled]="i === filtered().length - 1" class="admin-btn admin-btn--sm" style="min-width: 2.2rem;" aria-label="Mover abajo">↓</button>
+            <div class="flex shrink-0 flex-col gap-1">
+              <button
+                type="button"
+                (click)="move(i, -1)"
+                [disabled]="i === 0"
+                class="admin-btn admin-btn--sm admin-btn--icono"
+                aria-label="Mover arriba"
+              >
+                ↑
+              </button>
+              <button
+                type="button"
+                (click)="move(i, 1)"
+                [disabled]="i === visible().length - 1"
+                class="admin-btn admin-btn--sm admin-btn--icono"
+                aria-label="Mover abajo"
+              >
+                ↓
+              </button>
             </div>
           }
         </div>
 
-        <div class="mt-3 grid grid-cols-3 gap-2">
-          <a [routerLink]="['/admin/productos', p._id]" class="admin-btn admin-btn--primary admin-btn--sm">Editar</a>
-          <button type="button" (click)="toggleActive(p)" [disabled]="busyId() === p._id" class="admin-btn admin-btn--sm">
-            {{ p.active ? 'Ocultar' : 'Publicar' }}
-          </button>
-          <button type="button" (click)="toggleFeatured(p)" [disabled]="busyId() === p._id" class="admin-btn admin-btn--sm">
-            {{ p.featured ? 'Quitar' : 'Al inicio' }}
-          </button>
-        </div>
+        <!--
+          Una sola acción principal: la que mueve el mueble hacia adelante. Si está
+          oculto y ya tiene foto, lo que toca es publicarlo; si no, editarlo.
+        -->
+        @let publicarEsLoPrincipal = !p.active && p.imageCount > 0;
+        @if (!faltaFoto) {
+          <div class="flex flex-wrap gap-2 px-3.5 pb-3.5">
+            <a
+              [routerLink]="['/admin/productos', p._id]"
+              class="admin-btn"
+              [class.admin-btn--primary]="!publicarEsLoPrincipal"
+              style="flex: 1 1 7rem;"
+              >Editar</a
+            >
+            <button
+              type="button"
+              (click)="toggleActive(p)"
+              [disabled]="busyId() === p._id"
+              class="admin-btn"
+              [class.admin-btn--primary]="publicarEsLoPrincipal"
+              style="flex: 1 1 7rem;"
+            >
+              {{ p.active ? 'Ocultar' : 'Publicar' }}
+            </button>
+            <button
+              type="button"
+              (click)="toggleMenu(p._id)"
+              [attr.aria-expanded]="openMenu() === p._id"
+              [attr.aria-label]="'Más acciones para ' + p.name"
+              class="admin-btn admin-btn--icono"
+            >
+              ⋯
+            </button>
+          </div>
+        } @else {
+          <!-- La falta de foto deja de ser una etiqueta: es el diagnóstico y la salida. -->
+          <div
+            class="flex flex-wrap items-center gap-3 px-3.5 py-3"
+            style="background: #fbf1ea; border-top: 1px solid #e3c9b8;"
+          >
+            <p
+              class="m-0 min-w-0 flex-1 text-[14px] leading-snug"
+              style="color: var(--alerta); flex-basis: 14rem;"
+            >
+              <strong>Le falta la foto.</strong> Es lo único que falta para poder publicarlo.
+            </p>
+            <label class="admin-btn admin-btn--primary cursor-pointer">
+              {{ busyId() === p._id ? 'Subiendo…' : 'Tomar la foto' }}
+              <input
+                type="file"
+                accept="image/*"
+                capture="environment"
+                class="hidden"
+                (change)="tomarFoto(p, $event)"
+                [disabled]="busyId() === p._id"
+              />
+            </label>
+            <button
+              type="button"
+              (click)="toggleMenu(p._id)"
+              [attr.aria-expanded]="openMenu() === p._id"
+              [attr.aria-label]="'Más acciones para ' + p.name"
+              class="admin-btn admin-btn--icono"
+            >
+              ⋯
+            </button>
+          </div>
+        }
+
+        @if (openMenu() === p._id) {
+          <div
+            class="flex flex-col gap-2 px-3.5 pb-3.5"
+            style="border-top: 1px solid var(--linea); padding-top: 0.875rem;"
+          >
+            <button
+              type="button"
+              (click)="toggleFeatured(p)"
+              [disabled]="busyId() === p._id"
+              class="admin-btn admin-btn--sm"
+            >
+              {{ p.featured ? 'Quitar del inicio' : 'Destacar en el inicio' }}
+            </button>
+            <button
+              type="button"
+              (click)="duplicar(p)"
+              [disabled]="busyId() === p._id"
+              class="admin-btn admin-btn--sm"
+            >
+              Duplicar este mueble
+            </button>
+            @if (p.active) {
+              <a
+                [href]="'/producto/' + p.slug"
+                target="_blank"
+                rel="noopener"
+                class="admin-btn admin-btn--sm"
+                >Ver en la página ↗</a
+              >
+            }
+          </div>
+        }
       </li>
     } @empty {
       <li style="color: var(--gris);">No hay muebles que coincidan.</li>
     }
   </ul>
+
+  <!-- La paginación se ve: los de más abajo ya no desaparecen sin avisar. -->
+  @if (filtered().length) {
+    <div
+      class="mt-5 flex flex-wrap items-center justify-between gap-3.5 pt-4"
+      style="border-top: 1px solid var(--linea);"
+    >
+      <p class="m-0 text-[14px]" style="color: var(--gris);">
+        Muebles 1 a {{ visible().length }} de {{ filtered().length }}
+      </p>
+      @if (faltan()) {
+        <button type="button" (click)="verMas()" class="admin-btn">
+          Ver los {{ faltan() }} que faltan
+        </button>
+      }
+    </div>
+  }
 }

@@ -199,9 +199,12 @@ export class Header {
   /** Las hojas del árbol: las que llevan material y a las que se asignan los muebles. */
   private leaves = computed(() => {
     const out: CategoryNode[] = [];
-    const walk = (nodes: CategoryNode[]) => {
+    const walk = (nodes: CategoryNode[] | null | undefined) => {
+      // La API puede responder algo que no sea un arreglo; sin esta guarda el recorrido
+      // revienta y, en el encabezado, se lleva por delante todas las páginas.
+      if (!Array.isArray(nodes)) return;
       for (const n of nodes) {
-        if (n.children.length) walk(n.children);
+        if (n.children?.length) walk(n.children);
         else out.push(n);
       }
     };

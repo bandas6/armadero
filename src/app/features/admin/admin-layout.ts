@@ -33,7 +33,7 @@ const TABS: Tab[] = [
         class="sticky top-0 z-30 border-b"
         style="border-color: var(--linea); background: var(--hueso-alt);"
       >
-        <div class="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-3">
+        <div class="mx-auto flex max-w-[1120px] items-center justify-between gap-3 px-4 py-3">
           <a routerLink="/admin" class="font-semibold tracking-wide" style="color: var(--tinta);">
             ARTEMADERO · Panel
           </a>
@@ -41,12 +41,17 @@ const TABS: Tab[] = [
             <a routerLink="/admin/cuenta" class="underline" style="color: var(--gris);">
               {{ auth.user()?.name }}
             </a>
-            <button type="button" (click)="logout()" class="underline" style="color: var(--hoja);">
+            <button
+              type="button"
+              (click)="logout()"
+              class="inline-flex cursor-pointer items-center px-2 underline"
+              style="color: var(--hoja); min-height: 2.75rem;"
+            >
               Salir
             </button>
           </div>
         </div>
-        <nav class="mx-auto flex max-w-3xl gap-1 overflow-x-auto px-2 text-sm">
+        <nav class="mx-auto flex max-w-[1120px] gap-1 overflow-x-auto px-2 text-sm">
           @for (tab of tabs(); track tab.path) {
             <a
               [routerLink]="tab.path"
@@ -64,7 +69,7 @@ const TABS: Tab[] = [
         </nav>
       </header>
 
-      <main class="mx-auto max-w-3xl px-4 py-6">
+      <main class="mx-auto max-w-[1120px] px-4 py-6">
         <router-outlet />
       </main>
 
