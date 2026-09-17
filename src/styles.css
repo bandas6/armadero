@@ -254,6 +254,8 @@ a:hover {
 }
 .admin-input {
   border-radius: var(--r-control);
+  /* Un campo tambien se toca: el mismo minimo que los botones. */
+  min-height: 2.75rem;
   width: 100%;
   border: 1px solid var(--linea-fuerte);
   background: #fff;

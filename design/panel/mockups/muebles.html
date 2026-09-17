@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel · Muebles (rediseño)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#f7f6f2;color:#191c1e;font-family:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Instrument Serif',Georgia,serif;font-weight:700}
+  a{color:#42604b;text-underline-offset:3px}
+  a:hover{color:#191c1e}
+  :focus-visible{outline:3px solid #42604b;outline-offset:3px}
+  @media (prefers-reduced-motion: reduce){*{transition-duration:.001ms!important;animation-duration:.001ms!important}}
+</style>
+</head>
+<body>
+<div style="--hueso:#f7f6f2;--hueso-alt:#f2f1ec;--tinta:#191c1e;--tinta-suave:#43484b;--gris:#5e6467;--tejido:#a8641e;--madera:#3a5a6b;--hoja:#42604b;--linea:#191c1e1f;--linea-fuerte:#191c1e33;--alerta:#8c4a34;--r-bloque:12px;--r-pieza:10px;--r-control:8px;--r-pastilla:999px;background:var(--hueso);min-height:100vh">
+
+<header style="position:sticky;top:0;z-index:30;background:var(--hueso-alt);border-bottom:1px solid var(--linea)">
+  <div style="max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <span style="font-family:'IBM Plex Sans',sans-serif;font-weight:600;letter-spacing:0.06em;font-size:15px;color:var(--tinta)">ARTEMADERO · Panel</span>
+    <div style="display:flex;align-items:center;gap:18px;font-size:14px">
+      <a href="#cuenta" style="color:var(--gris)">Vanessa Ríos</a>
+      <a href="#salir" style="color:var(--hoja)">Salir</a>
+    </div>
+  </div>
+  <nav style="max-width:1120px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;font-size:14px">
+    <a href="#muebles" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid var(--hoja);color:var(--tinta);font-weight:600;text-decoration:none">Muebles</a>
+    <a href="#muebles" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Categorías</a>
+    <a href="#muebles" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Colecciones</a>
+    <a href="#muebles" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Cotizaciones</a>
+    <a href="#muebles" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Inicio</a>
+    <a href="#muebles" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Envíos</a>
+    <a href="#muebles" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Ajustes</a>
+    <a href="#muebles" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Usuarios</a>
+  </nav>
+</header>
+
+<main id="muebles" style="max-width:1120px;margin:0 auto;padding:22px 20px 60px">
+
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:6px">
+    <div>
+      <h1 style="margin:0;font-size:clamp(26px,3.4vw,34px);line-height:1.05">Muebles</h1>
+      <p style="margin:4px 0 0;font-size:15px;color:var(--gris)">24 en el catálogo · 19 se ven en la página</p>
+    </div>
+    <a href="#nuevo" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font-size:15px;font-weight:600;text-decoration:none">+ Nuevo mueble</a>
+  </div>
+
+  
+    <section style="margin-top:18px;border:1px solid #c9a08a;border-left:5px solid var(--alerta);border-radius:var(--r-bloque);background:#fbf1ea;padding:16px 18px">
+      <h2 style="margin:0 0 4px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:16px;color:var(--alerta)">3 muebles esperan una foto</h2>
+      <p style="margin:0 0 14px;font-size:15px;line-height:1.5;color:var(--tinta-suave);max-width:62ch">Sin foto no se pueden publicar, así que hoy nadie los ve en la página. Ábrelos y toma la foto desde el celular.</p>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <a href="#p-butaco" style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fff;border:1px solid var(--linea-fuerte);border-radius:var(--r-control);text-decoration:none;color:var(--tinta)">
+          <span style="width:40px;height:40px;flex:0 0 auto;border-radius:6px;background:var(--hueso-alt);border:1px dashed var(--linea-fuerte);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--gris)">—</span>
+          <span style="flex:1;min-width:0;font-weight:500">Butaco Yumbo</span>
+          <span style="font-size:14px;color:var(--hoja);font-weight:600">Agregar foto</span>
+        </a>
+        <a href="#p-nochero" style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fff;border:1px solid var(--linea-fuerte);border-radius:var(--r-control);text-decoration:none;color:var(--tinta)">
+          <span style="width:40px;height:40px;flex:0 0 auto;border-radius:6px;background:var(--hueso-alt);border:1px dashed var(--linea-fuerte);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--gris)">—</span>
+          <span style="flex:1;min-width:0;font-weight:500">Nochero Jamundí</span>
+          <span style="font-size:14px;color:var(--hoja);font-weight:600">Agregar foto</span>
+        </a>
+        <a href="#p-espejo" style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fff;border:1px solid var(--linea-fuerte);border-radius:var(--r-control);text-decoration:none;color:var(--tinta)">
+          <span style="width:40px;height:40px;flex:0 0 auto;border-radius:6px;background:var(--hueso-alt);border:1px dashed var(--linea-fuerte);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--gris)">—</span>
+          <span style="flex:1;min-width:0;font-weight:500">Espejo Dagua en madera</span>
+          <span style="font-size:14px;color:var(--hoja);font-weight:600">Agregar foto</span>
+        </a>
+      </div>
+    </section>
+  
+
+  <div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap">
+    <input type="search" placeholder="Buscar por nombre" aria-label="Buscar por nombre" style="flex:1 1 15rem;min-width:0;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+    <select aria-label="Categoría" style="flex:0 1 auto;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+      <option>Todas las categorías</option>
+      <option>Sala · Salas tejidas</option>
+      <option>Sala · Salas rústicas</option>
+      <option>Comedor · Comedores tejidos</option>
+      <option>Comedor · Comedores rústicos</option>
+      <option>Mecedoras · Mecedoras tejidas</option>
+      <option>Mecedoras · Mecedoras de madera</option>
+    </select>
+  </div>
+
+  <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);background:var(--tinta);color:var(--hueso);font-size:14px;font-weight:600">Todos <span style="opacity:.75;font-weight:400">24</span></span>
+    <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid #c9a08a;background:#fbf1ea;color:var(--alerta);font-size:14px;font-weight:600">Les falta foto <span style="font-weight:400">3</span></span>
+    <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);font-size:14px">Ocultos <span style="color:var(--gris)">5</span></span>
+    <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);font-size:14px">Se ven en la página <span style="color:var(--gris)">19</span></span>
+    <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);font-size:14px">En el inicio <span style="color:var(--gris)">9 de 9</span></span>
+  </div>
+
+  <p style="margin:14px 0 0;font-size:14px;color:var(--gris);display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span aria-hidden="true" style="font-size:16px;color:var(--linea-fuerte)">⠿</span>
+    Arrastra un mueble para cambiar el orden en que aparece en el catálogo.
+  </p>
+
+  <ul style="list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(380px,100%),1fr));gap:12px">
+
+    <li style="border:1px solid var(--linea);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+      <div style="display:flex;gap:14px;padding:14px">
+        <span aria-label="Arrastrar para reordenar" style="align-self:center;cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:18px;padding:0 2px">⠿</span>
+        <a href="#p1" style="width:88px;height:88px;flex:0 0 auto;border-radius:var(--r-pieza);overflow:hidden;border:1px solid var(--linea);display:block">
+          <span style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:11px;text-align:center">foto del<br>mueble</span>
+        </a>
+        <div style="flex:1;min-width:0">
+          <a href="#p1" style="display:block;font-weight:600;font-size:17px;line-height:1.2;color:var(--tinta);text-decoration:none">Sala Guadalajara</a>
+          <p style="margin:3px 0 0;font-size:13px;color:var(--gris)">Sala · Salas tejidas</p>
+          <p style="margin:6px 0 0;font-size:15px;font-weight:600;color:var(--hoja)">Según medidas</p>
+          <p style="margin:8px 0 0;font-size:14px;display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+            <span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;background:var(--hoja);flex:0 0 auto"></span>
+            <span style="color:var(--tinta)">Se ve en la página</span>
+            <span style="color:var(--gris)">Destacado en el inicio</span>
+          </p>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;padding:0 14px 14px;flex-wrap:wrap">
+        <a href="#p1" style="flex:1 1 7rem;display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 0.85rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font-size:14px;font-weight:600;text-decoration:none">Editar</a>
+        <button type="button" style="flex:1 1 7rem;min-height:2.75rem;padding:0.5rem 0.85rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;font-weight:500;cursor:pointer">Ocultar</button>
+        <button type="button" aria-label="Más acciones para Sala Guadalajara" style="flex:0 0 auto;min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+      </div>
+    </li>
+
+    <li id="p-butaco" style="border:1px solid #c9a08a;border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+      <div style="display:flex;gap:14px;padding:14px">
+        <span aria-label="Arrastrar para reordenar" style="align-self:center;cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:18px;padding:0 2px">⠿</span>
+        <a href="#p-butaco" style="width:88px;height:88px;flex:0 0 auto;border-radius:var(--r-pieza);overflow:hidden;border:1px dashed var(--linea-fuerte);display:block">
+          <span style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:11px;text-align:center">sin<br>foto</span>
+        </a>
+        <div style="flex:1;min-width:0">
+          <a href="#p-butaco" style="display:block;font-weight:600;font-size:17px;line-height:1.2;color:var(--tinta);text-decoration:none">Butaco Yumbo</a>
+          <p style="margin:3px 0 0;font-size:13px;color:var(--gris)">Butacos · Butacos tejidos</p>
+          <p style="margin:6px 0 0;font-size:15px;font-weight:600;color:var(--tinta)">$ 320.000</p>
+          <p style="margin:8px 0 0;font-size:14px;display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+            <span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;border:1.5px solid var(--gris);flex:0 0 auto"></span>
+            <span style="color:var(--gris)">Oculto — todavía nadie lo ve</span>
+          </p>
+        </div>
+      </div>
+      <div style="background:#fbf1ea;border-top:1px solid #e3c9b8;padding:12px 14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <p style="margin:0;flex:1 1 14rem;min-width:0;font-size:14px;line-height:1.45;color:var(--alerta)"><strong>Le falta la foto.</strong> Es lo único que falta para poder publicarlo.</p>
+        <a href="#p-butaco" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font-size:14px;font-weight:600;text-decoration:none">Tomar la foto</a>
+      </div>
+    </li>
+
+    <li style="border:1px solid var(--linea);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+      <div style="display:flex;gap:14px;padding:14px">
+        <span aria-label="Arrastrar para reordenar" style="align-self:center;cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:18px;padding:0 2px">⠿</span>
+        <a href="#p3" style="width:88px;height:88px;flex:0 0 auto;border-radius:var(--r-pieza);overflow:hidden;border:1px solid var(--linea);display:block">
+          <span style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:11px;text-align:center">foto del<br>mueble</span>
+        </a>
+        <div style="flex:1;min-width:0">
+          <a href="#p3" style="display:block;font-weight:600;font-size:17px;line-height:1.2;color:var(--tinta);text-decoration:none">Comedor Roldanillo</a>
+          <p style="margin:3px 0 0;font-size:13px;color:var(--gris)">Comedor · Comedores tejidos</p>
+          <p style="margin:6px 0 0;font-size:15px;font-weight:600;color:var(--tinta)">$ 3.900.000</p>
+          <p style="margin:8px 0 0;font-size:14px;display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+            <span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;background:var(--hoja);flex:0 0 auto"></span>
+            <span style="color:var(--tinta)">Se ve en la página</span>
+            <span style="color:var(--gris)">Destacado en el inicio</span>
+          </p>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;padding:0 14px 14px;flex-wrap:wrap">
+        <a href="#p3" style="flex:1 1 7rem;display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 0.85rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font-size:14px;font-weight:600;text-decoration:none">Editar</a>
+        <button type="button" style="flex:1 1 7rem;min-height:2.75rem;padding:0.5rem 0.85rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;font-weight:500;cursor:pointer">Ocultar</button>
+        <button type="button" aria-label="Más acciones para Comedor Roldanillo" style="flex:0 0 auto;min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+      </div>
+    </li>
+
+    <li style="border:1px solid var(--linea);border-radius:var(--r-bloque);background:#fff;overflow:hidden;position:relative">
+      <div style="display:flex;gap:14px;padding:14px">
+        <span aria-label="Arrastrar para reordenar" style="align-self:center;cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:18px;padding:0 2px">⠿</span>
+        <a href="#p4" style="width:88px;height:88px;flex:0 0 auto;border-radius:var(--r-pieza);overflow:hidden;border:1px solid var(--linea);display:block">
+          <span style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:11px;text-align:center">foto del<br>mueble</span>
+        </a>
+        <div style="flex:1;min-width:0">
+          <a href="#p4" style="display:block;font-weight:600;font-size:17px;line-height:1.2;color:var(--tinta);text-decoration:none">Mecedora Buga</a>
+          <p style="margin:3px 0 0;font-size:13px;color:var(--gris)">Mecedoras · Mecedoras tejidas</p>
+          <p style="margin:6px 0 0;font-size:15px;font-weight:600;color:var(--tinta)">$ 1.150.000</p>
+          <p style="margin:8px 0 0;font-size:14px;display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+            <span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;border:1.5px solid var(--gris);flex:0 0 auto"></span>
+            <span style="color:var(--gris)">Oculto — tiene 4 fotos, pero nadie lo ve</span>
+          </p>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;padding:0 14px 14px;flex-wrap:wrap">
+        <a href="#p4" style="flex:1 1 7rem;display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 0.85rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;font-weight:500;text-decoration:none">Editar</a>
+        <button type="button" style="flex:1 1 7rem;min-height:2.75rem;padding:0.5rem 0.85rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer">Publicar</button>
+        <button type="button" aria-label="Más acciones para Mecedora Buga" style="flex:0 0 auto;min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+      </div>
+    </li>
+
+  </ul>
+
+  <div style="margin-top:20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;border-top:1px solid var(--linea);padding-top:16px">
+    <p style="margin:0;font-size:14px;color:var(--gris)">Muebles 1 a 20 de 24</p>
+    <div style="display:flex;gap:8px">
+      <button type="button" disabled style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;opacity:.5;cursor:default">Anteriores</button>
+      <button type="button" style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;font-weight:500;cursor:pointer">Ver los 4 que faltan</button>
+    </div>
+  </div>
+
+</main>
+
+<div style="max-width:1120px;margin:0 auto;padding:0 20px 48px">
+  <p style="margin:0 0 10px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gris)">Aviso de deshacer — aparece abajo unos segundos y se va</p>
+  <div role="status" style="max-width:26rem;display:flex;align-items:center;justify-content:space-between;gap:12px;border-radius:var(--r-pieza);background:var(--tinta);color:var(--hueso);padding:12px 16px;font-size:14px;box-shadow:0 8px 24px #191c1e40">
+    <span>“Mecedora Palmira” quedó oculta en la página.</span>
+    <button type="button" style="flex:0 0 auto;min-height:2.75rem;padding:0 0.75rem;border:0;background:transparent;color:#fff;font:inherit;font-size:14px;font-weight:600;text-decoration:underline;cursor:pointer">Deshacer</button>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

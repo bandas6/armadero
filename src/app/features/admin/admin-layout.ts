@@ -34,11 +34,19 @@ const TABS: Tab[] = [
         style="border-color: var(--linea); background: var(--hueso-alt);"
       >
         <div class="mx-auto flex max-w-[1120px] items-center justify-between gap-3 px-4 py-3">
-          <a routerLink="/admin" class="font-semibold tracking-wide" style="color: var(--tinta);">
+          <a
+            routerLink="/admin"
+            class="inline-flex items-center font-semibold tracking-wide"
+            style="color: var(--tinta); min-height: 2.75rem;"
+          >
             ARTEMADERO · Panel
           </a>
           <div class="flex items-center gap-3 text-sm">
-            <a routerLink="/admin/cuenta" class="underline" style="color: var(--gris);">
+            <a
+              routerLink="/admin/cuenta"
+              class="inline-flex items-center underline"
+              style="color: var(--gris); min-height: 2.75rem;"
+            >
               {{ auth.user()?.name }}
             </a>
             <button
@@ -58,7 +66,7 @@ const TABS: Tab[] = [
               [routerLinkActiveOptions]="{ exact: tab.exact }"
               routerLinkActive
               #rla="routerLinkActive"
-              class="whitespace-nowrap border-b-2 px-3 py-2"
+              class="inline-flex min-h-11 items-center whitespace-nowrap border-b-2 px-3"
               [style.border-color]="rla.isActive ? 'var(--hoja)' : 'transparent'"
               [style.color]="rla.isActive ? 'var(--tinta)' : 'var(--linea-fuerte)'"
               [style.font-weight]="rla.isActive ? '600' : '400'"

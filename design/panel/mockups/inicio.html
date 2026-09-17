@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel · Inicio (rediseño)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#f7f6f2;color:#191c1e;font-family:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Instrument Serif',Georgia,serif;font-weight:700}
+  a{color:#42604b;text-underline-offset:3px}
+  a:hover{color:#191c1e}
+  :focus-visible{outline:3px solid #42604b;outline-offset:3px}
+  @media (prefers-reduced-motion: reduce){*{transition-duration:.001ms!important;animation-duration:.001ms!important}}
+</style>
+</head>
+<body>
+<div style="--hueso:#f7f6f2;--hueso-alt:#f2f1ec;--tinta:#191c1e;--tinta-suave:#43484b;--gris:#5e6467;--tejido:#a8641e;--madera:#3a5a6b;--hoja:#42604b;--linea:#191c1e1f;--linea-fuerte:#191c1e33;--alerta:#8c4a34;--r-bloque:12px;--r-pieza:10px;--r-control:8px;--r-pastilla:999px;background:var(--hueso);min-height:100vh">
+
+<header style="position:sticky;top:0;z-index:30;background:var(--hueso-alt);border-bottom:1px solid var(--linea)">
+  <div style="max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <span style="font-weight:600;letter-spacing:0.06em;font-size:15px;color:var(--tinta)">ARTEMADERO · Panel</span>
+    <div style="display:flex;align-items:center;gap:18px;font-size:14px">
+      <a href="#ini" style="color:var(--gris)">Vanessa Ríos</a>
+      <a href="#ini" style="color:var(--hoja)">Salir</a>
+    </div>
+  </div>
+  <nav style="max-width:1120px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;font-size:14px">
+    <a href="#ini" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Muebles</a>
+    <a href="#ini" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Categorías</a>
+    <a href="#ini" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Colecciones</a>
+    <a href="#ini" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Cotizaciones</a>
+    <a href="#ini" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid var(--hoja);color:var(--tinta);font-weight:600;text-decoration:none">Inicio</a>
+    <a href="#ini" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Envíos</a>
+    <a href="#ini" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Ajustes</a>
+    <a href="#ini" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Usuarios</a>
+  </nav>
+</header>
+
+<main id="ini" style="max-width:1120px;margin:0 auto;padding:22px 20px 60px">
+
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div>
+      <h1 style="margin:0;font-size:clamp(26px,3.4vw,34px);line-height:1.05">Portada del inicio</h1>
+      <p style="margin:4px 0 0;font-size:15px;color:var(--gris);max-width:64ch">La foto y las frases que ve quien entra a la página. Solo una está al aire a la vez; las demás esperan su turno o su fecha.</p>
+    </div>
+    <a href="#nueva" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font-size:15px;font-weight:600;text-decoration:none">+ Nueva portada</a>
+  </div>
+
+  <section style="margin-top:20px">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+      <span aria-hidden="true" style="width:10px;height:10px;border-radius:50%;background:var(--hoja)"></span>
+      <h2 style="margin:0;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.04em;text-transform:uppercase">Esto es lo que se ve ahora</h2>
+      <a href="#ini" style="margin-left:auto;font-size:14px;font-weight:500">Abrir la página →</a>
+    </div>
+
+    <div style="border:2px solid var(--hoja);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+      <div style="position:relative;background:var(--tinta);min-height:230px;display:flex;align-items:center;isolation:isolate">
+        <div style="position:absolute;inset:0;z-index:0;display:flex;align-items:center;justify-content:center;background:#2b2a26;color:#8a877e;font-size:12px">foto de la portada</div>
+        <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(105deg,#191c1e5c 0%,#191c1e33 44%,#191c1e14 100%)"></div>
+        <div style="position:relative;z-index:2;padding:22px;max-width:34rem">
+          <div style="background:#12151799;backdrop-filter:blur(3px);border-left:4px solid var(--hoja);border-radius:3px 10px 10px 3px;padding:16px 18px">
+            <p style="margin:0 0 7px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#e4e7e0">Muebles campestres y tejidos · Cali</p>
+            <p style="margin:0 0 8px;font-family:'Instrument Serif',Georgia,serif;font-size:29px;line-height:1.02;color:#f7f6f2">Comedores tejidos, hechos a tu medida</p>
+            <p style="margin:0;font-size:14px;line-height:1.5;color:#dee1da">Mesa redonda o rectangular, del tamaño de tu comedor. Escríbenos y te decimos qué te cabe.</p>
+          </div>
+        </div>
+      </div>
+      <div style="padding:14px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <div style="flex:1 1 18rem;min-width:0">
+          <p style="margin:0;font-size:14px;color:var(--gris)">Al aire desde el 12 de septiembre · sin fecha de fin</p>
+          <p style="margin:4px 0 0;font-size:14px;color:var(--gris)">El botón lleva a <a href="#ini">Catálogo · comedores tejidos</a></p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <a href="#editar" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;font-weight:500;text-decoration:none">Editar</a>
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Bajarla</button>
+        </div>
+      </div>
+    </div>
+
+    
+      <p style="margin:10px 0 0;font-size:14px;line-height:1.5;color:var(--tinta-suave);background:var(--hueso-alt);border:1px solid var(--linea);border-radius:var(--r-control);padding:11px 13px">Si bajas esta portada, entra <strong>“Mecedoras tejidas”</strong>, que es la siguiente de la cola.</p>
+    
+  </section>
+
+  <section style="margin-top:30px">
+    <h2 style="margin:0 0 4px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.04em;text-transform:uppercase;color:var(--gris)">Esperando turno</h2>
+    <p style="margin:0 0 12px;font-size:14px;color:var(--gris);display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span aria-hidden="true" style="font-size:16px;color:var(--linea-fuerte)">⠿</span>
+      Arrastra para cambiar el turno. La primera de esta lista es la que entra cuando la de arriba se baje o se venza.
+    </p>
+
+    <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px">
+
+      <li style="border:1px solid var(--linea-fuerte);border-left:5px solid var(--madera);border-radius:var(--r-bloque);background:#fff;padding:13px;display:flex;gap:13px;align-items:center;flex-wrap:wrap">
+        <span aria-label="Arrastrar para cambiar el turno" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:18px">⠿</span>
+        <span style="width:116px;height:70px;flex:0 0 auto;border-radius:var(--r-pieza);overflow:hidden;border:1px solid var(--linea);background:var(--hueso-alt);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gris)">foto</span>
+        <div style="flex:1 1 14rem;min-width:0">
+          <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+            <span style="display:inline-flex;align-items:center;padding:2px 9px;border-radius:var(--r-pastilla);border:1px solid var(--madera);color:var(--madera);font-size:12px;font-weight:600">La siguiente</span>
+            <p style="margin:0;font-weight:600;font-size:16px">Mecedoras tejidas</p>
+          </div>
+          <p style="margin:5px 0 0;font-size:14px;color:var(--gris)">“Tejidas a mano, una por una” · lleva a Mecedoras tejidas</p>
+          <p style="margin:3px 0 0;font-size:14px;color:var(--gris)">Lista, sin fecha: entra en cuanto la de arriba salga</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer">Subirla ya</button>
+          <a href="#editar" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;font-weight:500;text-decoration:none">Editar</a>
+          <button type="button" aria-label="Más acciones para Mecedoras tejidas" style="min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+        </div>
+      </li>
+
+      <li style="border:1px solid var(--linea);border-left:5px solid var(--tejido);border-radius:var(--r-bloque);background:#fff;padding:13px;display:flex;gap:13px;align-items:center;flex-wrap:wrap">
+        <span aria-label="Arrastrar para cambiar el turno" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:18px">⠿</span>
+        <span style="width:116px;height:70px;flex:0 0 auto;border-radius:var(--r-pieza);overflow:hidden;border:1px solid var(--linea);background:var(--hueso-alt);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gris)">foto</span>
+        <div style="flex:1 1 14rem;min-width:0">
+          <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+            <span style="display:inline-flex;align-items:center;padding:2px 9px;border-radius:var(--r-pastilla);border:1px solid var(--tejido);color:var(--tejido);font-size:12px;font-weight:600">Programada</span>
+            <p style="margin:0;font-weight:600;font-size:16px">Diciembre en la finca</p>
+          </div>
+          <p style="margin:5px 0 0;font-size:14px;color:var(--gris)">“Que la sala quede lista para las fiestas” · lleva al catálogo</p>
+          <p style="margin:3px 0 0;font-size:14px;color:var(--tejido)">Sube sola el 1 de diciembre y baja el 6 de enero</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
+          <a href="#editar" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;font-weight:500;text-decoration:none">Editar</a>
+          <button type="button" aria-label="Más acciones para Diciembre en la finca" style="min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+        </div>
+      </li>
+
+      <li style="border:1px solid #c9a08a;border-left:5px solid var(--alerta);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+        <div style="padding:13px;display:flex;gap:13px;align-items:center;flex-wrap:wrap">
+          <span aria-label="Arrastrar para cambiar el turno" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:18px">⠿</span>
+          <span style="width:116px;height:70px;flex:0 0 auto;border-radius:var(--r-pieza);overflow:hidden;border:1px solid var(--linea);background:var(--hueso-alt);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gris)">foto</span>
+          <div style="flex:1 1 14rem;min-width:0">
+            <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+              <span style="display:inline-flex;align-items:center;padding:2px 9px;border-radius:var(--r-pastilla);background:#fbf1ea;border:1px solid #c9a08a;color:var(--alerta);font-size:12px;font-weight:600">Se venció</span>
+              <p style="margin:0;font-weight:600;font-size:16px">Feria del hogar</p>
+            </div>
+            <p style="margin:5px 0 0;font-size:14px;color:var(--gris)">“Ven a vernos al pabellón 3” · lleva al catálogo</p>
+          </div>
+        </div>
+        <div style="background:#fbf1ea;border-top:1px solid #e3c9b8;padding:11px 13px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <p style="margin:0;flex:1 1 18rem;min-width:0;font-size:14px;line-height:1.45;color:var(--alerta)">Su fecha terminó el 31 de agosto, así que ya no puede subir. Cámbiale las fechas o quítala de la lista.</p>
+          <div style="display:flex;gap:8px;flex:0 0 auto;flex-wrap:wrap">
+            <a href="#editar" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font-size:14px;font-weight:500;text-decoration:none">Cambiar fechas</a>
+            <button type="button" style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--alerta);background:#fff;color:var(--alerta);font:inherit;font-size:14px;cursor:pointer">Quitar</button>
+          </div>
+        </div>
+      </li>
+
+      <li style="border:1px dashed var(--linea-fuerte);border-radius:var(--r-bloque);background:var(--hueso-alt);padding:13px;display:flex;gap:13px;align-items:center;flex-wrap:wrap;opacity:.74">
+        <span aria-hidden="true" style="color:var(--linea-fuerte);font-size:18px">⠿</span>
+        <span style="width:116px;height:70px;flex:0 0 auto;border-radius:var(--r-pieza);overflow:hidden;border:1px solid var(--linea);background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gris)">foto</span>
+        <div style="flex:1 1 14rem;min-width:0">
+          <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+            <span style="display:inline-flex;align-items:center;padding:2px 9px;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);color:var(--gris);font-size:12px;font-weight:600">Apagada</span>
+            <p style="margin:0;font-weight:600;font-size:16px">Sin titular</p>
+          </div>
+          <p style="margin:5px 0 0;font-size:14px;color:var(--gris)">Sin frases: usaría el titular de siempre, “Lo tejemos y lo armamos aquí mismo”</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:14px;font-weight:500;cursor:pointer">Encender</button>
+          <a href="#editar" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font-size:14px;font-weight:500;text-decoration:none">Editar</a>
+        </div>
+      </li>
+
+    </ul>
+  </section>
+
+  <section style="margin-top:30px;border:1px solid var(--linea);border-radius:var(--r-bloque);background:var(--hueso-alt);padding:16px 18px">
+    <h2 style="margin:0 0 6px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px">Si no hay ninguna portada encendida</h2>
+    <p style="margin:0 0 12px;font-size:15px;line-height:1.5;color:var(--tinta-suave);max-width:62ch">El inicio usa la portada de siempre, que no se puede borrar. Es esta:</p>
+    <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:#fff;border:1px solid var(--linea);border-radius:var(--r-pieza);padding:12px">
+      <span style="width:116px;height:70px;flex:0 0 auto;border-radius:var(--r-control);border:1px solid var(--linea);background:var(--hueso-alt);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gris);text-align:center">foto de<br>siempre</span>
+      <div style="flex:1 1 16rem;min-width:0">
+        <p style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-size:19px;line-height:1.15">Lo tejemos y lo armamos aquí mismo.</p>
+        <p style="margin:4px 0 0;font-size:14px;color:var(--gris);line-height:1.45">Taller propio. Casi todo se fabrica con las medidas de tu espacio.</p>
+      </div>
+      <a href="#editar" style="flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;font-weight:500;text-decoration:none">Cambiar la de siempre</a>
+    </div>
+  </section>
+
+  <section id="nueva" style="margin-top:38px;border-top:2px solid var(--tinta);padding-top:20px">
+    <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gris)">Así se arma una portada nueva</p>
+
+    <div id="editar" style="border:2px solid var(--hoja);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+      <div style="background:var(--hueso-alt);padding:14px 16px;border-bottom:1px solid var(--linea)">
+        <h2 style="margin:0;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:16px">Nueva portada</h2>
+        <p style="margin:3px 0 0;font-size:14px;color:var(--gris)">Cambia la foto y las frases del inicio. Las secciones de la página siguen igual.</p>
+      </div>
+
+      <div style="padding:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:20px;align-items:start">
+
+        <div>
+          <p style="margin:0 0 9px;font-size:14px;font-weight:600">Así se va a ver</p>
+          <div style="position:relative;border:1px solid var(--linea);border-radius:var(--r-pieza);overflow:hidden;background:var(--tinta);min-height:186px;display:flex;align-items:center;isolation:isolate">
+            <div style="position:absolute;inset:0;z-index:0;display:flex;align-items:center;justify-content:center;background:#2b2a26;color:#8a877e;font-size:11px">la foto que subas</div>
+            <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(105deg,#191c1e5c 0%,#191c1e33 44%,#191c1e14 100%)"></div>
+            <div style="position:relative;z-index:2;padding:16px;max-width:24rem">
+              <div style="background:#12151799;backdrop-filter:blur(3px);border-left:4px solid var(--hoja);border-radius:3px 9px 9px 3px;padding:13px 15px">
+                <p style="margin:0 0 6px;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:#e4e7e0">Muebles campestres y tejidos · Cali</p>
+                <p style="margin:0 0 7px;font-family:'Instrument Serif',Georgia,serif;font-size:22px;line-height:1.05;color:#f7f6f2">Comedores tejidos, hechos a tu medida</p>
+                <p style="margin:0;font-size:13px;line-height:1.45;color:#dee1da">Mesa redonda o rectangular, del tamaño de tu comedor.</p>
+              </div>
+            </div>
+          </div>
+          <p style="margin:9px 0 0;font-size:14px;color:var(--gris);line-height:1.5">La franja oscura va encima de la foto para que las frases se lean. Por eso funciona mejor una foto horizontal y despejada, de una sala o un comedor completo.</p>
+        </div>
+
+        <div>
+          <div style="margin-bottom:16px">
+            <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Foto <span style="color:var(--alerta);font-weight:400">· obligatoria</span></span>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+              <span style="width:2.75rem;height:2.75rem;flex:0 0 auto;border-radius:var(--r-control);border:1px dashed var(--linea-fuerte);background:var(--hueso-alt);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--gris)">—</span>
+              <label style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;font-weight:500;cursor:pointer">Tomar o elegir foto<input type="file" accept="image/*" capture="environment" style="display:none"></label>
+            </div>
+          </div>
+
+          <label style="display:block;margin-bottom:14px">
+            <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Titular <span style="font-weight:400;color:var(--gris)">— si lo dejas vacío, queda el de siempre</span></span>
+            <input value="Comedores tejidos, hechos a tu medida" maxlength="120" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+            <span style="display:block;font-size:13px;color:var(--gris);margin-top:4px">Corto funciona mejor: cabe en una o dos líneas.</span>
+          </label>
+
+          <label style="display:block;margin-bottom:14px">
+            <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Frase debajo <span style="font-weight:400;color:var(--gris)">— opcional</span></span>
+            <textarea rows="2" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem;resize:vertical">Mesa redonda o rectangular, del tamaño de tu comedor. Escríbenos y te decimos qué te cabe.</textarea>
+          </label>
+
+          <div style="margin-bottom:14px">
+            <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">A dónde lleva el botón</span>
+            <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px">
+              <button type="button" style="min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);background:var(--tinta);border:1px solid var(--tinta);color:var(--hueso);font:inherit;font-size:14px;font-weight:600;cursor:pointer">Una categoría</button>
+              <button type="button" style="min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Una colección</button>
+              <button type="button" style="min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Todo el catálogo</button>
+              <button type="button" style="min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Otra dirección</button>
+            </div>
+            <select aria-label="Categoría a la que lleva" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+              <option>Comedor · Comedores tejidos</option>
+              <option>Sala · Salas tejidas</option>
+              <option>Sala · Salas rústicas</option>
+              <option>Mecedoras · Mecedoras tejidas</option>
+              <option>Decoración · Lámparas tejidas</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom:6px">
+            <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Cuándo se ve</span>
+            <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px">
+              <button type="button" style="min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);background:var(--tinta);border:1px solid var(--tinta);color:var(--hueso);font:inherit;font-size:14px;font-weight:600;cursor:pointer">Hasta que yo la baje</button>
+              <button type="button" style="min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Entre dos fechas</button>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(140px,100%),1fr));gap:10px;opacity:.5">
+              <label style="display:block">
+                <span style="display:block;font-size:13px;color:var(--gris);margin-bottom:0.2rem">Desde</span>
+                <input type="date" disabled style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+              </label>
+              <label style="display:block">
+                <span style="display:block;font-size:13px;color:var(--gris);margin-bottom:0.2rem">Hasta</span>
+                <input type="date" disabled style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+              </label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="border-top:1px solid var(--linea);padding:14px 16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer">Subirla ahora</button>
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:15px;font-weight:500;cursor:pointer">Guardar para después</button>
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:15px;cursor:pointer">Cancelar</button>
+        <p style="margin:0 0 0 auto;font-size:14px;color:var(--gris);max-width:24ch;line-height:1.45">“Subirla ahora” la pone de primera y baja la que esté al aire.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+</div>
+</body>
+</html>

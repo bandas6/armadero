@@ -31,6 +31,16 @@ que se fabrica a la medida.
 **Cuenta de Instagram y Facebook.** Los enlaces del pie apuntan hoy a WhatsApp como
 sustituto.
 
+## Campos que le faltan al modelo
+
+**Fecha en que se le quitó el acceso a un usuario.** `AdminUserRow` guarda `active`,
+`lastLoginAt` y `createdAt`, pero no cuándo se desactivó a alguien. Por eso la fila de
+Usuarios dice "Sin acceso" a secas; con el campo diría "sin acceso desde el 3 de agosto".
+No bloquea nada (design/panel/PENDIENTES.md).
+
+**Fecha en que se ocultó un mueble o una categoría.** Mismo caso y mismo efecto: se puede
+decir que está oculto, no desde cuándo.
+
 ## Mejora grande y barata
 
 **El arte original del aviso**, en Illustrator, Photoshop o PNG en alta. Quien le hizo el

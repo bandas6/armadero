@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel · Usuarios (rediseño)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#f7f6f2;color:#191c1e;font-family:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Instrument Serif',Georgia,serif;font-weight:700}
+  a{color:#42604b;text-underline-offset:3px}
+  a:hover{color:#191c1e}
+  :focus-visible{outline:3px solid #42604b;outline-offset:3px}
+  @media (prefers-reduced-motion: reduce){*{transition-duration:.001ms!important;animation-duration:.001ms!important}}
+</style>
+</head>
+<body>
+<div style="--hueso:#f7f6f2;--hueso-alt:#f2f1ec;--tinta:#191c1e;--tinta-suave:#43484b;--gris:#5e6467;--tejido:#a8641e;--madera:#3a5a6b;--hoja:#42604b;--linea:#191c1e1f;--linea-fuerte:#191c1e33;--alerta:#8c4a34;--r-bloque:12px;--r-pieza:10px;--r-control:8px;--r-pastilla:999px;background:var(--hueso);min-height:100vh">
+
+<header style="position:sticky;top:0;z-index:30;background:var(--hueso-alt);border-bottom:1px solid var(--linea)">
+  <div style="max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <span style="font-weight:600;letter-spacing:0.06em;font-size:15px;color:var(--tinta)">ARTEMADERO · Panel</span>
+    <div style="display:flex;align-items:center;gap:18px;font-size:14px">
+      <a href="#us" style="color:var(--gris)">Vanessa Ríos</a>
+      <a href="#us" style="color:var(--hoja)">Salir</a>
+    </div>
+  </div>
+  <nav style="max-width:1120px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;font-size:14px">
+    <a href="#us" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Muebles</a>
+    <a href="#us" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Categorías</a>
+    <a href="#us" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Colecciones</a>
+    <a href="#us" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Cotizaciones</a>
+    <a href="#us" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Inicio</a>
+    <a href="#us" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Envíos</a>
+    <a href="#us" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Ajustes</a>
+    <a href="#us" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid var(--hoja);color:var(--tinta);font-weight:600;text-decoration:none">Usuarios</a>
+  </nav>
+</header>
+
+<main id="us" style="max-width:1120px;margin:0 auto;padding:22px 20px 60px">
+
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div>
+      <h1 style="margin:0;font-size:clamp(26px,3.4vw,34px);line-height:1.05">Quién entra al panel</h1>
+      <p style="margin:4px 0 0;font-size:15px;color:var(--gris)">3 personas · 2 con acceso hoy</p>
+    </div>
+    <a href="#nueva" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font-size:15px;font-weight:600;text-decoration:none">+ Dar acceso a alguien</a>
+  </div>
+
+  <section style="margin-top:18px;border:1px solid var(--linea);border-radius:var(--r-bloque);background:var(--hueso-alt);padding:16px 18px">
+    <h2 style="margin:0 0 12px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px">Hay dos permisos</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:12px">
+      <div style="background:#fff;border:1px solid var(--linea);border-left:4px solid var(--tinta);border-radius:var(--r-pieza);padding:13px 15px">
+        <p style="margin:0 0 6px;font-weight:600;font-size:16px">Administra todo</p>
+        <p style="margin:0;font-size:14px;line-height:1.55;color:var(--tinta-suave)">Entra a las ocho pestañas. Puede cambiar el número de WhatsApp, los precios de envío, la portada y quién más entra al panel.</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--linea);border-left:4px solid var(--madera);border-radius:var(--r-pieza);padding:13px 15px">
+        <p style="margin:0 0 6px;font-weight:600;font-size:16px">Carga muebles y fotos</p>
+        <p style="margin:0;font-size:14px;line-height:1.55;color:var(--tinta-suave)">Ve Muebles, Categorías, Colecciones y Cotizaciones. No puede tocar Ajustes, Inicio, Envíos ni Usuarios.</p>
+      </div>
+    </div>
+  </section>
+
+  <ul style="list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:12px">
+
+    <li style="border:2px solid var(--linea-fuerte);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+      <div style="padding:14px 16px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
+        <span aria-hidden="true" style="width:46px;height:46px;flex:0 0 auto;border-radius:50%;background:var(--tinta);color:var(--hueso);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600">V</span>
+        <div style="flex:1 1 14rem;min-width:0">
+          <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+            <p style="margin:0;font-weight:600;font-size:17px">Vanessa Ríos</p>
+            <span style="display:inline-flex;align-items:center;padding:2px 9px;border-radius:var(--r-pastilla);background:var(--hueso-alt);border:1px solid var(--linea-fuerte);color:var(--gris);font-size:12px;font-weight:600">Eres tú</span>
+          </div>
+          <p style="margin:4px 0 0;font-size:15px;color:var(--gris)">vanessa@artemadero.co</p>
+          <p style="margin:6px 0 0;font-size:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;background:var(--hoja)"></span>
+            <span style="font-weight:500">Administra todo</span>
+            <span style="color:var(--gris)">Entrando ahora</span>
+          </p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
+          <a href="#clave" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;font-weight:500;text-decoration:none">Cambiar mi contraseña</a>
+        </div>
+      </div>
+      <div style="background:var(--hueso-alt);border-top:1px solid var(--linea);padding:11px 16px">
+        <p style="margin:0;font-size:14px;color:var(--gris);line-height:1.45">No puedes quitarte el acceso ni bajarte el permiso a ti misma, para que el panel no quede sin nadie que lo administre.</p>
+      </div>
+    </li>
+
+    <li id="clave" style="border:1px solid var(--linea);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+      <div style="padding:14px 16px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
+        <span aria-hidden="true" style="width:46px;height:46px;flex:0 0 auto;border-radius:50%;background:var(--madera);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600">C</span>
+        <div style="flex:1 1 14rem;min-width:0">
+          <p style="margin:0;font-weight:600;font-size:17px">Camilo Restrepo</p>
+          <p style="margin:4px 0 0;font-size:15px;color:var(--gris)">camilo@artemadero.co</p>
+          <p style="margin:6px 0 0;font-size:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;background:var(--hoja)"></span>
+            <span style="font-weight:500">Carga muebles y fotos</span>
+            <span style="color:var(--gris)">Entró hace 2 días</span>
+          </p>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--linea);padding:14px 16px">
+        <p style="margin:0 0 9px;font-size:14px;font-weight:600">Qué puede hacer</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);background:var(--madera);border:1px solid var(--madera);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer">Carga muebles y fotos</button>
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Administra todo</button>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--linea);background:var(--hueso-alt);padding:14px 16px">
+        <p style="margin:0 0 4px;font-size:14px;font-weight:600">Ponerle una contraseña nueva</p>
+        <p style="margin:0 0 11px;font-size:14px;color:var(--gris);line-height:1.5;max-width:56ch">Se la pasas tú por WhatsApp o en persona. Él la puede cambiar después desde su propia cuenta.</p>
+        <div style="display:flex;gap:9px;flex-wrap:wrap;align-items:flex-start">
+          <div style="flex:1 1 15rem;min-width:0">
+            <span style="display:block;font-size:13px;font-weight:600;margin-bottom:0.2rem;color:var(--gris)">Contraseña nueva</span>
+            <span style="display:flex;align-items:center;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;overflow:hidden">
+              <input type="text" value="mimbre-roble-742" autocomplete="off" aria-label="Contraseña nueva para Camilo Restrepo" style="flex:1;min-width:0;border:0;background:transparent;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+              <button type="button" aria-label="Copiar la contraseña" style="flex:0 0 auto;min-width:2.75rem;min-height:2.75rem;border:0;border-left:1px solid var(--linea);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:13px;font-weight:500;padding:0 0.7rem;cursor:pointer">Copiar</button>
+            </span>
+            <span style="display:block;font-size:13px;color:var(--hoja);margin-top:4px">Sirve: tiene 16 caracteres.</span>
+          </div>
+          <button type="button" style="flex:0 0 auto;min-height:2.75rem;margin-top:1.35rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Generar otra</button>
+        </div>
+        <div style="margin-top:13px;display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer">Ponerle esta contraseña</button>
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:15px;cursor:pointer">Cancelar</button>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--linea);padding:12px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <p style="margin:0;flex:1 1 16rem;min-width:0;font-size:14px;color:var(--gris);line-height:1.45">Si ya no trabaja contigo, quítale el acceso. No se borra nada de lo que cargó.</p>
+        <button type="button" style="flex:0 0 auto;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--alerta);background:#fff;color:var(--alerta);font:inherit;font-size:14px;font-weight:500;cursor:pointer">Quitarle el acceso</button>
+      </div>
+    </li>
+
+    <li style="border:1px dashed var(--linea-fuerte);border-radius:var(--r-bloque);background:var(--hueso-alt);overflow:hidden">
+      <div style="padding:14px 16px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;opacity:.76">
+        <span aria-hidden="true" style="width:46px;height:46px;flex:0 0 auto;border-radius:50%;background:#fff;border:1px solid var(--linea-fuerte);color:var(--gris);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600">L</span>
+        <div style="flex:1 1 14rem;min-width:0">
+          <p style="margin:0;font-weight:600;font-size:17px">Laura Cifuentes</p>
+          <p style="margin:4px 0 0;font-size:15px;color:var(--gris)">laura@artemadero.co</p>
+          <p style="margin:6px 0 0;font-size:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;border:1.5px solid var(--gris)"></span>
+            <span style="color:var(--gris)">Sin acceso</span>
+          </p>
+          <p style="margin:4px 0 0;font-size:14px;color:var(--gris)">Cargaba muebles y fotos · última entrada, 28 de julio</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer">Devolverle el acceso</button>
+        </div>
+      </div>
+    </li>
+
+  </ul>
+
+  <section id="nueva" style="margin-top:26px;border:2px solid var(--hoja);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+    <div style="background:var(--hueso-alt);padding:14px 16px;border-bottom:1px solid var(--linea)">
+      <h2 style="margin:0;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:16px">Dar acceso a alguien</h2>
+      <p style="margin:3px 0 0;font-size:14px;color:var(--gris)">Se le crea la cuenta y tú le pasas la contraseña.</p>
+    </div>
+    <div style="padding:16px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:14px">
+        <label style="display:block">
+          <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Nombre</span>
+          <input placeholder="Camilo Restrepo" autocomplete="name" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+        </label>
+        <label style="display:block">
+          <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Correo</span>
+          <input type="email" placeholder="camilo@artemadero.co" autocomplete="email" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+          <span style="display:block;font-size:13px;color:var(--gris);margin-top:4px">Con este correo entra al panel.</span>
+        </label>
+      </div>
+
+      <div style="margin-top:16px">
+        <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.4rem">Contraseña</span>
+        <div style="display:flex;gap:9px;flex-wrap:wrap;align-items:center">
+          <span style="flex:1 1 15rem;min-width:0;display:flex;align-items:center;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;overflow:hidden">
+            <input type="text" value="guadua-lino-318" autocomplete="off" aria-label="Contraseña de la nueva persona" style="flex:1;min-width:0;border:0;background:transparent;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+            <button type="button" aria-label="Copiar la contraseña" style="flex:0 0 auto;min-width:2.75rem;min-height:2.75rem;border:0;border-left:1px solid var(--linea);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:13px;font-weight:500;padding:0 0.7rem;cursor:pointer">Copiar</button>
+          </span>
+          <button type="button" style="flex:0 0 auto;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Generar otra</button>
+        </div>
+        <p style="margin:6px 0 0;font-size:13px;color:var(--gris);line-height:1.5">Te generamos una que sirve. Cópiala antes de crear la cuenta: después no se puede ver de nuevo, solo cambiar.</p>
+      </div>
+
+      <div style="margin-top:18px">
+        <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.4rem">Qué va a poder hacer</span>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <label style="display:flex;gap:11px;align-items:flex-start;border:2px solid var(--madera);border-radius:var(--r-pieza);background:#f2f5f7;padding:12px 14px;cursor:pointer">
+            <input type="radio" name="rol-nuevo" checked style="margin-top:3px;width:18px;height:18px;accent-color:#3a5a6b;flex:0 0 auto">
+            <span style="min-width:0">
+              <span style="display:block;font-weight:600;font-size:15px">Carga muebles y fotos</span>
+              <span style="display:block;font-size:14px;color:var(--tinta-suave);line-height:1.5;margin-top:2px">Muebles, Categorías, Colecciones y Cotizaciones. Es lo que necesita quien solo sube el catálogo.</span>
+            </span>
+          </label>
+          <label style="display:flex;gap:11px;align-items:flex-start;border:1px solid var(--linea-fuerte);border-radius:var(--r-pieza);background:#fff;padding:12px 14px;cursor:pointer">
+            <input type="radio" name="rol-nuevo" style="margin-top:3px;width:18px;height:18px;accent-color:#191c1e;flex:0 0 auto">
+            <span style="min-width:0">
+              <span style="display:block;font-weight:600;font-size:15px">Administra todo</span>
+              <span style="display:block;font-size:14px;color:var(--tinta-suave);line-height:1.5;margin-top:2px">Las ocho pestañas, incluido el número de WhatsApp y quién más entra. Dalo solo a quien maneje el negocio.</span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--linea);padding-top:14px">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer">Crear la cuenta</button>
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:15px;cursor:pointer">Cancelar</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+</div>
+</body>
+</html>

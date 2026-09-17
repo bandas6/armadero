@@ -1,0 +1,504 @@
+<!--
+  Quién entra al panel. Rediseño de design/panel/PROMPT-08-usuarios.md sobre el mockup
+  design/panel/mockups/usuarios.html. Los valores salen de src/styles.css: aquí no hay
+  colores, radios ni tamaños nuevos.
+-->
+<div class="flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <h1 class="m-0 text-3xl leading-none">Quién entra al panel</h1>
+    <p class="mt-1 text-[15px]" style="color: var(--gris);">
+      {{ resumen().total }} {{ resumen().total === 1 ? 'persona' : 'personas' }} ·
+      {{ resumen().conAcceso }} con acceso hoy
+    </p>
+  </div>
+  <button type="button" (click)="abrirNueva()" class="admin-btn admin-btn--primary">
+    {{ showNew() ? 'Cancelar' : '+ Dar acceso a alguien' }}
+  </button>
+</div>
+
+@if (error()) {
+  <p
+    class="rounded-control mt-3 border px-3 py-2 text-sm"
+    style="border-color: var(--alerta); color: var(--alerta); background: #fff;"
+    role="alert"
+  >
+    {{ error() }}
+  </p>
+}
+
+<!--
+  Los dos permisos, explicados por lo que dejan hacer. Arriba de la lista y no dentro de
+  cada fila: es la misma explicación para todos, y así se lee una sola vez.
+-->
+<section
+  class="rounded-bloque mt-[18px] border p-4"
+  style="border-color: var(--linea); background: var(--hueso-alt);"
+>
+  <h2 class="font-body m-0 mb-3 text-[15px] font-semibold">Hay dos permisos</h2>
+  <div
+    class="grid gap-3"
+    style="grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));"
+  >
+    <div
+      class="rounded-pieza border border-l-4 px-[15px] py-[13px]"
+      style="background: #fff; border-color: var(--linea); border-left-color: var(--tinta);"
+    >
+      <p class="m-0 mb-1.5 text-base font-semibold">Administra todo</p>
+      <p class="m-0 text-sm leading-relaxed" style="color: var(--tinta-suave);">
+        Entra a las ocho pestañas. Puede cambiar el número de WhatsApp, los precios de envío, la
+        portada y quién más entra al panel.
+      </p>
+    </div>
+    <div
+      class="rounded-pieza border border-l-4 px-[15px] py-[13px]"
+      style="background: #fff; border-color: var(--linea); border-left-color: var(--madera);"
+    >
+      <p class="m-0 mb-1.5 text-base font-semibold">Carga muebles y fotos</p>
+      <p class="m-0 text-sm leading-relaxed" style="color: var(--tinta-suave);">
+        Ve Muebles, Categorías, Colecciones y Cotizaciones. No puede tocar Ajustes, Inicio,
+        Envíos ni Usuarios.
+      </p>
+    </div>
+  </div>
+</section>
+
+@if (loading()) {
+  <p class="mt-6" style="color: var(--gris);">Cargando…</p>
+} @else {
+  <ul class="mt-5 flex list-none flex-col gap-3 p-0">
+    @for (u of ordenados(); track u._id) {
+      @let soyYo = u._id === me();
+      <li
+        class="rounded-bloque overflow-hidden border"
+        [style.border-width]="soyYo ? '2px' : '1px'"
+        [style.border-style]="u.active ? 'solid' : 'dashed'"
+        [style.border-color]="soyYo || !u.active ? 'var(--linea-fuerte)' : 'var(--linea)'"
+        [style.background]="u.active ? '#fff' : 'var(--hueso-alt)'"
+      >
+        <!-- Cabecera de la fila: quién es, qué permiso tiene y cuándo entró -->
+        <div
+          class="flex flex-wrap items-start gap-3.5 px-4 py-3.5"
+          [style.opacity]="u.active ? 1 : 0.76"
+        >
+          <span
+            aria-hidden="true"
+            class="flex h-[46px] w-[46px] flex-none items-center justify-center rounded-full text-lg font-semibold"
+            [style.background]="u.active ? colorRol(u) : '#fff'"
+            [style.border]="u.active ? 'none' : '1px solid var(--linea-fuerte)'"
+            [style.color]="u.active ? 'var(--hueso)' : 'var(--gris)'"
+            >{{ inicial(u) }}</span
+          >
+
+          <div class="min-w-0 flex-[1_1_14rem]">
+            <div class="flex flex-wrap items-center gap-2">
+              <p class="m-0 text-[17px] font-semibold">{{ u.name }}</p>
+              @if (soyYo) {
+                <span
+                  class="rounded-pastilla inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold"
+                  style="background: var(--hueso-alt); border-color: var(--linea-fuerte); color: var(--gris);"
+                  >Eres tú</span
+                >
+              }
+            </div>
+            <p class="mt-1 mb-0 text-[15px]" style="color: var(--gris);">{{ u.email }}</p>
+
+            @if (u.active) {
+              <p class="mt-1.5 mb-0 flex flex-wrap items-center gap-2 text-sm">
+                <span
+                  aria-hidden="true"
+                  class="h-[9px] w-[9px] rounded-full"
+                  style="background: var(--hoja);"
+                ></span>
+                <span class="font-medium">{{ nombreRol(u.role) }}</span>
+                <span style="color: var(--gris);">{{ entrada(u) }}</span>
+              </p>
+            } @else {
+              <p class="mt-1.5 mb-0 flex flex-wrap items-center gap-2 text-sm">
+                <span
+                  aria-hidden="true"
+                  class="h-[9px] w-[9px] rounded-full"
+                  style="border: 1.5px solid var(--gris);"
+                ></span>
+                <span style="color: var(--gris);">Sin acceso</span>
+              </p>
+              <p class="mt-1 mb-0 text-sm" style="color: var(--gris);">{{ historia(u) }}</p>
+            }
+          </div>
+
+          <div class="ml-auto flex flex-wrap gap-2">
+            @if (soyYo) {
+              <!-- La propia contraseña se cambia en Mi cuenta, donde se pide la actual. -->
+              <a routerLink="/admin/cuenta" class="admin-btn no-underline">Cambiar mi contraseña</a>
+            } @else if (u.active) {
+              <button
+                type="button"
+                (click)="abrirClave(u)"
+                [disabled]="busy()"
+                class="admin-btn"
+                [attr.aria-expanded]="cambiandoClave() === u._id"
+              >
+                Ponerle una contraseña nueva
+              </button>
+            } @else {
+              <button
+                type="button"
+                (click)="devolverAcceso(u)"
+                [disabled]="busy()"
+                class="admin-btn admin-btn--primary"
+              >
+                Devolverle el acceso
+              </button>
+            }
+          </div>
+        </div>
+
+        @if (soyYo) {
+          <!--
+            El API impide quitarse el acceso o bajarse el permiso a uno mismo. Se dice
+            aquí, antes de intentarlo, en vez de aparecer como error después.
+          -->
+          <div
+            class="border-t px-4 py-[11px]"
+            style="background: var(--hueso-alt); border-color: var(--linea);"
+          >
+            <p class="m-0 text-sm leading-snug" style="color: var(--gris);">
+              No puedes quitarte el acceso ni bajarte el permiso a ti misma, para que el panel no
+              quede sin nadie que lo administre.
+            </p>
+          </div>
+        } @else if (u.active) {
+          <!-- El permiso: dos botones, no un desplegable -->
+          <div class="border-t px-4 py-3.5" style="border-color: var(--linea);">
+            <p class="m-0 mb-2.5 text-sm font-semibold">Qué puede hacer</p>
+            <div class="flex flex-wrap gap-2" role="group" aria-label="Qué puede hacer">
+              <button
+                type="button"
+                (click)="setRole(u, 'EDITOR')"
+                [disabled]="busy()"
+                [attr.aria-pressed]="u.role === 'EDITOR'"
+                class="admin-btn"
+                [style.background]="u.role === 'EDITOR' ? 'var(--madera)' : 'var(--hueso-alt)'"
+                [style.border-color]="u.role === 'EDITOR' ? 'var(--madera)' : 'var(--linea-fuerte)'"
+                [style.color]="u.role === 'EDITOR' ? '#fff' : 'var(--tinta)'"
+                [style.font-weight]="u.role === 'EDITOR' ? 600 : 400"
+              >
+                Carga muebles y fotos
+              </button>
+              <button
+                type="button"
+                (click)="setRole(u, 'ADMIN')"
+                [disabled]="busy()"
+                [attr.aria-pressed]="u.role === 'ADMIN'"
+                class="admin-btn"
+                [style.background]="u.role === 'ADMIN' ? 'var(--tinta)' : 'var(--hueso-alt)'"
+                [style.border-color]="u.role === 'ADMIN' ? 'var(--tinta)' : 'var(--linea-fuerte)'"
+                [style.color]="u.role === 'ADMIN' ? 'var(--hueso)' : 'var(--tinta)'"
+                [style.font-weight]="u.role === 'ADMIN' ? 600 : 400"
+              >
+                Administra todo
+              </button>
+            </div>
+          </div>
+
+          @if (cambiandoClave() === u._id) {
+            <!--
+              El panel que reemplaza al prompt(). La contraseña se ve (type="text"): es una
+              credencial que hay que pasarle a otra persona, no la propia.
+            -->
+            <div
+              class="border-t px-4 py-3.5"
+              style="border-color: var(--linea); background: var(--hueso-alt);"
+            >
+              <p class="m-0 mb-1 text-sm font-semibold">Ponerle una contraseña nueva</p>
+              <p class="m-0 mb-3 max-w-[56ch] text-sm leading-relaxed" style="color: var(--gris);">
+                Se la pasas tú por WhatsApp o en persona. {{ u.name.split(' ')[0] }} la puede
+                cambiar después desde su propia cuenta.
+              </p>
+
+              <div class="flex flex-wrap items-start gap-2.5">
+                <div class="min-w-0 flex-[1_1_15rem]">
+                  <label
+                    [attr.for]="'clave-' + u._id"
+                    class="mb-1 block text-[13px] font-semibold"
+                    style="color: var(--gris);"
+                    >Contraseña nueva</label
+                  >
+                  <span
+                    class="rounded-control flex items-center overflow-hidden border"
+                    style="border-color: var(--linea-fuerte); background: #fff;"
+                  >
+                    <input
+                      [id]="'clave-' + u._id"
+                      #campoClave
+                      type="text"
+                      [ngModel]="claveNueva()"
+                      (ngModelChange)="claveNueva.set($event)"
+                      name="clave"
+                      autocomplete="off"
+                      spellcheck="false"
+                      class="min-h-11 min-w-0 flex-1 border-0 bg-transparent px-3 py-2.5 text-[0.95rem]"
+                    />
+                    <button
+                      type="button"
+                      (click)="copiar(claveNueva(), u._id, campoClave)"
+                      class="min-h-11 min-w-11 flex-none cursor-pointer border-0 border-l px-3 text-[13px] font-medium"
+                      style="border-left: 1px solid var(--linea); background: var(--hueso-alt); color: var(--tinta);"
+                      [attr.aria-label]="'Copiar la contraseña de ' + u.name"
+                    >
+                      {{ copiado() === u._id ? 'Copiada' : 'Copiar' }}
+                    </button>
+                  </span>
+                  <span
+                    class="mt-1 block text-[13px]"
+                    [style.color]="revisionCambio().sirve ? 'var(--hoja)' : 'var(--alerta)'"
+                    >{{ revisionCambio().texto }}</span
+                  >
+                </div>
+                <button
+                  type="button"
+                  (click)="regenerarClave()"
+                  class="admin-btn mt-[1.35rem] flex-none"
+                  style="background: #fff;"
+                >
+                  Generar otra
+                </button>
+              </div>
+
+              <div class="mt-3 flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  (click)="ponerClave(u)"
+                  [disabled]="busy() || !revisionCambio().sirve"
+                  class="admin-btn admin-btn--primary"
+                >
+                  Ponerle esta contraseña
+                </button>
+                <button type="button" (click)="cerrarClave()" class="admin-btn" style="background: #fff;">
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          }
+
+          <!-- Quitar el acceso: la consecuencia dicha antes, y sin confirm() del navegador -->
+          @if (confirmandoSalida() === u._id) {
+            <div
+              class="border-t px-4 py-3"
+              style="border-color: var(--alerta); background: var(--hueso-alt);"
+            >
+              <p class="m-0 mb-2.5 text-sm leading-snug" style="color: var(--tinta-suave);">
+                <strong>{{ u.name }}</strong> deja de entrar al panel y se le cierran las sesiones
+                abiertas. Los muebles y las fotos que cargó se quedan como están, y puedes
+                devolverle el acceso cuando quieras.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  (click)="quitarAcceso(u)"
+                  [disabled]="busy()"
+                  class="admin-btn admin-btn--danger"
+                  style="background: #fff;"
+                >
+                  Sí, quitarle el acceso
+                </button>
+                <button
+                  type="button"
+                  (click)="confirmandoSalida.set(null)"
+                  class="admin-btn"
+                  style="background: #fff;"
+                >
+                  Dejarlo como está
+                </button>
+              </div>
+            </div>
+          } @else {
+            <div
+              class="flex flex-wrap items-center gap-2.5 border-t px-4 py-3"
+              style="border-color: var(--linea);"
+            >
+              <p class="m-0 min-w-0 flex-[1_1_16rem] text-sm leading-snug" style="color: var(--gris);">
+                Si ya no trabaja contigo, quítale el acceso. No se borra nada de lo que cargó.
+              </p>
+              <button
+                type="button"
+                (click)="pedirSalida(u)"
+                [disabled]="busy()"
+                class="admin-btn admin-btn--danger flex-none"
+                style="background: #fff;"
+              >
+                Quitarle el acceso
+              </button>
+            </div>
+          }
+        }
+      </li>
+    }
+  </ul>
+}
+
+@if (showNew()) {
+  <!-- Dar acceso a alguien. El borde --hoja marca que esto es lo que se está editando. -->
+  <section
+    class="rounded-bloque mt-6 overflow-hidden border-2"
+    style="border-color: var(--hoja); background: #fff;"
+  >
+    <div
+      class="border-b px-4 py-3.5"
+      style="background: var(--hueso-alt); border-color: var(--linea);"
+    >
+      <h2 class="font-body m-0 text-base font-semibold">Dar acceso a alguien</h2>
+      <p class="mt-1 mb-0 text-sm" style="color: var(--gris);">
+        Se le crea la cuenta y tú le pasas la contraseña.
+      </p>
+    </div>
+
+    <form class="p-4" (ngSubmit)="create()">
+      <div
+        class="grid gap-3.5"
+        style="grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));"
+      >
+        <div>
+          <label for="nuevo-nombre" class="admin-label">Nombre</label>
+          <input
+            id="nuevo-nombre"
+            [ngModel]="draft().name"
+            (ngModelChange)="draft.set({ ...draft(), name: $event })"
+            name="name"
+            autocomplete="name"
+            placeholder="Camilo Restrepo"
+            required
+            class="admin-input"
+          />
+        </div>
+        <div>
+          <label for="nuevo-correo" class="admin-label">Correo</label>
+          <input
+            id="nuevo-correo"
+            [ngModel]="draft().email"
+            (ngModelChange)="draft.set({ ...draft(), email: $event })"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="camilo@artemadero.co"
+            required
+            class="admin-input"
+          />
+          <span class="mt-1 block text-[13px]" style="color: var(--gris);"
+            >Con este correo entra al panel.</span
+          >
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <label for="nueva-clave" class="admin-label">Contraseña</label>
+        <div class="flex flex-wrap items-center gap-2.5">
+          <span
+            class="rounded-control flex min-w-0 flex-[1_1_15rem] items-center overflow-hidden border"
+            style="border-color: var(--linea-fuerte); background: #fff;"
+          >
+            <input
+              id="nueva-clave"
+              #campoNueva
+              type="text"
+              [ngModel]="draft().password"
+              (ngModelChange)="draft.set({ ...draft(), password: $event })"
+              name="password"
+              autocomplete="off"
+              spellcheck="false"
+              class="min-h-11 min-w-0 flex-1 border-0 bg-transparent px-3 py-2.5 text-[0.95rem]"
+            />
+            <button
+              type="button"
+              (click)="copiar(draft().password, 'nueva', campoNueva)"
+              class="min-h-11 min-w-11 flex-none cursor-pointer border-0 px-3 text-[13px] font-medium"
+              style="border-left: 1px solid var(--linea); background: var(--hueso-alt); color: var(--tinta);"
+              aria-label="Copiar la contraseña de la nueva persona"
+            >
+              {{ copiado() === 'nueva' ? 'Copiada' : 'Copiar' }}
+            </button>
+          </span>
+          <button type="button" (click)="regenerarNueva()" class="admin-btn flex-none">
+            Generar otra
+          </button>
+        </div>
+        <p
+          class="mt-1 mb-0 text-[13px]"
+          [style.color]="revisionNueva().sirve ? 'var(--hoja)' : 'var(--alerta)'"
+        >
+          {{ revisionNueva().texto }}
+        </p>
+        <p class="mt-1.5 mb-0 text-[13px] leading-relaxed" style="color: var(--gris);">
+          Te generamos una que sirve. Cópiala antes de crear la cuenta: después no se puede ver de
+          nuevo, solo cambiar.
+        </p>
+      </div>
+
+      <!--
+        El permiso se elige con la explicación al lado de cada opción, no con un párrafo
+        arriba que hay que recordar mientras se escoge.
+      -->
+      <fieldset class="mt-[18px] m-0 border-0 p-0">
+        <legend class="admin-label p-0">Qué va a poder hacer</legend>
+        <div class="flex flex-col gap-2.5">
+          <label
+            class="rounded-pieza flex cursor-pointer items-start gap-3 px-3.5 py-3"
+            [style.border]="
+              draft().role === 'EDITOR' ? '2px solid var(--madera)' : '1px solid var(--linea-fuerte)'
+            "
+            [style.background]="draft().role === 'EDITOR' ? '#f2f5f7' : '#fff'"
+          >
+            <input
+              type="radio"
+              name="role"
+              value="EDITOR"
+              [ngModel]="draft().role"
+              (ngModelChange)="draft.set({ ...draft(), role: $event })"
+              class="mt-[3px] h-[18px] w-[18px] flex-none"
+              style="accent-color: var(--madera);"
+            />
+            <span class="min-w-0">
+              <span class="block text-[15px] font-semibold">Carga muebles y fotos</span>
+              <span class="mt-0.5 block text-sm leading-relaxed" style="color: var(--tinta-suave);"
+                >Muebles, Categorías, Colecciones y Cotizaciones. Es lo que necesita quien solo
+                sube el catálogo.</span
+              >
+            </span>
+          </label>
+          <label
+            class="rounded-pieza flex cursor-pointer items-start gap-3 px-3.5 py-3"
+            [style.border]="
+              draft().role === 'ADMIN' ? '2px solid var(--tinta)' : '1px solid var(--linea-fuerte)'
+            "
+            [style.background]="draft().role === 'ADMIN' ? 'var(--hueso-alt)' : '#fff'"
+          >
+            <input
+              type="radio"
+              name="role"
+              value="ADMIN"
+              [ngModel]="draft().role"
+              (ngModelChange)="draft.set({ ...draft(), role: $event })"
+              class="mt-[3px] h-[18px] w-[18px] flex-none"
+              style="accent-color: var(--tinta);"
+            />
+            <span class="min-w-0">
+              <span class="block text-[15px] font-semibold">Administra todo</span>
+              <span class="mt-0.5 block text-sm leading-relaxed" style="color: var(--tinta-suave);"
+                >Las ocho pestañas, incluido el número de WhatsApp y quién más entra. Dalo solo a
+                quien maneje el negocio.</span
+              >
+            </span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="mt-[18px] flex flex-wrap gap-2 border-t pt-3.5" style="border-color: var(--linea);">
+        <button type="submit" [disabled]="busy()" class="admin-btn admin-btn--primary">
+          Crear la cuenta
+        </button>
+        <button type="button" (click)="showNew.set(false)" class="admin-btn" style="background: #fff;">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
+}

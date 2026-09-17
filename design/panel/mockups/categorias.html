@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel · Categorías (rediseño)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#f7f6f2;color:#191c1e;font-family:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Instrument Serif',Georgia,serif;font-weight:700}
+  a{color:#42604b;text-underline-offset:3px}
+  a:hover{color:#191c1e}
+  :focus-visible{outline:3px solid #42604b;outline-offset:3px}
+  @media (prefers-reduced-motion: reduce){*{transition-duration:.001ms!important;animation-duration:.001ms!important}}
+</style>
+</head>
+<body>
+<div style="--hueso:#f7f6f2;--hueso-alt:#f2f1ec;--tinta:#191c1e;--tinta-suave:#43484b;--gris:#5e6467;--tejido:#a8641e;--madera:#3a5a6b;--hoja:#42604b;--linea:#191c1e1f;--linea-fuerte:#191c1e33;--alerta:#8c4a34;--r-bloque:12px;--r-pieza:10px;--r-control:8px;--r-pastilla:999px;background:var(--hueso);min-height:100vh">
+
+<header style="position:sticky;top:0;z-index:30;background:var(--hueso-alt);border-bottom:1px solid var(--linea)">
+  <div style="max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <span style="font-weight:600;letter-spacing:0.06em;font-size:15px;color:var(--tinta)">ARTEMADERO · Panel</span>
+    <div style="display:flex;align-items:center;gap:18px;font-size:14px">
+      <a href="#cuenta" style="color:var(--gris)">Vanessa Ríos</a>
+      <a href="#salir" style="color:var(--hoja)">Salir</a>
+    </div>
+  </div>
+  <nav style="max-width:1120px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;font-size:14px">
+    <a href="#cat" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Muebles</a>
+    <a href="#cat" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid var(--hoja);color:var(--tinta);font-weight:600;text-decoration:none">Categorías</a>
+    <a href="#cat" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Colecciones</a>
+    <a href="#cat" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Cotizaciones</a>
+    <a href="#cat" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Inicio</a>
+    <a href="#cat" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Envíos</a>
+    <a href="#cat" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Ajustes</a>
+    <a href="#cat" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Usuarios</a>
+  </nav>
+</header>
+
+<main id="cat" style="max-width:1120px;margin:0 auto;padding:22px 20px 60px">
+
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div>
+      <h1 style="margin:0;font-size:clamp(26px,3.4vw,34px);line-height:1.05">Categorías</h1>
+      <p style="margin:4px 0 0;font-size:15px;color:var(--gris)">7 tipos de mueble · 16 subcategorías</p>
+    </div>
+    <button type="button" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer">+ Nuevo tipo de mueble</button>
+  </div>
+
+  
+    <div style="margin-top:16px;border:1px solid var(--linea);border-radius:var(--r-bloque);background:var(--hueso-alt);padding:14px 16px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
+      <p style="margin:0;flex:1 1 24rem;min-width:0;font-size:15px;line-height:1.55;color:var(--tinta-suave)">El catálogo tiene dos niveles: el <strong>tipo de mueble</strong> agrupa, y la <strong>subcategoría</strong> es la que la gente ve y toca en la página. Por eso <strong>la foto va en la subcategoría</strong>; si no le pones una, el sitio toma la de uno de sus muebles.</p>
+      <button type="button" style="flex:0 0 auto;min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Entendido</button>
+    </div>
+  
+
+  
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);background:var(--tinta);color:var(--hueso);font-size:14px;font-weight:600">Todas <span style="opacity:.75;font-weight:400">16</span></span>
+      <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid #c9a08a;background:#fbf1ea;color:var(--alerta);font-size:14px;font-weight:600">Sin foto propia <span style="font-weight:400">4</span></span>
+      <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);font-size:14px">Sin muebles <span style="color:var(--gris)">2</span></span>
+      <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);font-size:14px">Ocultas <span style="color:var(--gris)">1</span></span>
+      <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);font-size:14px"><span aria-hidden="true" style="width:10px;height:10px;border-radius:2px;background:var(--tejido)"></span>Tejido <span style="color:var(--gris)">7</span></span>
+      <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);font-size:14px"><span aria-hidden="true" style="width:10px;height:10px;border-radius:2px;background:var(--madera)"></span>Madera <span style="color:var(--gris)">5</span></span>
+    </div>
+  
+
+  <p style="margin:16px 0 0;font-size:14px;color:var(--gris);display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span aria-hidden="true" style="font-size:16px;color:var(--linea-fuerte)">⠿</span>
+    Arrastra para cambiar el orden en que se ven en el menú y en el catálogo.
+  </p>
+
+  <ul style="list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:20px">
+
+    <li>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--tinta);padding-bottom:9px">
+        <span aria-label="Arrastrar para reordenar" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:18px">⠿</span>
+        <h2 style="margin:0;font-size:24px;line-height:1.1;flex:1 1 10rem;min-width:0">Sala</h2>
+        <span style="font-size:14px;color:var(--gris)">3 subcategorías · 91 muebles</span>
+        <div style="display:flex;gap:8px">
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Cambiar nombre</button>
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Ocultar</button>
+        </div>
+      </div>
+
+      <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;margin-top:10px">
+        <li style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;border:1px solid var(--linea);border-left:5px solid var(--tejido);border-radius:var(--r-control);background:#fff;padding:10px 12px">
+          <span aria-label="Arrastrar para reordenar" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:16px">⠿</span>
+          <span style="width:56px;height:56px;flex:0 0 auto;border-radius:var(--r-control);overflow:hidden;border:1px solid var(--linea);display:flex;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:10px;text-align:center">foto</span>
+          <span style="flex:1 1 12rem;min-width:0">
+            <span style="display:block;font-weight:500;font-size:16px">Salas tejidas</span>
+            <span style="display:flex;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--gris);margin-top:2px">
+              <span style="color:var(--tejido);font-weight:600">Tejido</span>
+              <span>58 muebles</span>
+              <span>Foto propia</span>
+            </span>
+          </span>
+          <span style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
+            <button type="button" style="min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Editar</button>
+            <button type="button" aria-label="Más acciones para Salas tejidas" style="min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+          </span>
+        </li>
+
+        <li style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;border:1px solid var(--linea);border-left:5px solid var(--madera);border-radius:var(--r-control);background:#fff;padding:10px 12px">
+          <span aria-label="Arrastrar para reordenar" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:16px">⠿</span>
+          <span style="width:56px;height:56px;flex:0 0 auto;border-radius:var(--r-control);overflow:hidden;border:1px solid var(--linea);display:flex;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:10px;text-align:center">foto</span>
+          <span style="flex:1 1 12rem;min-width:0">
+            <span style="display:block;font-weight:500;font-size:16px">Salas rústicas</span>
+            <span style="display:flex;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--gris);margin-top:2px">
+              <span style="color:var(--madera);font-weight:600">Madera</span>
+              <span>21 muebles</span>
+              <span>Foto propia</span>
+            </span>
+          </span>
+          <span style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
+            <button type="button" style="min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Editar</button>
+            <button type="button" aria-label="Más acciones para Salas rústicas" style="min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+          </span>
+        </li>
+
+        <li style="border:1px solid #c9a08a;border-left:5px solid var(--linea-fuerte);border-radius:var(--r-control);background:#fff;overflow:hidden">
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:10px 12px">
+            <span aria-label="Arrastrar para reordenar" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:16px">⠿</span>
+            <span style="width:56px;height:56px;flex:0 0 auto;border-radius:var(--r-control);border:1px dashed var(--linea-fuerte);display:flex;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:10px;text-align:center">sin<br>foto</span>
+            <span style="flex:1 1 12rem;min-width:0">
+              <span style="display:block;font-weight:500;font-size:16px">Mesas de centro</span>
+              <span style="display:flex;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--gris);margin-top:2px">
+                <span>Sin material</span>
+                <span>12 muebles</span>
+              </span>
+            </span>
+            <span style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
+              <button type="button" style="min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Editar</button>
+              <button type="button" aria-label="Más acciones para Mesas de centro" style="min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+            </span>
+          </div>
+          <div style="background:#fbf1ea;border-top:1px solid #e3c9b8;padding:11px 12px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+            <p style="margin:0;flex:1 1 18rem;min-width:0;font-size:14px;line-height:1.45;color:var(--alerta)">Está usando la foto de un mueble. Ponle una propia y decides tú qué se ve en el catálogo.</p>
+            <label style="flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font-size:14px;font-weight:600;cursor:pointer">Subir foto<input type="file" accept="image/*" style="display:none"></label>
+          </div>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--tinta);padding-bottom:9px">
+        <span aria-label="Arrastrar para reordenar" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:18px">⠿</span>
+        <h2 style="margin:0;font-size:24px;line-height:1.1;flex:1 1 10rem;min-width:0">Mecedoras</h2>
+        <span style="font-size:14px;color:var(--gris)">2 subcategorías · 34 muebles</span>
+        <div style="display:flex;gap:8px">
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Cambiar nombre</button>
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Ocultar</button>
+        </div>
+      </div>
+
+      <ul style="list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:8px">
+        <li style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;border:1px solid var(--linea);border-left:5px solid var(--tejido);border-radius:var(--r-control);background:#fff;padding:10px 12px">
+          <span aria-label="Arrastrar para reordenar" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:16px">⠿</span>
+          <span style="width:56px;height:56px;flex:0 0 auto;border-radius:var(--r-control);overflow:hidden;border:1px solid var(--linea);display:flex;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:10px;text-align:center">foto</span>
+          <span style="flex:1 1 12rem;min-width:0">
+            <span style="display:block;font-weight:500;font-size:16px">Mecedoras tejidas</span>
+            <span style="display:flex;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--gris);margin-top:2px">
+              <span style="color:var(--tejido);font-weight:600">Tejido</span>
+              <span>34 muebles</span>
+              <span>Foto propia</span>
+            </span>
+          </span>
+          <span style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
+            <button type="button" style="min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Editar</button>
+            <button type="button" aria-label="Más acciones para Mecedoras tejidas" style="min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+          </span>
+        </li>
+
+        <li style="border:2px solid var(--hoja);border-radius:var(--r-control);background:var(--hueso-alt);overflow:hidden">
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:10px 12px;background:#fff;border-bottom:1px solid var(--linea)">
+            <span aria-hidden="true" style="color:var(--linea-fuerte);font-size:16px">⠿</span>
+            <span style="width:56px;height:56px;flex:0 0 auto;border-radius:var(--r-control);border:1px dashed var(--linea-fuerte);display:flex;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:10px;text-align:center">sin<br>foto</span>
+            <span style="flex:1 1 12rem;min-width:0">
+              <span style="display:block;font-weight:500;font-size:16px">Mecedoras de madera</span>
+              <span style="display:flex;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--gris);margin-top:2px">
+                <span style="color:var(--madera);font-weight:600">Madera</span>
+                <span>Sin muebles todavía</span>
+              </span>
+            </span>
+          </div>
+
+          <div style="padding:14px 12px 12px">
+            <p style="margin:0 0 12px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--hoja);font-weight:600">Editando esta subcategoría</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:12px">
+              <label style="display:block">
+                <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Nombre</span>
+                <input value="Mecedoras de madera" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+              </label>
+              <label style="display:block">
+                <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Material</span>
+                <select style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+                  <option>Madera</option>
+                  <option>Tejido</option>
+                  <option>Sin material específico</option>
+                </select>
+              </label>
+            </div>
+            <label style="display:block;margin-top:12px">
+              <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Descripción <span style="font-weight:400;color:var(--gris)">— opcional, se ve arriba de la retícula</span></span>
+              <textarea rows="2" placeholder="Maciza, respaldo de varillas. Las hacemos en la medida que necesites." style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem;resize:vertical"></textarea>
+            </label>
+            <div style="margin-top:12px">
+              <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Foto de la subcategoría</span>
+              <p style="margin:0 0 8px;font-size:14px;color:var(--gris);line-height:1.45">Es la que la gente toca en el catálogo. Todavía no hay muebles aquí, así que sin foto propia esta subcategoría se ve vacía.</p>
+              <label style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font-size:14px;font-weight:500;cursor:pointer">Tomar o elegir foto<input type="file" accept="image/*" capture="environment" style="display:none"></label>
+            </div>
+            <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+              <button type="button" style="min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer">Guardar</button>
+              <button type="button" style="min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Cancelar</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--tinta);padding-bottom:9px">
+        <span aria-label="Arrastrar para reordenar" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:18px">⠿</span>
+        <h2 style="margin:0;font-size:24px;line-height:1.1;flex:1 1 10rem;min-width:0">Butacos</h2>
+        <span style="font-size:14px;color:var(--gris)">2 subcategorías · 20 muebles</span>
+        <div style="display:flex;gap:8px">
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Cambiar nombre</button>
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px solid var(--alerta);background:var(--hueso-alt);color:var(--alerta);font:inherit;font-size:14px;cursor:pointer">Ocultar</button>
+        </div>
+      </div>
+
+      <div style="margin-top:10px;border:1px solid #c9a08a;border-left:5px solid var(--alerta);border-radius:var(--r-control);background:#fbf1ea;padding:13px 14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <p style="margin:0;flex:1 1 20rem;min-width:0;font-size:15px;line-height:1.5;color:var(--alerta)"><strong>Ocultar “Butacos” también saca 20 muebles de la página.</strong> Nadie los va a ver hasta que la vuelvas a mostrar.</p>
+        <div style="display:flex;gap:8px;flex:0 0 auto;flex-wrap:wrap">
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--alerta);background:var(--alerta);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer">Ocultar de todos modos</button>
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Cancelar</button>
+        </div>
+      </div>
+
+      <ul style="list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:8px">
+        <li style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;border:1px solid var(--linea);border-left:5px solid var(--tejido);border-radius:var(--r-control);background:#fff;padding:10px 12px">
+          <span aria-label="Arrastrar para reordenar" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:16px">⠿</span>
+          <span style="width:56px;height:56px;flex:0 0 auto;border-radius:var(--r-control);overflow:hidden;border:1px solid var(--linea);display:flex;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:10px;text-align:center">foto</span>
+          <span style="flex:1 1 12rem;min-width:0">
+            <span style="display:block;font-weight:500;font-size:16px">Butacos tejidos</span>
+            <span style="display:flex;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--gris);margin-top:2px">
+              <span style="color:var(--tejido);font-weight:600">Tejido</span>
+              <span>20 muebles</span>
+              <span>Foto propia</span>
+            </span>
+          </span>
+          <span style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
+            <button type="button" style="min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Editar</button>
+            <button type="button" aria-label="Más acciones para Butacos tejidos" style="min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+          </span>
+        </li>
+
+        <li style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;border:1px dashed var(--linea-fuerte);border-radius:var(--r-control);background:var(--hueso-alt);padding:10px 12px;opacity:.72">
+          <span aria-hidden="true" style="color:var(--linea-fuerte);font-size:16px">⠿</span>
+          <span style="width:56px;height:56px;flex:0 0 auto;border-radius:var(--r-control);border:1px dashed var(--linea-fuerte);display:flex;align-items:center;justify-content:center;background:#fff;color:var(--gris);font-size:10px;text-align:center">sin<br>foto</span>
+          <span style="flex:1 1 12rem;min-width:0">
+            <span style="display:block;font-weight:500;font-size:16px">Butacos de madera</span>
+            <span style="display:flex;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--gris);margin-top:2px">
+              <span style="color:var(--madera);font-weight:600">Madera</span>
+              <span>Sin muebles · oculta</span>
+            </span>
+          </span>
+          <span style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
+            <button type="button" style="min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Mostrar</button>
+            <button type="button" style="min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Editar</button>
+          </span>
+        </li>
+      </ul>
+
+      <button type="button" style="margin-top:10px;min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px dashed var(--linea-fuerte);background:transparent;color:var(--hoja);font:inherit;font-size:14px;font-weight:500;cursor:pointer">+ Agregar subcategoría a Butacos</button>
+    </li>
+
+    <li>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--tinta);padding-bottom:9px">
+        <span aria-label="Arrastrar para reordenar" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:18px">⠿</span>
+        <h2 style="margin:0;font-size:24px;line-height:1.1;flex:1 1 10rem;min-width:0">Guadua</h2>
+        <span style="font-size:14px;color:var(--gris)">Línea transversal · 9 muebles</span>
+        <div style="display:flex;gap:8px">
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Cambiar nombre</button>
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 0.9rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Ocultar</button>
+        </div>
+      </div>
+      <p style="margin:10px 0 0;font-size:15px;color:var(--gris);line-height:1.5;max-width:64ch">Atraviesa las demás categorías: no tiene subcategorías propias, los muebles de guadua viven en Sala, Comedor y las otras.</p>
+    </li>
+
+  </ul>
+
+  <div style="margin-top:26px;border-top:1px solid var(--linea);padding-top:16px">
+    <button type="button" style="min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer">+ Nuevo tipo de mueble</button>
+  </div>
+
+</main>
+
+</div>
+</body>
+</html>
