@@ -16,6 +16,7 @@ import { CopCurrencyPipe } from '../../shared/pipes/cop-currency.pipe';
 import { CustomizationFields } from '../../shared/customization-fields/customization-fields';
 import { MaterialTag } from '../../shared/material-tag';
 import { ShippingNote } from '../../shared/shipping-note';
+import { PhotoZoom } from '../../shared/photo-zoom';
 import { measureCard } from '../../shared/measure-label';
 import { BUSINESS_HOURS } from '../../core/business';
 import type { Product, ProductVariant } from '../../core/models/product.model';
@@ -34,6 +35,7 @@ type LoadState = { product: Product | null; notFound: boolean };
     CustomizationFields,
     MaterialTag,
     ShippingNote,
+    PhotoZoom,
   ],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',

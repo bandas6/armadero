@@ -1,0 +1,225 @@
+<!--
+  La foto de la ficha, con la lupa encima, y el visor a pantalla completa que se abre al
+  tocarla. Los valores salen de src/styles.css: no hay colores ni radios nuevos.
+-->
+@let f = foto();
+
+<div
+  #marco
+  class="rounded-pieza relative aspect-[4/3] overflow-hidden"
+  style="border: 1px solid var(--linea);"
+>
+  @if (f) {
+    <button
+      type="button"
+      (click)="abrir()"
+      (pointermove)="moverLupa($event)"
+      (pointerleave)="soltarLupa()"
+      [attr.aria-label]="'Ver ' + (f.alt || nombre()) + ' más grande'"
+      class="absolute inset-0 block h-full w-full cursor-zoom-in border-0 p-0"
+      style="background: transparent;"
+    >
+      <img
+        [ngSrc]="f.url"
+        [alt]="f.alt || nombre()"
+        fill
+        priority
+        sizes="(max-width: 720px) 100vw, 45vw"
+        class="object-cover"
+      />
+
+      <!--
+        La lupa: la misma foto, en grande, anclada al puntero. Va como capa aparte y no
+        como transform del <img> para que NgOptimizedImage siga sirviendo el tamaño que
+        corresponde a la ficha.
+      -->
+      @if (lupaActiva()) {
+        <span
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0"
+          [style.background-image]="'url(' + f.url + ')'"
+          [style.background-size]="factorLupa * 100 + '%'"
+          [style.background-position]="lupaX() + '% ' + lupaY() + '%'"
+          style="background-repeat: no-repeat;"
+        ></span>
+      }
+    </button>
+
+    <!-- El aviso de que la foto se puede ampliar: sin él, nadie la toca. -->
+    <span
+      aria-hidden="true"
+      class="rounded-control pointer-events-none absolute right-2.5 bottom-2.5 flex items-center gap-1.5 px-2.5 py-1.5 text-[13px] font-medium"
+      style="background: var(--velo-celda); color: var(--sobre-oscuro);"
+    >
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="7" cy="7" r="4.6" stroke="currentColor" stroke-width="1.5" />
+        <path d="M10.4 10.4 14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        <path d="M5.2 7h3.6M7 5.2v3.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+      </svg>
+      {{ conPunteroFino() ? 'Pasa por encima o haz clic' : 'Toca para ampliar' }}
+    </span>
+  } @else {
+    <span
+      class="absolute inset-0 flex items-center justify-center text-sm"
+      style="background: var(--hueso-alt); color: var(--gris);"
+      >Foto pronto</span
+    >
+  }
+</div>
+
+<ng-template #visor>
+  @let g = foto();
+  @if (g) {
+  <!--
+    Visor a pantalla completa. Fondo --tinta, como el encabezado y el hero: la foto queda
+    sobre el mismo negro del sitio y nada más compite con ella.
+  -->
+  <div
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="'Fotos de ' + nombre()"
+    class="fixed inset-0 z-50 flex flex-col"
+    style="background: var(--tinta);"
+  >
+    <div
+      class="flex flex-wrap items-center gap-3 border-b px-4 py-3"
+      style="border-color: var(--linea-oscura-tenue);"
+    >
+      <!-- En 360 px el nombre se lleva su propia línea: truncado a "Mece…" no sirve de nada. -->
+      <p
+        class="m-0 w-full min-w-0 truncate text-[15px] sm:w-auto sm:flex-1"
+        style="color: var(--sobre-oscuro);"
+      >
+        {{ nombre() }}
+        @if (total() > 1) {
+          <span style="color: var(--sobre-oscuro-3);"> · foto {{ indice() + 1 }} de {{ total() }}</span>
+        }
+      </p>
+
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          (click)="alejar()"
+          [disabled]="!puedeAlejar()"
+          aria-label="Alejar"
+          class="rounded-control inline-flex h-11 w-11 cursor-pointer items-center justify-center border text-xl disabled:opacity-40"
+          style="border-color: var(--linea-oscura); background: transparent; color: var(--sobre-oscuro);"
+        >
+          −
+        </button>
+        <span
+          class="min-w-[3.5rem] text-center text-sm tabular-nums"
+          style="color: var(--sobre-oscuro-3);"
+          aria-live="polite"
+          >{{ escala() | number: '1.0-1' }}×</span
+        >
+        <button
+          type="button"
+          (click)="acercar()"
+          [disabled]="!puedeAcercar()"
+          aria-label="Acercar"
+          class="rounded-control inline-flex h-11 w-11 cursor-pointer items-center justify-center border text-xl disabled:opacity-40"
+          style="border-color: var(--linea-oscura); background: transparent; color: var(--sobre-oscuro);"
+        >
+          +
+        </button>
+        <button
+          data-cerrar
+          type="button"
+          (click)="cerrar()"
+          aria-label="Cerrar las fotos"
+          class="rounded-control ml-1 inline-flex min-h-11 cursor-pointer items-center border px-4 text-[15px] font-semibold"
+          style="border-color: var(--linea-oscura); background: transparent; color: var(--sobre-oscuro);"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+
+    <!--
+      El lienzo. Un puntero arrastra, dos pellizcan, la rueda acerca y el doble clic
+      alterna entre la foto entera y el detalle.
+    -->
+    <div class="relative flex-1 overflow-hidden">
+      <!--
+        Las flechas van FUERA del lienzo. Dentro, el lienzo captura el puntero para poder
+        arrastrar la foto, y esa captura se traga el clic de cualquier botón que sea hijo
+        suyo: las flechas dejaban de funcionar en cuanto se acercaba la foto.
+      -->
+      <div
+        data-lienzo
+        class="absolute inset-0"
+        [style.cursor]="escala() > 1 ? 'grab' : 'zoom-in'"
+        (pointerdown)="alApoyar($event)"
+        (pointermove)="alMover($event)"
+        (pointerup)="alSoltar($event)"
+        (pointercancel)="alSoltar($event)"
+        (dblclick)="alternarZoom()"
+        (wheel)="alRodar($event)"
+        style="touch-action: none;"
+      >
+        <img
+          [src]="g.url"
+          [alt]="g.alt || nombre()"
+          draggable="false"
+          class="absolute inset-0 h-full w-full object-contain select-none"
+          [style.transform]="'translate(' + x() + 'px, ' + y() + 'px) scale(' + escala() + ')'"
+          [style.transition]="'transform 0.12s'"
+        />
+      </div>
+
+      @if (total() > 1) {
+        <button
+          type="button"
+          (click)="ir(-1)"
+          aria-label="Foto anterior"
+          class="rounded-control absolute top-1/2 left-3 inline-flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center border text-2xl"
+          style="border-color: var(--linea-oscura); background: var(--velo-celda); color: var(--sobre-oscuro);"
+        >
+          ‹
+        </button>
+        <button
+          type="button"
+          (click)="ir(1)"
+          aria-label="Foto siguiente"
+          class="rounded-control absolute top-1/2 right-3 inline-flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center border text-2xl"
+          style="border-color: var(--linea-oscura); background: var(--velo-celda); color: var(--sobre-oscuro);"
+        >
+          ›
+        </button>
+      }
+    </div>
+
+    @if (total() > 1) {
+      <div
+        class="flex gap-2 overflow-x-auto border-t px-4 py-3"
+        style="border-color: var(--linea-oscura-tenue);"
+      >
+        @for (img of fotos(); track img._id; let i = $index) {
+          <button
+            type="button"
+            (click)="verFoto(i)"
+            [attr.aria-label]="'Ver la foto ' + (i + 1)"
+            [attr.aria-pressed]="i === indice()"
+            class="rounded-control h-14 w-20 flex-none cursor-pointer overflow-hidden p-0"
+            [style.border]="
+              i === indice() ? '2px solid var(--sobre-oscuro)' : '1px solid var(--linea-oscura)'
+            "
+            [style.opacity]="i === indice() ? 1 : 0.6"
+          >
+            <img [src]="img.url" [alt]="''" class="h-full w-full object-cover" />
+          </button>
+        }
+      </div>
+    }
+
+    <p class="m-0 px-4 pb-3 text-[13px]" style="color: var(--pie-tenue);">
+      {{
+        conPunteroFino()
+          ? 'Rueda del mouse o + y − para acercar · arrastra para recorrerla · Esc para cerrar'
+          : 'Pellizca para acercar · arrastra para recorrerla'
+      }}
+    </p>
+  </div>
+  }
+</ng-template>
