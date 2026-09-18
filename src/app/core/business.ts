@@ -43,3 +43,22 @@ export function whatsappUrl(message: string): string {
 
 /** El mensaje generico: "quiero cotizar un mueble". */
 export const WHATSAPP_GENERIC_URL = whatsappUrl('Hola Artemadero, quiero cotizar un mueble.');
+
+/**
+ * La portada de siempre: la foto y las frases con las que abre el inicio cuando no hay
+ * ninguna portada encendida en el panel.
+ *
+ * Vive aqui, y no suelta en home.html, porque el panel la muestra tal cual en el bloque
+ * "Si no hay ninguna portada encendida": si estuviera copiada en dos sitios, el panel
+ * acabaria ensenando una portada que ya no es la que sale.
+ */
+export const PORTADA_POR_DEFECTO = {
+  eyebrow: 'Muebles campestres y tejidos · Cali',
+  title: 'Lo tejemos y lo armamos aquí mismo.',
+  subtitle:
+    'Taller propio. Casi todo se fabrica con las medidas de tu espacio, en el tejido y el ' +
+    'acabado que escojas.',
+  /** Relativa a filesUrl: la sirve la API junto con el resto de las fotos. */
+  photoPath: '/fotos/salas-tejidas/salas-tejidas-03.webp',
+  alt: 'Sala tejida en fibra natural con mesa de centro, en el local de Artemadero',
+} as const;

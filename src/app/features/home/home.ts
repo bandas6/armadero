@@ -10,6 +10,7 @@ import { ProductCard } from '../catalog/product-card';
 import { MaterialTag } from '../../shared/material-tag';
 import {
   BUSINESS_HOURS,
+  PORTADA_POR_DEFECTO,
   HOURS_SATURDAY,
   HOURS_WEEKDAY,
   WHATSAPP_GENERIC_URL,
@@ -128,6 +129,8 @@ export class Home {
   readonly datosHero = DATOS_HERO;
   readonly garantiasHero = GARANTIAS_HERO;
   readonly filesUrl = environment.filesUrl;
+  /** La portada de siempre, la que sale cuando no hay ninguna encendida en el panel. */
+  readonly portada = PORTADA_POR_DEFECTO;
   readonly whatsappUrl = WHATSAPP_GENERIC_URL;
   readonly hours = BUSINESS_HOURS;
   readonly hoursWeekday = HOURS_WEEKDAY;
