@@ -233,10 +233,20 @@ a:hover {
   border-color: var(--hoja);
   color: #fff;
 }
+/*
+ * --sm baja el peso visual, NO el area de toque: sigue en 44 px. En el panel hay filas
+ * con cinco botones y se usa desde el celular, en el local (design/panel/REGLAS-COMUNES.md).
+ */
 .admin-btn--sm {
-  min-height: 2.25rem;
-  padding: 0.3rem 0.6rem;
+  padding: 0.35rem 0.7rem;
   font-size: 0.8rem;
+}
+
+/* Botones de solo icono: ademas de alto, ancho suficiente para el dedo. */
+.admin-btn--icono {
+  min-width: 2.75rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 .admin-btn--danger {
   color: var(--alerta);
@@ -244,6 +254,8 @@ a:hover {
 }
 .admin-input {
   border-radius: var(--r-control);
+  /* Un campo tambien se toca: el mismo minimo que los botones. */
+  min-height: 2.75rem;
   width: 100%;
   border: 1px solid var(--linea-fuerte);
   background: #fff;

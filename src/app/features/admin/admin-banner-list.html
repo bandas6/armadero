@@ -1,0 +1,648 @@
+<!--
+  Portada del inicio. Rediseño de design/panel/PROMPT-05-inicio.md sobre el mockup
+  design/panel/mockups/inicio.html. Los valores salen de src/styles.css.
+-->
+<div class="flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <h1 class="m-0 text-3xl leading-none">Portada del inicio</h1>
+    <p class="mt-1 max-w-[62ch] text-[15px]" style="color: var(--gris);">
+      La foto y las frases que ve quien entra a la página. Solo una está al aire a la vez; las
+      demás esperan su turno o su fecha.
+    </p>
+  </div>
+  <button type="button" (click)="abrirNueva()" class="admin-btn admin-btn--primary">
+    + Nueva portada
+  </button>
+</div>
+
+@if (error()) {
+  <p
+    class="rounded-control mt-3 border px-3 py-2 text-sm"
+    style="border-color: var(--alerta); color: var(--alerta); background: #fff;"
+    role="alert"
+  >
+    {{ error() }}
+  </p>
+}
+
+<!--
+  Lo que falta, arriba. La portada es lo que ve todo el que llega: si algo está a medias,
+  no puede quedar enterrado en una fila de la cola.
+-->
+@if (pendientes().length) {
+  <section
+    class="rounded-bloque mt-4 border p-4"
+    style="border-color: var(--alerta); background: #fff;"
+  >
+    <h2 class="font-body m-0 mb-2 text-[15px] font-semibold" style="color: var(--alerta);">
+      Hay algo sin resolver en la portada
+    </h2>
+    <ul class="m-0 flex list-none flex-col gap-2 p-0">
+      @for (p of pendientes(); track p.texto) {
+        <li class="flex flex-wrap items-center gap-3 text-sm" style="color: var(--tinta-suave);">
+          <span class="min-w-0 flex-[1_1_20rem]">{{ p.texto }}</span>
+          @if (p.banner; as b) {
+            <button type="button" (click)="abrirEdicion(b)" class="admin-btn admin-btn--sm flex-none">
+              Cambiarle las fechas
+            </button>
+          } @else {
+            <button type="button" (click)="abrirNueva()" class="admin-btn admin-btn--sm flex-none">
+              Subir una portada
+            </button>
+          }
+        </li>
+      }
+    </ul>
+  </section>
+}
+
+@if (loading()) {
+  <p class="mt-6" style="color: var(--gris);">Cargando…</p>
+} @else {
+  <!--
+    1. Lo que se ve ahora mismo. Es lo primero que uno quiere ver al entrar, y hasta hoy
+    había que abrir el sitio en otra pestaña para saberlo.
+  -->
+  <section class="mt-6">
+    <div class="mb-3 flex flex-wrap items-center gap-3">
+      <h2 class="font-body m-0 text-[15px] font-semibold tracking-[0.04em] uppercase">
+        Esto es lo que se ve ahora
+      </h2>
+      <a
+        href="/"
+        target="_blank"
+        rel="noopener"
+        class="ml-auto inline-flex items-center text-sm font-medium"
+        style="min-height: 2.75rem;"
+        >Abrir la página →</a
+      >
+    </div>
+
+    @let arriba = alAire();
+    <div
+      class="rounded-bloque overflow-hidden border-2"
+      style="border-color: var(--hoja); background: #fff;"
+    >
+      <!--
+        La maqueta del hero: la misma foto, el mismo velo y la misma placa que el inicio,
+        en pequeño. No es interactiva; sirve para ver la composición.
+      -->
+      <div
+        class="relative isolate flex items-center"
+        style="background: var(--tinta); min-height: 230px;"
+      >
+        <img
+          [src]="arriba?.imageUrl || filesUrl + porDefecto.photoPath"
+          alt=""
+          class="absolute inset-0 -z-10 h-full w-full object-cover"
+        />
+        <div
+          class="pointer-events-none absolute inset-0 z-0"
+          style="background: linear-gradient(105deg, #191c1e5c 0%, #191c1e33 44%, #191c1e14 100%);"
+        ></div>
+        <div class="relative z-10 max-w-[34rem] p-[22px]">
+          <div
+            style="background: var(--velo-hero); backdrop-filter: blur(3px); border-left: 4px solid var(--hoja); border-radius: 3px 10px 10px 3px; padding: 16px 18px;"
+          >
+            <p
+              class="m-0 mb-[7px] text-[11px] tracking-[0.16em] uppercase"
+              style="color: var(--sobre-oscuro-2);"
+            >
+              {{ porDefecto.eyebrow }}
+            </p>
+            <p
+              class="font-display m-0 mb-2 text-[29px] leading-[1.02]"
+              style="color: var(--sobre-oscuro);"
+            >
+              {{ arriba?.title || porDefecto.title }}
+            </p>
+            <p class="m-0 text-sm leading-normal" style="color: #dee1da;">
+              {{ arriba?.subtitle || porDefecto.subtitle }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3 px-4 py-3.5">
+        <div class="min-w-0 flex-[1_1_18rem]">
+          @if (arriba; as b) {
+            <p class="m-0 text-sm" style="color: var(--gris);">{{ cuando(b) }}</p>
+            <p class="mt-1 mb-0 text-sm" style="color: var(--gris);">
+              El botón lleva a {{ nombreDestino(b.linkUrl) }}
+            </p>
+          } @else {
+            <p class="m-0 text-sm" style="color: var(--gris);">
+              No hay ninguna portada encendida, así que el inicio está usando la de siempre.
+            </p>
+          }
+        </div>
+        <div class="flex flex-wrap gap-2">
+          @if (arriba; as b) {
+            <button type="button" (click)="abrirEdicion(b)" class="admin-btn">Editar</button>
+            <button type="button" (click)="bajar(b)" [disabled]="busy()" class="admin-btn">
+              Bajarla
+            </button>
+          } @else {
+            <button type="button" (click)="abrirNueva()" class="admin-btn admin-btn--primary">
+              Subir una portada
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+
+    @if (arriba && siguiente(); as sig) {
+      <p
+        class="rounded-control mt-2.5 border px-3.5 py-3 text-sm leading-normal"
+        style="border-color: var(--linea); background: var(--hueso-alt); color: var(--tinta-suave);"
+      >
+        Si bajas esta portada, entra <strong>«{{ titular(sig) }}»</strong>, que es la siguiente de
+        la cola.
+      </p>
+    }
+  </section>
+
+  <!-- 2. La cola: el orden es el orden en que van a entrar. -->
+  @if (enCola().length) {
+    <section class="mt-8">
+      <h2
+        class="font-body m-0 mb-1 text-[15px] font-semibold tracking-[0.04em] uppercase"
+        style="color: var(--gris);"
+      >
+        Esperando turno
+      </h2>
+      <p class="m-0 mb-3 flex flex-wrap items-center gap-2 text-sm" style="color: var(--gris);">
+        <span aria-hidden="true" class="text-base" style="color: var(--linea-fuerte);">⠿</span>
+        Arrastra para cambiar el turno. La primera de esta lista es la que entra cuando la de
+        arriba se baje o se venza.
+      </p>
+
+      <ul
+        class="m-0 flex list-none flex-col gap-2.5 p-0"
+        cdkDropList
+        (cdkDropListDropped)="drop($event)"
+      >
+        @for (b of enCola(); track b._id) {
+          @let vencida = estado(b) === 'vencida';
+          @let apagada = estado(b) === 'apagada';
+          <li
+            cdkDrag
+            class="rounded-bloque overflow-hidden border"
+            [style.border-style]="apagada ? 'dashed' : 'solid'"
+            [style.border-color]="vencida ? 'var(--alerta)' : 'var(--linea-fuerte)'"
+            [style.border-left]="apagada ? null : '5px solid ' + color(b)"
+            [style.background]="apagada ? 'var(--hueso-alt)' : '#fff'"
+          >
+            <div class="flex flex-wrap items-center gap-3 p-3.5" [style.opacity]="apagada ? 0.74 : 1">
+              <span
+                cdkDragHandle
+                class="cursor-grab text-lg"
+                style="color: var(--linea-fuerte); touch-action: none;"
+                aria-label="Arrastrar para cambiar el turno"
+                >⠿</span
+              >
+              <img
+                [src]="b.imageUrl"
+                alt=""
+                class="rounded-pieza h-[70px] w-[116px] flex-none border object-cover"
+                style="border-color: var(--linea); background: var(--hueso-alt);"
+              />
+              <div class="min-w-0 flex-[1_1_14rem]">
+                <div class="flex flex-wrap items-center gap-2.5">
+                  <span
+                    class="rounded-pastilla inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold"
+                    [style.border-color]="color(b)"
+                    [style.color]="vencida || apagada ? color(b) : color(b)"
+                    >{{ rotulo(b) }}</span
+                  >
+                  <p class="m-0 text-base font-semibold">{{ titular(b) }}</p>
+                </div>
+                <p class="mt-1.5 mb-0 text-sm" style="color: var(--gris);">{{ resumen(b) }}</p>
+                @if (!vencida) {
+                  <p
+                    class="mt-1 mb-0 text-sm"
+                    [style.color]="estado(b) === 'programada' ? 'var(--tejido)' : 'var(--gris)'"
+                  >
+                    {{ cuando(b) }}
+                  </p>
+                }
+              </div>
+
+              <!--
+                Una acción principal por fila —la que mueve la portada hacia adelante— y el
+                resto detrás del ⋯ (design/panel/REGLAS-COMUNES.md §5).
+              -->
+              <div class="ml-auto flex flex-wrap gap-2">
+                @if (apagada) {
+                  <button type="button" (click)="encender(b)" [disabled]="busy()" class="admin-btn">
+                    Encender
+                  </button>
+                } @else if (!vencida) {
+                  <button
+                    type="button"
+                    (click)="subirYa(b)"
+                    [disabled]="busy()"
+                    class="admin-btn admin-btn--primary"
+                  >
+                    Subirla ya
+                  </button>
+                }
+                <button type="button" (click)="abrirEdicion(b)" class="admin-btn">Editar</button>
+                @if (!apagada && !vencida) {
+                  <button
+                    type="button"
+                    (click)="openMenu.set(openMenu() === b._id ? null : b._id)"
+                    [attr.aria-expanded]="openMenu() === b._id"
+                    [attr.aria-label]="'Más acciones para ' + titular(b)"
+                    class="admin-btn admin-btn--icono"
+                  >
+                    ⋯
+                  </button>
+                }
+              </div>
+            </div>
+
+            @if (openMenu() === b._id) {
+              <div
+                class="flex flex-wrap gap-2 border-t px-3.5 py-3"
+                style="border-color: var(--linea); background: var(--hueso-alt);"
+              >
+                <button type="button" (click)="bajar(b)" [disabled]="busy()" class="admin-btn">
+                  Apagarla: sale de la cola
+                </button>
+              </div>
+            }
+
+            @if (vencida) {
+              <div
+                class="flex flex-wrap items-center gap-3 border-t px-3.5 py-3"
+                style="border-color: var(--alerta); background: var(--hueso-alt);"
+              >
+                <p
+                  class="m-0 min-w-0 flex-[1_1_18rem] text-sm leading-snug"
+                  style="color: var(--alerta);"
+                >
+                  {{ cuando(b) }}
+                </p>
+                <div class="flex flex-none flex-wrap gap-2">
+                  <button
+                    type="button"
+                    (click)="abrirEdicion(b)"
+                    class="admin-btn"
+                    style="background: #fff;"
+                  >
+                    Cambiar fechas
+                  </button>
+                  <button
+                    type="button"
+                    (click)="bajar(b)"
+                    [disabled]="busy()"
+                    class="admin-btn admin-btn--danger"
+                    style="background: #fff;"
+                  >
+                    Apagarla
+                  </button>
+                </div>
+              </div>
+            }
+          </li>
+        }
+      </ul>
+    </section>
+  }
+
+  <!-- 3. La portada de siempre: la que sale cuando no hay ninguna encendida. -->
+  <section
+    class="rounded-bloque mt-8 border p-4"
+    style="border-color: var(--linea); background: var(--hueso-alt);"
+  >
+    <h2 class="font-body m-0 mb-1.5 text-[15px] font-semibold">
+      Si no hay ninguna portada encendida
+    </h2>
+    <p class="m-0 mb-3 max-w-[62ch] text-[15px] leading-normal" style="color: var(--tinta-suave);">
+      El inicio usa la portada de siempre, que viene con la página y no se puede borrar. Es esta:
+    </p>
+    <div
+      class="rounded-pieza flex flex-wrap items-center gap-3.5 border p-3"
+      style="border-color: var(--linea); background: #fff;"
+    >
+      <img
+        [src]="filesUrl + porDefecto.photoPath"
+        alt=""
+        class="rounded-control h-[70px] w-[116px] flex-none border object-cover"
+        style="border-color: var(--linea);"
+      />
+      <div class="min-w-0 flex-[1_1_16rem]">
+        <p class="font-display m-0 text-[19px] leading-tight">{{ porDefecto.title }}</p>
+        <p class="mt-1 mb-0 text-sm leading-snug" style="color: var(--gris);">
+          {{ porDefecto.subtitle }}
+        </p>
+      </div>
+      <button type="button" (click)="abrirDesdePorDefecto()" class="admin-btn flex-none">
+        Cambiar la de siempre
+      </button>
+    </div>
+  </section>
+}
+
+@if (editing() !== null) {
+  <!--
+    4. El formulario, con la maqueta al lado: se ve cómo va quedando mientras se escribe,
+    que es lo que hoy obligaba a guardar y abrir el sitio para comprobarlo.
+  -->
+  <section class="mt-10 border-t-2 pt-5" style="border-color: var(--tinta);" id="editar">
+    @let d = draft();
+    <p class="m-0 mb-3.5 text-[13px] tracking-[0.08em] uppercase" style="color: var(--gris);">
+      {{ editing() === 'new' ? 'Así se arma una portada nueva' : 'Estás editando una portada' }}
+    </p>
+
+    <form
+      class="rounded-bloque overflow-hidden border-2"
+      style="border-color: var(--hoja); background: #fff;"
+      (ngSubmit)="guardar(true)"
+    >
+      <div
+        class="border-b px-4 py-3.5"
+        style="background: var(--hueso-alt); border-color: var(--linea);"
+      >
+        <h2 class="font-body m-0 text-base font-semibold">
+          {{ editing() === 'new' ? 'Nueva portada' : 'Editar la portada' }}
+        </h2>
+        <p class="mt-1 mb-0 text-sm" style="color: var(--gris);">
+          Cambia la foto y las frases del inicio. Las secciones de la página siguen igual.
+        </p>
+      </div>
+
+      <div
+        class="grid items-start gap-5 p-4"
+        style="grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));"
+      >
+        <div>
+          <p class="m-0 mb-2.5 text-sm font-semibold">Así se va a ver</p>
+          <div
+            class="rounded-pieza relative isolate flex items-center overflow-hidden border"
+            style="border-color: var(--linea); background: var(--tinta); min-height: 186px;"
+          >
+            @if (d.imageUrl) {
+              <img [src]="d.imageUrl" alt="" class="absolute inset-0 -z-10 h-full w-full object-cover" />
+            } @else {
+              <span
+                class="absolute inset-0 -z-10 flex items-center justify-center text-[11px]"
+                style="background: #2b2a26; color: #8a877e;"
+                >la foto que subas</span
+              >
+            }
+            <div
+              class="pointer-events-none absolute inset-0 z-0"
+              style="background: linear-gradient(105deg, #191c1e5c 0%, #191c1e33 44%, #191c1e14 100%);"
+            ></div>
+            <div class="relative z-10 max-w-[24rem] p-4">
+              <div
+                style="background: var(--velo-hero); backdrop-filter: blur(3px); border-left: 4px solid var(--hoja); border-radius: 3px 9px 9px 3px; padding: 13px 15px;"
+              >
+                <p
+                  class="m-0 mb-1.5 text-[10px] tracking-[0.16em] uppercase"
+                  style="color: var(--sobre-oscuro-2);"
+                >
+                  {{ porDefecto.eyebrow }}
+                </p>
+                <p
+                  class="font-display m-0 mb-[7px] text-[22px] leading-[1.05]"
+                  style="color: var(--sobre-oscuro);"
+                >
+                  {{ d.title || porDefecto.title }}
+                </p>
+                <p class="m-0 text-[13px] leading-snug" style="color: #dee1da;">
+                  {{ d.subtitle || porDefecto.subtitle }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <p class="mt-2.5 mb-0 text-sm leading-normal" style="color: var(--gris);">
+            La franja oscura va encima de la foto para que las frases se lean. Por eso funciona
+            mejor una foto horizontal y despejada, de una sala o un comedor completo.
+          </p>
+        </div>
+
+        <div>
+          <div class="mb-4">
+            <span class="admin-label"
+              >Foto <span class="font-normal" style="color: var(--alerta);">· obligatoria</span></span
+            >
+            <div class="flex flex-wrap items-center gap-2.5">
+              @if (d.imageUrl) {
+                <img
+                  [src]="d.imageUrl"
+                  alt="Foto elegida para la portada"
+                  class="rounded-control h-11 w-11 flex-none border object-cover"
+                  style="border-color: var(--linea-fuerte);"
+                />
+              } @else {
+                <span
+                  aria-hidden="true"
+                  class="rounded-control flex h-11 w-11 flex-none items-center justify-center text-[9px]"
+                  style="border: 1px dashed var(--linea-fuerte); background: var(--hueso-alt); color: var(--gris);"
+                  >—</span
+                >
+              }
+              <!-- capture="environment": desde el celular abre la cámara directamente. -->
+              <label class="admin-btn" [style.opacity]="uploading() ? 0.5 : 1">
+                {{
+                  uploading()
+                    ? 'Subiendo…'
+                    : d.imageUrl
+                      ? 'Cambiar la foto'
+                      : 'Tomar o elegir foto'
+                }}
+                <input
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  (change)="subirFoto($event)"
+                  [disabled]="uploading()"
+                  class="hidden"
+                />
+              </label>
+            </div>
+          </div>
+
+          <label class="mb-3.5 block">
+            <span class="admin-label"
+              >Titular
+              <span class="font-normal" style="color: var(--gris);"
+                >— si lo dejas vacío, queda el de siempre</span
+              ></span
+            >
+            <input
+              [ngModel]="d.title"
+              (ngModelChange)="parche({ title: $event })"
+              name="title"
+              maxlength="120"
+              class="admin-input"
+            />
+            <span class="mt-1 block text-[13px]" style="color: var(--gris);"
+              >Corto funciona mejor: cabe en una o dos líneas.</span
+            >
+          </label>
+
+          <label class="mb-3.5 block">
+            <span class="admin-label"
+              >Frase debajo <span class="font-normal" style="color: var(--gris);">— opcional</span></span
+            >
+            <textarea
+              [ngModel]="d.subtitle"
+              (ngModelChange)="parche({ subtitle: $event })"
+              name="subtitle"
+              rows="2"
+              maxlength="240"
+              class="admin-input resize-y"
+            ></textarea>
+          </label>
+
+          <div class="mb-3.5">
+            <span class="admin-label">A dónde lleva el botón</span>
+            <div class="mb-2 flex flex-wrap gap-[7px]">
+              @for (op of [
+                { valor: 'categoria', texto: 'Una categoría' },
+                { valor: 'coleccion', texto: 'Una colección' },
+                { valor: 'catalogo', texto: 'Todo el catálogo' },
+                { valor: 'otra', texto: 'Otra dirección' }
+              ]; track op.valor) {
+                @let activo = d.destino === op.valor;
+                <button
+                  type="button"
+                  (click)="setDestino($any(op.valor))"
+                  [attr.aria-pressed]="activo"
+                  class="rounded-pastilla cursor-pointer border px-3.5 text-sm"
+                  style="min-height: 2.75rem;"
+                  [style.background]="activo ? 'var(--tinta)' : 'var(--hueso-alt)'"
+                  [style.border-color]="activo ? 'var(--tinta)' : 'var(--linea-fuerte)'"
+                  [style.color]="activo ? 'var(--hueso)' : 'var(--tinta)'"
+                  [style.font-weight]="activo ? 600 : 400"
+                >
+                  {{ op.texto }}
+                </button>
+              }
+            </div>
+
+            @if (d.destino === 'categoria') {
+              <select
+                [ngModel]="d.destinoValor"
+                (ngModelChange)="parche({ destinoValor: $event })"
+                name="categoria"
+                class="admin-input"
+                aria-label="Categoría a la que lleva"
+              >
+                <option value="">Elige una categoría…</option>
+                @for (h of hojas(); track h.slug) {
+                  <option [value]="h.slug">{{ h.etiqueta }}</option>
+                }
+              </select>
+            } @else if (d.destino === 'coleccion') {
+              <select
+                [ngModel]="d.destinoValor"
+                (ngModelChange)="parche({ destinoValor: $event })"
+                name="coleccion"
+                class="admin-input"
+                aria-label="Colección a la que lleva"
+              >
+                <option value="">Elige una colección…</option>
+                @for (c of colecciones(); track c._id) {
+                  <option [value]="c.slug">{{ c.name }}</option>
+                }
+              </select>
+            } @else if (d.destino === 'otra') {
+              <input
+                [ngModel]="d.destinoValor"
+                (ngModelChange)="parche({ destinoValor: $event })"
+                name="otra"
+                placeholder="/catalogo?material=madera"
+                class="admin-input"
+                aria-label="Dirección a la que lleva"
+              />
+            } @else {
+              <p class="m-0 text-sm" style="color: var(--gris);">
+                El botón lleva al catálogo completo.
+              </p>
+            }
+          </div>
+
+          <div>
+            <span class="admin-label">Cuándo se ve</span>
+            <div class="mb-2.5 flex flex-wrap gap-[7px]">
+              @for (op of [
+                { valor: 'siempre', texto: 'Hasta que yo la baje' },
+                { valor: 'fechas', texto: 'Entre dos fechas' }
+              ]; track op.valor) {
+                @let activo = d.vigencia === op.valor;
+                <button
+                  type="button"
+                  (click)="parche({ vigencia: $any(op.valor) })"
+                  [attr.aria-pressed]="activo"
+                  class="rounded-pastilla cursor-pointer border px-3.5 text-sm"
+                  style="min-height: 2.75rem;"
+                  [style.background]="activo ? 'var(--tinta)' : 'var(--hueso-alt)'"
+                  [style.border-color]="activo ? 'var(--tinta)' : 'var(--linea-fuerte)'"
+                  [style.color]="activo ? 'var(--hueso)' : 'var(--tinta)'"
+                  [style.font-weight]="activo ? 600 : 400"
+                >
+                  {{ op.texto }}
+                </button>
+              }
+            </div>
+            @if (d.vigencia === 'fechas') {
+              <div
+                class="grid gap-2.5"
+                style="grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));"
+              >
+                <label class="block">
+                  <span class="mb-1 block text-[13px]" style="color: var(--gris);">Desde</span>
+                  <input
+                    type="date"
+                    [ngModel]="d.startsAt"
+                    (ngModelChange)="parche({ startsAt: $event })"
+                    name="startsAt"
+                    class="admin-input"
+                  />
+                </label>
+                <label class="block">
+                  <span class="mb-1 block text-[13px]" style="color: var(--gris);">Hasta</span>
+                  <input
+                    type="date"
+                    [ngModel]="d.endsAt"
+                    (ngModelChange)="parche({ endsAt: $event })"
+                    name="endsAt"
+                    class="admin-input"
+                  />
+                </label>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-wrap items-center gap-2 border-t px-4 py-3.5"
+        style="border-color: var(--linea);"
+      >
+        <button type="submit" [disabled]="busy() || uploading()" class="admin-btn admin-btn--primary">
+          Subirla ahora
+        </button>
+        <button
+          type="button"
+          (click)="guardar(false)"
+          [disabled]="busy() || uploading()"
+          class="admin-btn"
+        >
+          Guardar para después
+        </button>
+        <button type="button" (click)="editing.set(null)" class="admin-btn" style="background: #fff;">
+          Cancelar
+        </button>
+        <p class="m-0 ml-auto max-w-[24ch] text-sm leading-snug" style="color: var(--gris);">
+          «Subirla ahora» la pone de primera y baja la que esté al aire.
+        </p>
+      </div>
+    </form>
+  </section>
+}

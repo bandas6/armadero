@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel · Colecciones (rediseño)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#f7f6f2;color:#191c1e;font-family:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Instrument Serif',Georgia,serif;font-weight:700}
+  a{color:#42604b;text-underline-offset:3px}
+  a:hover{color:#191c1e}
+  :focus-visible{outline:3px solid #42604b;outline-offset:3px}
+  @media (prefers-reduced-motion: reduce){*{transition-duration:.001ms!important;animation-duration:.001ms!important}}
+</style>
+</head>
+<body>
+<div style="--hueso:#f7f6f2;--hueso-alt:#f2f1ec;--tinta:#191c1e;--tinta-suave:#43484b;--gris:#5e6467;--tejido:#a8641e;--madera:#3a5a6b;--hoja:#42604b;--linea:#191c1e1f;--linea-fuerte:#191c1e33;--alerta:#8c4a34;--r-bloque:12px;--r-pieza:10px;--r-control:8px;--r-pastilla:999px;background:var(--hueso);min-height:100vh">
+
+<header style="position:sticky;top:0;z-index:30;background:var(--hueso-alt);border-bottom:1px solid var(--linea)">
+  <div style="max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <span style="font-weight:600;letter-spacing:0.06em;font-size:15px;color:var(--tinta)">ARTEMADERO · Panel</span>
+    <div style="display:flex;align-items:center;gap:18px;font-size:14px">
+      <a href="#col" style="color:var(--gris)">Vanessa Ríos</a>
+      <a href="#col" style="color:var(--hoja)">Salir</a>
+    </div>
+  </div>
+  <nav style="max-width:1120px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;font-size:14px">
+    <a href="#col" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Muebles</a>
+    <a href="#col" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Categorías</a>
+    <a href="#col" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid var(--hoja);color:var(--tinta);font-weight:600;text-decoration:none">Colecciones</a>
+    <a href="#col" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Cotizaciones</a>
+    <a href="#col" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Inicio</a>
+    <a href="#col" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Envíos</a>
+    <a href="#col" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Ajustes</a>
+    <a href="#col" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Usuarios</a>
+  </nav>
+</header>
+
+<main id="col" style="max-width:1120px;margin:0 auto;padding:22px 20px 60px">
+
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div>
+      <h1 style="margin:0;font-size:clamp(26px,3.4vw,34px);line-height:1.05">Colecciones</h1>
+      <p style="margin:4px 0 0;font-size:15px;color:var(--gris);max-width:62ch">Ambientes armados con varios muebles: “Sala para la finca”, “Comedor para 6”. Se ven en el inicio y cada una tiene su propia página.</p>
+    </div>
+    <button type="button" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer">+ Nueva colección</button>
+  </div>
+
+  
+    <div style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);background:var(--tinta);color:var(--hueso);font-size:14px;font-weight:600">Todas <span style="opacity:.75;font-weight:400">4</span></span>
+      <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);font-size:14px">Se ven en el inicio <span style="color:var(--gris)">3</span></span>
+      <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid #c9a08a;background:#fbf1ea;color:var(--alerta);font-size:14px;font-weight:600">Con muebles ocultos <span style="font-weight:400">1</span></span>
+      <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);font-size:14px">Sin foto <span style="color:var(--gris)">1</span></span>
+    </div>
+  
+
+  <p style="margin:16px 0 0;font-size:14px;color:var(--gris);display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span aria-hidden="true" style="font-size:16px;color:var(--linea-fuerte)">⠿</span>
+    Arrastra para cambiar el orden en que aparecen en el inicio.
+  </p>
+
+  <ul style="list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:12px">
+
+    <li style="border:1px solid var(--linea);border-radius:var(--r-bloque);background:#fff;padding:14px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+      <span aria-label="Arrastrar para reordenar" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:18px">⠿</span>
+      <span style="width:80px;height:80px;flex:0 0 auto;border-radius:var(--r-pieza);overflow:hidden;border:1px solid var(--linea);display:flex;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:10px;text-align:center">foto del<br>ambiente</span>
+      <div style="flex:1 1 14rem;min-width:0">
+        <p style="margin:0;font-weight:600;font-size:17px">Sala para la finca</p>
+        <p style="margin:3px 0 0;font-size:14px;color:var(--gris)">5 muebles · se ve en el inicio</p>
+        <p style="margin:6px 0 0;font-size:14px"><a href="#col">Ver la página →</a> <span style="color:var(--gris)">artemadero.co/coleccion/sala-para-la-finca</span></p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;font-weight:500;cursor:pointer">Editar</button>
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Ocultar</button>
+      </div>
+    </li>
+
+    <li style="border:2px solid var(--hoja);border-radius:var(--r-bloque);background:var(--hueso-alt);overflow:hidden">
+      <div style="background:#fff;padding:14px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--linea)">
+        <span aria-hidden="true" style="color:var(--linea-fuerte);font-size:18px">⠿</span>
+        <span style="width:80px;height:80px;flex:0 0 auto;border-radius:var(--r-pieza);overflow:hidden;border:1px solid var(--linea);display:flex;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:10px;text-align:center">foto del<br>ambiente</span>
+        <div style="flex:1 1 14rem;min-width:0">
+          <p style="margin:0;font-weight:600;font-size:17px">Comedor para 6</p>
+          <p style="margin:3px 0 0;font-size:14px;color:var(--gris)">4 muebles · se ve en el inicio</p>
+        </div>
+      </div>
+
+      <div style="padding:16px 14px">
+        <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--hoja);font-weight:600">Editando esta colección</p>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:14px">
+          <label style="display:block">
+            <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Nombre</span>
+            <input value="Comedor para 6" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+          </label>
+          <div>
+            <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Foto del ambiente</span>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+              <span style="width:2.75rem;height:2.75rem;flex:0 0 auto;border-radius:var(--r-control);border:1px solid var(--linea);background:var(--hueso-alt);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--gris);text-align:center">foto</span>
+              <label style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font-size:14px;font-weight:500;cursor:pointer">Cambiar foto<input type="file" accept="image/*" capture="environment" style="display:none"></label>
+            </div>
+          </div>
+        </div>
+
+        <label style="display:block;margin-top:14px">
+          <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Descripción <span style="font-weight:400;color:var(--gris)">— opcional, se ve en la página de la colección</span></span>
+          <textarea rows="2" placeholder="Mesa redonda tejida con seis sillas, listo para un comedor de 3 × 3 m." style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem;resize:vertical"></textarea>
+        </label>
+
+        <div style="margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:16px;align-items:start">
+
+          <section style="border:1px solid var(--linea);border-radius:var(--r-pieza);background:#fff;padding:12px">
+            <h3 style="margin:0;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px">En la colección <span style="color:var(--gris);font-weight:400">· 4 muebles</span></h3>
+            <p style="margin:4px 0 12px;font-size:13px;color:var(--gris)">Arrastra para cambiar el orden en que salen en la página.</p>
+            <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px">
+              <li style="display:flex;gap:10px;align-items:center;border:1px solid var(--linea);border-left:4px solid var(--tejido);border-radius:var(--r-control);padding:8px 10px">
+                <span aria-label="Arrastrar" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:15px">⠿</span>
+                <span style="width:44px;height:44px;flex:0 0 auto;border-radius:6px;border:1px solid var(--linea);background:var(--hueso-alt);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--gris)">foto</span>
+                <span style="flex:1;min-width:0">
+                  <span style="display:block;font-size:15px;font-weight:500">Comedor Roldanillo</span>
+                  <span style="display:block;font-size:13px;color:var(--gris)">$ 3.900.000</span>
+                </span>
+                <button type="button" aria-label="Quitar Comedor Roldanillo de la colección" style="flex:0 0 auto;min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--alerta);font:inherit;font-size:15px;cursor:pointer">×</button>
+              </li>
+              <li style="display:flex;gap:10px;align-items:center;border:1px solid var(--linea);border-left:4px solid var(--madera);border-radius:var(--r-control);padding:8px 10px">
+                <span aria-label="Arrastrar" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:15px">⠿</span>
+                <span style="width:44px;height:44px;flex:0 0 auto;border-radius:6px;border:1px solid var(--linea);background:var(--hueso-alt);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--gris)">foto</span>
+                <span style="flex:1;min-width:0">
+                  <span style="display:block;font-size:15px;font-weight:500">Silla Nariño</span>
+                  <span style="display:block;font-size:13px;color:var(--gris)">$ 890.000 · ×6</span>
+                </span>
+                <button type="button" aria-label="Quitar Silla Nariño de la colección" style="flex:0 0 auto;min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--alerta);font:inherit;font-size:15px;cursor:pointer">×</button>
+              </li>
+              <li style="border:1px solid #c9a08a;border-left:4px solid var(--alerta);border-radius:var(--r-control);overflow:hidden">
+                <div style="display:flex;gap:10px;align-items:center;padding:8px 10px">
+                  <span aria-label="Arrastrar" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:15px">⠿</span>
+                  <span style="width:44px;height:44px;flex:0 0 auto;border-radius:6px;border:1px solid var(--linea);background:var(--hueso-alt);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--gris)">foto</span>
+                  <span style="flex:1;min-width:0">
+                    <span style="display:block;font-size:15px;font-weight:500">Aparador Sevilla</span>
+                    <span style="display:block;font-size:13px;color:var(--gris)">$ 3.900.000</span>
+                  </span>
+                  <button type="button" aria-label="Quitar Aparador Sevilla de la colección" style="flex:0 0 auto;min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--alerta);font:inherit;font-size:15px;cursor:pointer">×</button>
+                </div>
+                
+                  <div style="background:#fbf1ea;border-top:1px solid #e3c9b8;padding:9px 10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                    <p style="margin:0;flex:1 1 12rem;min-width:0;font-size:13px;line-height:1.45;color:var(--alerta)">Está oculto, así que en la página se va a ver la colección con un mueble menos.</p>
+                    <button type="button" style="flex:0 0 auto;min-height:2.75rem;padding:0.4rem 0.9rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:13px;font-weight:600;cursor:pointer">Publicarlo</button>
+                  </div>
+                
+              </li>
+              <li style="display:flex;gap:10px;align-items:center;border:1px solid var(--linea);border-left:4px solid var(--tejido);border-radius:var(--r-control);padding:8px 10px">
+                <span aria-label="Arrastrar" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:15px">⠿</span>
+                <span style="width:44px;height:44px;flex:0 0 auto;border-radius:6px;border:1px solid var(--linea);background:var(--hueso-alt);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--gris)">foto</span>
+                <span style="flex:1;min-width:0">
+                  <span style="display:block;font-size:15px;font-weight:500">Lámpara Guacarí</span>
+                  <span style="display:block;font-size:13px;color:var(--gris)">$ 340.000</span>
+                </span>
+                <button type="button" aria-label="Quitar Lámpara Guacarí de la colección" style="flex:0 0 auto;min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--alerta);font:inherit;font-size:15px;cursor:pointer">×</button>
+              </li>
+            </ul>
+          </section>
+
+          <section style="border:1px solid var(--linea);border-radius:var(--r-pieza);background:var(--hueso);padding:12px">
+            <h3 style="margin:0 0 10px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px">Agregar del catálogo</h3>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <input type="search" placeholder="Buscar por nombre" aria-label="Buscar mueble" style="flex:1 1 9rem;min-width:0;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.55rem 0.7rem;font:inherit;font-size:0.9rem">
+              <select aria-label="Filtrar por categoría" style="flex:0 1 auto;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.55rem 0.7rem;font:inherit;font-size:0.9rem">
+                <option>Comedor</option>
+                <option>Todas las categorías</option>
+                <option>Sala</option>
+                <option>Mecedoras</option>
+                <option>Decoración</option>
+              </select>
+            </div>
+            <p style="margin:10px 0 10px;font-size:13px;color:var(--gris)">33 muebles en Comedor. Toca uno para agregarlo.</p>
+            <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(130px,100%),1fr));gap:8px">
+              <li>
+                <button type="button" style="width:100%;display:block;text-align:left;padding:0;border:1px solid var(--linea-fuerte);border-radius:var(--r-control);background:#fff;font:inherit;cursor:pointer;overflow:hidden">
+                  <span style="display:flex;width:100%;aspect-ratio:1/1;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:10px">foto</span>
+                  <span style="display:block;padding:7px 8px">
+                    <span style="display:block;font-size:13px;font-weight:500;line-height:1.25">Comedor Sevilla</span>
+                    <span style="display:block;font-size:12px;color:var(--hoja);margin-top:2px">Según medidas</span>
+                  </span>
+                </button>
+              </li>
+              <li>
+                <button type="button" style="width:100%;display:block;text-align:left;padding:0;border:1px solid var(--linea-fuerte);border-radius:var(--r-control);background:#fff;font:inherit;cursor:pointer;overflow:hidden">
+                  <span style="display:flex;width:100%;aspect-ratio:1/1;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:10px">foto</span>
+                  <span style="display:block;padding:7px 8px">
+                    <span style="display:block;font-size:13px;font-weight:500;line-height:1.25">Mesa Tunja</span>
+                    <span style="display:block;font-size:12px;color:var(--gris);margin-top:2px">$ 4.200.000</span>
+                  </span>
+                </button>
+              </li>
+              <li>
+                <button type="button" style="width:100%;display:block;text-align:left;padding:0;border:1px solid var(--linea-fuerte);border-radius:var(--r-control);background:#fff;font:inherit;cursor:pointer;overflow:hidden">
+                  <span style="display:flex;width:100%;aspect-ratio:1/1;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:10px">foto</span>
+                  <span style="display:block;padding:7px 8px">
+                    <span style="display:block;font-size:13px;font-weight:500;line-height:1.25">Butaco Yumbo</span>
+                    <span style="display:block;font-size:12px;color:var(--gris);margin-top:2px">$ 320.000</span>
+                  </span>
+                </button>
+              </li>
+              <li>
+                <button type="button" style="width:100%;display:block;text-align:left;padding:0;border:1px solid var(--linea-fuerte);border-radius:var(--r-control);background:#fff;font:inherit;cursor:pointer;overflow:hidden">
+                  <span style="display:flex;width:100%;aspect-ratio:1/1;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:10px">foto</span>
+                  <span style="display:block;padding:7px 8px">
+                    <span style="display:block;font-size:13px;font-weight:500;line-height:1.25">Mesa auxiliar Cauca</span>
+                    <span style="display:block;font-size:12px;color:var(--gris);margin-top:2px">$ 740.000</span>
+                  </span>
+                </button>
+              </li>
+            </ul>
+            <p style="margin:12px 0 0;font-size:13px;color:var(--gris)">Los que ya están en la colección no aparecen acá.</p>
+          </section>
+
+        </div>
+
+        <div style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--linea);padding-top:14px">
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer">Guardar</button>
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:15px;cursor:pointer">Cancelar</button>
+          <a href="#col" style="margin-left:auto;display:inline-flex;align-items:center;min-height:2.75rem;font-size:14px">Ver la página →</a>
+        </div>
+      </div>
+    </li>
+
+    <li style="border:1px solid #c9a08a;border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+      <div style="padding:14px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+        <span aria-label="Arrastrar para reordenar" style="cursor:grab;touch-action:none;color:var(--linea-fuerte);font-size:18px">⠿</span>
+        <span style="width:80px;height:80px;flex:0 0 auto;border-radius:var(--r-pieza);border:1px dashed var(--linea-fuerte);display:flex;align-items:center;justify-content:center;background:var(--hueso-alt);color:var(--gris);font-size:10px;text-align:center">sin<br>foto</span>
+        <div style="flex:1 1 14rem;min-width:0">
+          <p style="margin:0;font-weight:600;font-size:17px">Rincón de lectura</p>
+          <p style="margin:3px 0 0;font-size:14px;color:var(--gris)">3 muebles · se ve en el inicio</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;font-weight:500;cursor:pointer">Editar</button>
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Ocultar</button>
+        </div>
+      </div>
+      <div style="background:#fbf1ea;border-top:1px solid #e3c9b8;padding:11px 14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <p style="margin:0;flex:1 1 20rem;min-width:0;font-size:14px;line-height:1.45;color:var(--alerta)">Sin foto del ambiente, en el inicio se ve un recuadro vacío. Una foto del rincón completo funciona mejor que la de un mueble solo.</p>
+        <label style="flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font-size:14px;font-weight:600;cursor:pointer">Subir foto<input type="file" accept="image/*" capture="environment" style="display:none"></label>
+      </div>
+    </li>
+
+    <li style="border:1px dashed var(--linea-fuerte);border-radius:var(--r-bloque);background:var(--hueso-alt);padding:14px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;opacity:.75">
+      <span aria-hidden="true" style="color:var(--linea-fuerte);font-size:18px">⠿</span>
+      <span style="width:80px;height:80px;flex:0 0 auto;border-radius:var(--r-pieza);overflow:hidden;border:1px solid var(--linea);display:flex;align-items:center;justify-content:center;background:#fff;color:var(--gris);font-size:10px;text-align:center">foto del<br>ambiente</span>
+      <div style="flex:1 1 14rem;min-width:0">
+        <p style="margin:0;font-weight:600;font-size:17px">Terraza tejida</p>
+        <p style="margin:3px 0 0;font-size:14px;color:var(--gris)">6 muebles · oculta, no se ve en el inicio</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer">Publicar</button>
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Editar</button>
+      </div>
+    </li>
+
+  </ul>
+
+  <div style="margin-top:26px;border:1px dashed var(--linea-fuerte);border-radius:var(--r-bloque);padding:20px;text-align:center">
+    <p style="margin:0 0 6px;font-family:'Instrument Serif',Georgia,serif;font-size:22px">Armar un ambiente nuevo</p>
+    <p style="margin:0 0 14px;font-size:15px;color:var(--gris);max-width:56ch;margin-left:auto;margin-right:auto">Junta los muebles que se ven bien juntos, ponle nombre y una foto del conjunto. Sirve para que el comprador pida todo de una.</p>
+    <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer">+ Nueva colección</button>
+  </div>
+
+</main>
+
+</div>
+</body>
+</html>

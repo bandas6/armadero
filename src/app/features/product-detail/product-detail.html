@@ -33,24 +33,16 @@
         bastante más larga; en móvil, apilada, se comporta como un bloque normal.
       -->
       <section aria-label="Fotos del mueble" class="self-start lg:sticky lg:top-24">
-        <div class="rounded-pieza relative aspect-[4/3] overflow-hidden" style="border: 1px solid var(--linea);">
-          @if (product.images[selectedImageIndex()]; as mainImage) {
-            <img
-              [ngSrc]="mainImage.url"
-              [alt]="mainImage.alt || product.name"
-              fill
-              priority
-              sizes="(max-width: 720px) 100vw, 45vw"
-              class="object-cover"
-            />
-          } @else {
-            <span
-              class="absolute inset-0 flex items-center justify-center text-sm"
-              style="background: var(--hueso-alt); color: var(--gris);"
-              >Foto pronto</span
-            >
-          }
-        </div>
+        <!--
+          La foto grande con lupa y visor: lo que se vende es el tejido y el acabado, y eso
+          solo se juzga de cerca (src/app/shared/photo-zoom.ts).
+        -->
+        <app-photo-zoom
+          [fotos]="product.images"
+          [indice]="selectedImageIndex()"
+          (indiceChange)="selectImage($event)"
+          [nombre]="product.name"
+        />
 
         @if (product.images.length > 1) {
           <!-- repeat(3, minmax(0, 1fr)): con 1fr a secas las miniaturas se desbordan en móvil. -->

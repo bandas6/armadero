@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel · Cotizaciones (rediseño)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#f7f6f2;color:#191c1e;font-family:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Instrument Serif',Georgia,serif;font-weight:700}
+  a{color:#42604b;text-underline-offset:3px}
+  a:hover{color:#191c1e}
+  :focus-visible{outline:3px solid #42604b;outline-offset:3px}
+  @media (prefers-reduced-motion: reduce){*{transition-duration:.001ms!important;animation-duration:.001ms!important}}
+</style>
+</head>
+<body>
+<div style="--hueso:#f7f6f2;--hueso-alt:#f2f1ec;--tinta:#191c1e;--tinta-suave:#43484b;--gris:#5e6467;--tejido:#a8641e;--madera:#3a5a6b;--hoja:#42604b;--linea:#191c1e1f;--linea-fuerte:#191c1e33;--alerta:#8c4a34;--r-bloque:12px;--r-pieza:10px;--r-control:8px;--r-pastilla:999px;background:var(--hueso);min-height:100vh">
+
+<header style="position:sticky;top:0;z-index:30;background:var(--hueso-alt);border-bottom:1px solid var(--linea)">
+  <div style="max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <span style="font-weight:600;letter-spacing:0.06em;font-size:15px;color:var(--tinta)">ARTEMADERO · Panel</span>
+    <div style="display:flex;align-items:center;gap:18px;font-size:14px">
+      <a href="#cot" style="color:var(--gris)">Vanessa Ríos</a>
+      <a href="#cot" style="color:var(--hoja)">Salir</a>
+    </div>
+  </div>
+  <nav style="max-width:1120px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;font-size:14px">
+    <a href="#cot" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Muebles</a>
+    <a href="#cot" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Categorías</a>
+    <a href="#cot" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Colecciones</a>
+    <a href="#cot" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid var(--hoja);color:var(--tinta);font-weight:600;text-decoration:none">Cotizaciones</a>
+    <a href="#cot" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Inicio</a>
+    <a href="#cot" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Envíos</a>
+    <a href="#cot" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Ajustes</a>
+    <a href="#cot" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Usuarios</a>
+  </nav>
+</header>
+
+<main id="cot" style="max-width:1120px;margin:0 auto;padding:22px 20px 60px">
+
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div>
+      <h1 style="margin:0;font-size:clamp(26px,3.4vw,34px);line-height:1.05">Cotizaciones</h1>
+      <p style="margin:4px 0 0;font-size:15px;color:var(--gris)">14 este mes · 5 esperando que las contestes</p>
+    </div>
+    <a href="#cot" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;font-weight:500;text-decoration:none">Descargar en Excel</a>
+  </div>
+
+  
+    <section style="margin-top:18px;border:1px solid var(--linea-fuerte);border-left:5px solid var(--tinta);border-radius:var(--r-bloque);background:#fff;padding:16px 18px">
+      <h2 style="margin:0 0 4px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:16px">5 personas esperan respuesta</h2>
+      <p style="margin:0 0 14px;font-size:15px;line-height:1.5;color:var(--tinta-suave);max-width:62ch">La más vieja lleva 2 días. Escríbeles por WhatsApp desde aquí; el estado pasa a “Contactada” solo.</p>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:10px 12px;border:1px solid var(--linea);border-radius:var(--r-control)">
+          <span style="flex:1 1 12rem;min-width:0">
+            <span style="display:block;font-weight:500;font-size:15px">Marta Londoño · Palmira</span>
+            <span style="display:block;font-size:13px;color:var(--alerta);margin-top:2px">Hace 2 días · #AM-0187</span>
+          </span>
+          <span style="font-size:14px;color:var(--gris)">3 muebles · $ 5.180.000</span>
+          <a href="https://wa.me/573001112233" style="flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font-size:14px;font-weight:600;text-decoration:none">Escribirle</a>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:10px 12px;border:1px solid var(--linea);border-radius:var(--r-control)">
+          <span style="flex:1 1 12rem;min-width:0">
+            <span style="display:block;font-weight:500;font-size:15px">Diego Ramírez · Cali</span>
+            <span style="display:block;font-size:13px;color:var(--gris);margin-top:2px">Ayer · #AM-0189</span>
+          </span>
+          <span style="font-size:14px;color:var(--hoja);font-weight:600">Según medidas</span>
+          <a href="https://wa.me/573001112233" style="flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font-size:14px;font-weight:600;text-decoration:none">Escribirle</a>
+        </div>
+        <a href="#lista" style="align-self:flex-start;display:inline-flex;align-items:center;min-height:2.75rem;font-size:14px;font-weight:500">Ver las otras 3 →</a>
+      </div>
+    </section>
+  
+
+  <div style="margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:12px">
+    <div style="border:1px solid var(--linea);border-radius:var(--r-pieza);background:var(--hueso-alt);padding:14px 16px">
+      <p style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-size:32px;line-height:1">14</p>
+      <p style="margin:3px 0 0;font-size:14px;color:var(--gris)">cotizaciones este mes</p>
+      <p style="margin:6px 0 0;font-size:13px;color:var(--hoja)">3 más que en agosto</p>
+    </div>
+    <div style="border:1px solid var(--linea);border-radius:var(--r-pieza);background:var(--hueso-alt);padding:14px 16px">
+      <p style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-size:32px;line-height:1">6</p>
+      <p style="margin:3px 0 0;font-size:14px;color:var(--gris)">se volvieron venta</p>
+      <p style="margin:6px 0 0;font-size:13px;color:var(--gris)">de 14 · casi la mitad</p>
+    </div>
+    <div style="border:1px solid var(--linea);border-radius:var(--r-pieza);background:var(--hueso-alt);padding:14px 16px">
+      <p style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-size:32px;line-height:1">$ 18.4<span style="font-size:19px"> M</span></p>
+      <p style="margin:3px 0 0;font-size:14px;color:var(--gris)">en cotizaciones ganadas</p>
+      <p style="margin:6px 0 0;font-size:13px;color:var(--gris)">este mes, valor estimado</p>
+    </div>
+  </div>
+
+  <section style="margin-top:12px;border:1px solid var(--linea);border-radius:var(--r-pieza);background:var(--hueso-alt);padding:14px 16px">
+    <h2 style="margin:0 0 10px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px">Lo que más piden este mes</h2>
+    <ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px">
+      <li style="display:flex;align-items:center;gap:10px;font-size:14px">
+        <span style="flex:1 1 10rem;min-width:0">Comedor Roldanillo</span>
+        <span style="flex:2 1 6rem;min-width:0;height:8px;border-radius:var(--r-pastilla);background:#191c1e14;overflow:hidden"><span style="display:block;width:100%;height:100%;background:var(--hoja)"></span></span>
+        <span style="flex:0 0 auto;color:var(--gris);width:6.5rem;text-align:right">8 cotizaciones</span>
+      </li>
+      <li style="display:flex;align-items:center;gap:10px;font-size:14px">
+        <span style="flex:1 1 10rem;min-width:0">Sala Guadalajara</span>
+        <span style="flex:2 1 6rem;min-width:0;height:8px;border-radius:var(--r-pastilla);background:#191c1e14;overflow:hidden"><span style="display:block;width:75%;height:100%;background:var(--hoja)"></span></span>
+        <span style="flex:0 0 auto;color:var(--gris);width:6.5rem;text-align:right">6 cotizaciones</span>
+      </li>
+      <li style="display:flex;align-items:center;gap:10px;font-size:14px">
+        <span style="flex:1 1 10rem;min-width:0">Mecedora Buga</span>
+        <span style="flex:2 1 6rem;min-width:0;height:8px;border-radius:var(--r-pastilla);background:#191c1e14;overflow:hidden"><span style="display:block;width:50%;height:100%;background:var(--hoja)"></span></span>
+        <span style="flex:0 0 auto;color:var(--gris);width:6.5rem;text-align:right">4 cotizaciones</span>
+      </li>
+      <li style="display:flex;align-items:center;gap:10px;font-size:14px">
+        <span style="flex:1 1 10rem;min-width:0">Comedor Sevilla</span>
+        <span style="flex:2 1 6rem;min-width:0;height:8px;border-radius:var(--r-pastilla);background:#191c1e14;overflow:hidden"><span style="display:block;width:38%;height:100%;background:var(--hoja)"></span></span>
+        <span style="flex:0 0 auto;color:var(--gris);width:6.5rem;text-align:right">3 cotizaciones</span>
+      </li>
+    </ol>
+    <p style="margin:11px 0 0;font-size:13px;color:var(--gris)">Sirve para saber qué vale la pena tener listo o destacar en el inicio.</p>
+  </section>
+
+  <div id="lista" style="margin-top:26px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);background:var(--tinta);color:var(--hueso);font-size:14px;font-weight:600">Por atender <span style="opacity:.75;font-weight:400">5</span></span>
+    <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);font-size:14px">Contactadas <span style="color:var(--gris)">3</span></span>
+    <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);font-size:14px">Ganadas <span style="color:var(--gris)">6</span></span>
+    <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);font-size:14px">Perdidas <span style="color:var(--gris)">2</span></span>
+    <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);font-size:14px">Todas <span style="color:var(--gris)">16</span></span>
+    <input type="search" placeholder="Buscar por nombre o código" aria-label="Buscar cotización" style="flex:1 1 13rem;min-width:0;margin-left:auto;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.55rem 0.75rem;font:inherit;font-size:0.95rem">
+  </div>
+
+  <h2 style="margin:22px 0 10px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gris)">Hoy</h2>
+
+  <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px">
+
+    <li style="border:1px solid var(--linea-fuerte);border-left:5px solid var(--tinta);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+      <div style="padding:14px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
+        <div style="flex:1 1 16rem;min-width:0">
+          <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+            <span style="display:inline-flex;align-items:center;padding:2px 9px;border-radius:var(--r-pastilla);background:var(--tinta);color:var(--hueso);font-size:12px;font-weight:600">Por atender</span>
+            <a href="#detalle" style="font-weight:600;font-size:17px;color:var(--tinta);text-decoration:none">Camila Ospina</a>
+            <span style="font-size:14px;color:var(--gris)">· Cali</span>
+          </div>
+          <p style="margin:6px 0 0;font-size:14px;color:var(--gris)">Hoy 9:14 a. m. · #AM-0192 · llegó desde la ficha del Comedor Roldanillo</p>
+          <p style="margin:8px 0 0;font-size:15px;line-height:1.5;color:var(--tinta-suave)">2 muebles: Comedor Roldanillo, Silla Nariño ×6</p>
+        </div>
+        <div style="flex:0 0 auto;text-align:right">
+          <p style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-size:24px;line-height:1">$ 9.240.000</p>
+          <p style="margin:2px 0 0;font-size:13px;color:var(--gris)">valor estimado</p>
+        </div>
+      </div>
+      <div style="border-top:1px solid var(--linea);padding:12px 14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <a href="https://wa.me/573001112233" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font-size:14px;font-weight:600;text-decoration:none">Escribirle por WhatsApp</a>
+        <a href="#detalle" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;font-weight:500;text-decoration:none">Ver el detalle</a>
+        <button type="button" aria-label="Más acciones para la cotización de Camila Ospina" style="margin-left:auto;min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+      </div>
+    </li>
+
+    <li style="border:1px solid var(--linea-fuerte);border-left:5px solid var(--tinta);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+      <div style="padding:14px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
+        <div style="flex:1 1 16rem;min-width:0">
+          <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+            <span style="display:inline-flex;align-items:center;padding:2px 9px;border-radius:var(--r-pastilla);background:var(--tinta);color:var(--hueso);font-size:12px;font-weight:600">Por atender</span>
+            <a href="#detalle" style="font-weight:600;font-size:17px;color:var(--tinta);text-decoration:none">Jorge Valencia</a>
+            <span style="font-size:14px;color:var(--gris)">· Jamundí</span>
+          </div>
+          <p style="margin:6px 0 0;font-size:14px;color:var(--gris)">Hoy 8:02 a. m. · #AM-0191 · llegó desde el catálogo</p>
+          <p style="margin:8px 0 0;font-size:15px;line-height:1.5;color:var(--tinta-suave)">1 mueble: Sala Guadalajara</p>
+        </div>
+        <div style="flex:0 0 auto;text-align:right">
+          <p style="margin:0;font-size:17px;font-weight:600;color:var(--hoja)">Según medidas</p>
+          <p style="margin:2px 0 0;font-size:13px;color:var(--gris)">hay que hablar con él</p>
+        </div>
+      </div>
+      <div style="background:#f3f5f1;border-top:1px solid var(--linea);padding:11px 14px">
+        <p style="margin:0;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gris);font-weight:600">Lo que escribió</p>
+        <p style="margin:5px 0 0;font-size:15px;line-height:1.55;color:var(--tinta-suave)">“Mi sala tiene 3,20 m de pared libre. ¿Me la pueden hacer de 300 cm y con el puf más grande?”</p>
+      </div>
+      <div style="border-top:1px solid var(--linea);padding:12px 14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <a href="https://wa.me/573001112233" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font-size:14px;font-weight:600;text-decoration:none">Escribirle por WhatsApp</a>
+        <a href="#detalle" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;font-weight:500;text-decoration:none">Ver el detalle</a>
+        <button type="button" aria-label="Más acciones para la cotización de Jorge Valencia" style="margin-left:auto;min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+      </div>
+    </li>
+
+  </ul>
+
+  <h2 style="margin:22px 0 10px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gris)">Ayer</h2>
+
+  <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px">
+
+    <li style="border:1px solid var(--linea);border-left:5px solid var(--madera);border-radius:var(--r-bloque);background:#fff;padding:14px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1 1 16rem;min-width:0">
+        <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+          <span style="display:inline-flex;align-items:center;padding:2px 9px;border-radius:var(--r-pastilla);border:1px solid var(--madera);color:var(--madera);font-size:12px;font-weight:600">Contactada</span>
+          <a href="#detalle" style="font-weight:600;font-size:17px;color:var(--tinta);text-decoration:none">Luisa Betancur</a>
+          <span style="font-size:14px;color:var(--gris)">· Yumbo</span>
+        </div>
+        <p style="margin:6px 0 0;font-size:14px;color:var(--gris)">Ayer 4:35 p. m. · #AM-0190 · le escribiste ayer</p>
+        <p style="margin:6px 0 0;font-size:14px;color:var(--tinta-suave);font-style:italic">Tu nota: “Quedó pendiente de confirmar el color del cojín.”</p>
+      </div>
+      <div style="flex:0 0 auto;text-align:right">
+        <p style="margin:0;font-size:18px;font-weight:600">$ 1.150.000</p>
+        <p style="margin:2px 0 0;font-size:13px;color:var(--gris)">1 mueble</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;flex:1 1 100%">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer">Se volvió venta</button>
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">No siguió</button>
+        <a href="#detalle" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;font-weight:500;text-decoration:none">Ver el detalle</a>
+      </div>
+    </li>
+
+    <li style="border:1px solid var(--linea);border-left:5px solid var(--hoja);border-radius:var(--r-bloque);background:var(--hueso-alt);padding:14px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1 1 16rem;min-width:0">
+        <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+          <span style="display:inline-flex;align-items:center;padding:2px 9px;border-radius:var(--r-pastilla);background:var(--hoja);color:#fff;font-size:12px;font-weight:600">Ganada</span>
+          <a href="#detalle" style="font-weight:600;font-size:17px;color:var(--tinta);text-decoration:none">Andrés Mejía</a>
+          <span style="font-size:14px;color:var(--gris)">· Cali</span>
+        </div>
+        <p style="margin:6px 0 0;font-size:14px;color:var(--gris)">Ayer 11:20 a. m. · #AM-0188 · 4 muebles</p>
+      </div>
+      <div style="flex:0 0 auto;text-align:right">
+        <p style="margin:0;font-size:18px;font-weight:600">$ 6.410.000</p>
+      </div>
+      <a href="#detalle" style="flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font-size:14px;font-weight:500;text-decoration:none">Ver el detalle</a>
+    </li>
+
+    <li style="border:1px dashed var(--linea-fuerte);border-radius:var(--r-bloque);background:var(--hueso-alt);padding:14px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;opacity:.74">
+      <div style="flex:1 1 16rem;min-width:0">
+        <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+          <span style="display:inline-flex;align-items:center;padding:2px 9px;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);color:var(--gris);font-size:12px;font-weight:600">No siguió</span>
+          <a href="#detalle" style="font-weight:600;font-size:17px;color:var(--tinta);text-decoration:none">Paula Arango</a>
+          <span style="font-size:14px;color:var(--gris)">· Pradera</span>
+        </div>
+        <p style="margin:6px 0 0;font-size:14px;color:var(--gris)">Ayer 9:47 a. m. · #AM-0186 · 1 mueble</p>
+      </div>
+      <div style="flex:0 0 auto;text-align:right">
+        <p style="margin:0;font-size:18px;font-weight:600">$ 420.000</p>
+      </div>
+      <a href="#detalle" style="flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font-size:14px;font-weight:500;text-decoration:none">Ver el detalle</a>
+    </li>
+
+  </ul>
+
+  <div style="margin-top:20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;border-top:1px solid var(--linea);padding-top:16px">
+    <p style="margin:0;font-size:14px;color:var(--gris)">Cotizaciones 1 a 5 de 16</p>
+    <button type="button" style="min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;font-weight:500;cursor:pointer">Ver las 11 anteriores</button>
+  </div>
+
+  <div id="detalle" style="margin-top:44px;border-top:2px solid var(--tinta);padding-top:20px">
+    <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gris)">Así se ve el detalle de una cotización</p>
+
+    <div style="border:1px solid var(--linea);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+      <div style="padding:16px 18px;border-bottom:1px solid var(--linea);display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
+        <div style="flex:1 1 18rem;min-width:0">
+          <p style="margin:0 0 6px;font-size:14px"><a href="#lista">← Volver a cotizaciones</a></p>
+          <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+            <span style="display:inline-flex;align-items:center;padding:2px 9px;border-radius:var(--r-pastilla);background:var(--tinta);color:var(--hueso);font-size:12px;font-weight:600">Por atender</span>
+            <h2 style="margin:0;font-size:26px;line-height:1.1">Camila Ospina</h2>
+          </div>
+          <p style="margin:6px 0 0;font-size:15px;color:var(--gris)">Cali · hoy 9:14 a. m. · #AM-0192</p>
+        </div>
+        <div style="flex:0 0 auto;text-align:right">
+          <p style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-size:28px;line-height:1">$ 9.240.000</p>
+          <p style="margin:2px 0 0;font-size:13px;color:var(--gris)">valor estimado · flete aparte</p>
+        </div>
+      </div>
+
+      <div style="padding:16px 18px;border-bottom:1px solid var(--linea);display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <a href="https://wa.me/573001112233" style="display:inline-flex;flex-direction:column;justify-content:center;min-height:3.25rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;text-decoration:none">
+          <span style="font-size:15px;font-weight:600">Escribirle por WhatsApp</span>
+          <span style="font-size:12px;color:#d2decf">+57 300 111 2233 · lo dejó ella</span>
+        </a>
+        <p style="margin:0;flex:1 1 14rem;min-width:0;font-size:14px;line-height:1.5;color:var(--gris)">El mensaje va con el código y los muebles ya escritos. Al enviarlo, la cotización pasa a “Contactada”.</p>
+      </div>
+
+      <div style="padding:16px 18px;border-bottom:1px solid var(--linea)">
+        <h3 style="margin:0 0 12px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px">Lo que pidió</h3>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px">
+          <li style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;padding-bottom:10px;border-bottom:1px solid var(--linea)">
+            <span style="width:56px;height:56px;flex:0 0 auto;border-radius:var(--r-control);border:1px solid var(--linea);background:var(--hueso-alt);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gris)">foto</span>
+            <span style="flex:1 1 12rem;min-width:0">
+              <a href="#detalle" style="display:block;font-weight:500;font-size:16px">Comedor Roldanillo</a>
+              <span style="display:block;font-size:14px;color:var(--gris);margin-top:2px">Tejido sol · ⌀ 140 × 76 cm · 6 puestos</span>
+              <span style="display:block;font-size:14px;color:var(--gris)">SKU ROL-140-SOL</span>
+            </span>
+            <span style="flex:0 0 auto;text-align:right">
+              <span style="display:block;font-size:16px;font-weight:600">$ 3.900.000</span>
+              <span style="display:block;font-size:13px;color:var(--gris)">×1</span>
+            </span>
+          </li>
+          <li style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+            <span style="width:56px;height:56px;flex:0 0 auto;border-radius:var(--r-control);border:1px solid var(--linea);background:var(--hueso-alt);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gris)">foto</span>
+            <span style="flex:1 1 12rem;min-width:0">
+              <a href="#detalle" style="display:block;font-weight:500;font-size:16px">Silla Nariño</a>
+              <span style="display:block;font-size:14px;color:var(--gris);margin-top:2px">Nogal y cuero · 46 × 82 × 52 cm</span>
+              <span style="display:block;font-size:14px;color:var(--gris)">SKU NAR-46-CUE</span>
+            </span>
+            <span style="flex:0 0 auto;text-align:right">
+              <span style="display:block;font-size:16px;font-weight:600">$ 5.340.000</span>
+              <span style="display:block;font-size:13px;color:var(--gris)">×6 · $ 890.000 cada una</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <div style="padding:16px 18px;border-bottom:1px solid var(--linea);background:#f3f5f1">
+        <h3 style="margin:0 0 6px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px">Lo que escribió</h3>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:var(--tinta-suave)">“Necesito el comedor para el apartamento nuevo, con las seis sillas. ¿Alcanzan a entregarlo antes del 20 de octubre?”</p>
+      </div>
+
+      <div style="padding:16px 18px;border-bottom:1px solid var(--linea)">
+        <h3 style="margin:0 0 4px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px">Tu nota</h3>
+        <p style="margin:0 0 8px;font-size:14px;color:var(--gris)">Solo la ves tú y el equipo del panel. La clienta nunca la lee.</p>
+        <textarea rows="3" placeholder="Confirmé el 18 de octubre. Falta que mande el abono." style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.65rem 0.8rem;font:inherit;font-size:0.95rem;resize:vertical"></textarea>
+      </div>
+
+      <div style="padding:16px 18px">
+        <h3 style="margin:0 0 4px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px">¿En qué quedó?</h3>
+        <p style="margin:0 0 12px;font-size:14px;color:var(--gris)">Marcarlo mantiene al día la cuenta del mes.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);background:var(--tinta);border:1px solid var(--tinta);color:var(--hueso);font:inherit;font-size:14px;font-weight:600;cursor:pointer">Por atender</button>
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Ya le escribí</button>
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Se volvió venta</button>
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">No siguió</button>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--linea);padding-top:14px">
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer">Guardar</button>
+          <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:15px;cursor:pointer">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+</div>
+</body>
+</html>

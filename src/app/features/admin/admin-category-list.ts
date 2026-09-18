@@ -1,5 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgTemplateOutlet } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { AdminCategoryService } from '../../core/services/admin-category.service';
 import { AdminProductService } from '../../core/services/admin-product.service';
@@ -20,7 +21,7 @@ interface Draft {
 @Component({
   selector: 'app-admin-category-list',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgTemplateOutlet],
   templateUrl: './admin-category-list.html',
 })
 export class AdminCategoryList {
@@ -35,8 +36,106 @@ export class AdminCategoryList {
   draft = signal<Draft | null>(null);
   uploading = signal(false);
 
+  /** El bloque de ayuda se cierra y no vuelve en esta sesión. */
+  helpDismissed = signal(false);
+  /** Categoría cuya franja de "¿ocultar?" está abierta. Reemplaza al confirm(). */
+  confirmingHide = signal<string | null>(null);
+  dragId = signal<string | null>(null);
+
   roots = computed(() => this.all().filter((c) => !c.parent));
   childrenOf = (parentId: string) => this.all().filter((c) => c.parent === parentId);
+
+  /** Todas las subcategorías: es el nivel que la gente ve y toca en la página. */
+  private children = computed(() => this.all().filter((c) => c.parent));
+
+  readonly resumen = computed(() => {
+    const hijas = this.children();
+    return {
+      total: hijas.length,
+      sinFoto: hijas.filter((c) => !c.imageUrl).length,
+      sinMuebles: hijas.filter((c) => c.productCount === 0).length,
+      ocultas: hijas.filter((c) => !c.active).length,
+      tejido: hijas.filter((c) => c.material === 'tejido').length,
+      madera: hijas.filter((c) => c.material === 'madera').length,
+    };
+  });
+
+  /** El color del material, que es funcional y no decorativo. */
+  colorMaterial(c: AdminCategory): string {
+    if (c.material === 'tejido') return 'var(--tejido)';
+    if (c.material === 'madera') return 'var(--madera)';
+    return 'var(--linea-fuerte)';
+  }
+
+  nombreMaterial(c: AdminCategory): string | null {
+    if (c.material === 'tejido') return 'Tejido';
+    if (c.material === 'madera') return 'Madera';
+    return null;
+  }
+
+  /** Lo que se pierde al ocultar, dicho en concreto antes de tocar el botón. */
+  consecuenciaDeOcultar(c: AdminCategory): string {
+    if (c.productCount === 0) {
+      return `Ocultar «${c.name}» la saca de la página. Nadie la va a ver hasta que la vuelvas a mostrar.`;
+    }
+    const n = c.productCount;
+    return (
+      `Ocultar «${c.name}» también saca ${n} ${n === 1 ? 'mueble' : 'muebles'} de la página. ` +
+      'Nadie los va a ver hasta que la vuelvas a mostrar.'
+    );
+  }
+
+  onHandleDown(c: AdminCategory, event: PointerEvent) {
+    (event.target as HTMLElement).setPointerCapture?.(event.pointerId);
+    this.dragId.set(c._id);
+  }
+
+  /** Solo se reordena entre hermanas: una subcategoría no puede saltar de padre. */
+  onHandleMove(hermanas: AdminCategory[], event: PointerEvent) {
+    const id = this.dragId();
+    if (!id) return;
+    event.preventDefault();
+    const el = document
+      .elementsFromPoint(event.clientX, event.clientY)
+      .find((n) => n instanceof HTMLElement && n.dataset['catId']) as HTMLElement | undefined;
+    const overId = el?.dataset['catId'];
+    if (!overId || overId === id) return;
+    const from = hermanas.findIndex((c) => c._id === id);
+    const to = hermanas.findIndex((c) => c._id === overId);
+    if (from < 0 || to < 0) return;
+    const ids = hermanas.map((c) => c._id);
+    const [moved] = ids.splice(from, 1);
+    ids.splice(to, 0, moved);
+    this.applyOrder(ids);
+  }
+
+  onHandleUp(hermanas: AdminCategory[]) {
+    if (!this.dragId()) return;
+    this.dragId.set(null);
+    this.service.reorder(hermanas.map((c) => c._id)).subscribe({
+      error: () => this.error.set('No se pudo guardar el orden.'),
+    });
+  }
+
+  onHandleKey(hermanas: AdminCategory[], c: AdminCategory, event: KeyboardEvent) {
+    const delta = event.key === 'ArrowUp' ? -1 : event.key === 'ArrowDown' ? 1 : 0;
+    if (!delta) return;
+    event.preventDefault();
+    void this.move(hermanas, hermanas.findIndex((x) => x._id === c._id), delta);
+  }
+
+  /** Reordena en memoria para que el arrastre se vea moverse antes de guardar. */
+  private applyOrder(ids: string[]) {
+    const pos = new Map(ids.map((id, i) => [id, i]));
+    this.all.update((list) =>
+      [...list].sort((a, b) => {
+        const pa = pos.get(a._id);
+        const pb = pos.get(b._id);
+        if (pa === undefined || pb === undefined) return 0;
+        return pa - pb;
+      }),
+    );
+  }
 
   constructor() {
     this.load();
@@ -152,15 +251,13 @@ export class AdminCategoryList {
     }
   }
 
+  /** Mostrar es inocuo y va directo; ocultar pide confirmación en la propia fila. */
   async toggleActive(c: AdminCategory) {
-    if (c.active) {
-      const affected = c.productCount;
-      const msg =
-        affected > 0
-          ? `Ocultar "${c.name}" también oculta ${affected} mueble(s) del sitio. ¿Continuar?`
-          : `¿Ocultar "${c.name}" del sitio?`;
-      if (!confirm(msg)) return;
+    if (c.active && this.confirmingHide() !== c._id) {
+      this.confirmingHide.set(c._id);
+      return;
     }
+    this.confirmingHide.set(null);
     this.busyId.set(c._id);
     this.error.set(null);
     try {

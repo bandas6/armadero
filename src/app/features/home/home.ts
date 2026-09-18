@@ -10,6 +10,7 @@ import { ProductCard } from '../catalog/product-card';
 import { MaterialTag } from '../../shared/material-tag';
 import {
   BUSINESS_HOURS,
+  PORTADA_POR_DEFECTO,
   HOURS_SATURDAY,
   HOURS_WEEKDAY,
   WHATSAPP_GENERIC_URL,
@@ -128,6 +129,8 @@ export class Home {
   readonly datosHero = DATOS_HERO;
   readonly garantiasHero = GARANTIAS_HERO;
   readonly filesUrl = environment.filesUrl;
+  /** La portada de siempre, la que sale cuando no hay ninguna encendida en el panel. */
+  readonly portada = PORTADA_POR_DEFECTO;
   readonly whatsappUrl = WHATSAPP_GENERIC_URL;
   readonly hours = BUSINESS_HOURS;
   readonly hoursWeekday = HOURS_WEEKDAY;
@@ -191,9 +194,12 @@ export class Home {
    */
   private leaves = computed(() => {
     const out: CategoryNode[] = [];
-    const walk = (nodes: CategoryNode[]) => {
+    const walk = (nodes: CategoryNode[] | null | undefined) => {
+      // La API puede responder algo que no sea un arreglo; sin esta guarda el recorrido
+      // revienta y, en el encabezado, se lleva por delante todas las páginas.
+      if (!Array.isArray(nodes)) return;
       for (const n of nodes) {
-        if (n.children.length) walk(n.children);
+        if (n.children?.length) walk(n.children);
         else out.push(n);
       }
     };

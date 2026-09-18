@@ -1,155 +1,384 @@
-<div class="flex items-center justify-between gap-3">
-  <h1 class="text-xl">Categorías</h1>
-  <button type="button" (click)="newRoot()" class="admin-btn admin-btn--primary">+ Nueva categoría</button>
+<div class="flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <h1 class="m-0 text-2xl leading-tight sm:text-3xl">Categorías</h1>
+    <p class="mt-1 text-[15px]" style="color: var(--gris);">
+      {{ roots().length }} tipos de mueble · {{ resumen().total }} subcategorías
+    </p>
+  </div>
+  <button type="button" (click)="newRoot()" class="admin-btn admin-btn--primary">
+    + Nuevo tipo de mueble
+  </button>
 </div>
 
-<p class="mt-1 max-w-[70ch] text-sm" style="color: var(--gris);">
-  Dos niveles: el tipo de mueble (Sala, Comedor…) y, dentro, la versión tejida o en madera.
-  <strong>La foto va en la subcategoría</strong>, que es la que se ve en la retícula del
-  catálogo. Si no le pones una, el sitio usa la foto de uno de sus muebles.
-</p>
-
-@if (error()) {
-  <p class="mt-3 rounded-md border px-3 py-2 text-sm" style="border-color: #c98; color: #8c4a34;">{{ error() }}</p>
+<!--
+  La confusión más común de esta pantalla es dónde va la foto. Se explica una vez y se
+  puede cerrar, en vez de dejar que cada quien lo deduzca.
+-->
+@if (!helpDismissed()) {
+  <section
+    class="rounded-bloque mt-[18px] px-[18px] py-4"
+    style="border: 1px solid var(--linea-fuerte); border-left: 5px solid var(--hoja); background: var(--hueso-alt);"
+  >
+    <div class="flex items-start justify-between gap-3">
+      <p class="m-0 max-w-[70ch] text-[15px] leading-relaxed" style="color: var(--tinta-suave);">
+        El catálogo tiene dos niveles: <strong>el tipo de mueble agrupa</strong>, y
+        <strong>la subcategoría es la que la gente ve y toca en la página</strong>. Por eso la
+        foto va en la subcategoría; si no le pones una, el sitio toma la de uno de sus muebles.
+      </p>
+      <button
+        type="button"
+        (click)="helpDismissed.set(true)"
+        class="admin-btn admin-btn--sm admin-btn--icono"
+        aria-label="Cerrar esta explicación"
+      >
+        ✕
+      </button>
+    </div>
+  </section>
 }
 
-<!-- Editor (crear / editar nombre, descripción, material) -->
+<!-- Resumen: qué le falta al catálogo, de un vistazo. -->
+@let r = resumen();
+<div class="mt-4 flex flex-wrap items-center gap-2 text-[14px]">
+  <span
+    class="rounded-pastilla inline-flex min-h-11 items-center gap-[7px] px-3.5 font-semibold"
+    style="background: var(--tinta); color: var(--hueso);"
+    >{{ r.total }} subcategorías</span
+  >
+  <span
+    class="rounded-pastilla inline-flex min-h-11 items-center gap-[7px] px-3.5"
+    [style.background]="r.sinFoto ? '#fbf1ea' : 'var(--hueso-alt)'"
+    [style.color]="r.sinFoto ? 'var(--alerta)' : 'var(--tinta)'"
+    [style.border]="r.sinFoto ? '1px solid #c9a08a' : '1px solid var(--linea-fuerte)'"
+    >Sin foto propia <span class="font-semibold">{{ r.sinFoto }}</span></span
+  >
+  <span
+    class="rounded-pastilla inline-flex min-h-11 items-center gap-[7px] px-3.5"
+    style="background: var(--hueso-alt); border: 1px solid var(--linea-fuerte);"
+    >Sin muebles <span class="font-semibold">{{ r.sinMuebles }}</span></span
+  >
+  <span
+    class="rounded-pastilla inline-flex min-h-11 items-center gap-[7px] px-3.5"
+    style="background: var(--hueso-alt); border: 1px solid var(--linea-fuerte);"
+    >Ocultas <span class="font-semibold">{{ r.ocultas }}</span></span
+  >
+  <span
+    class="rounded-pastilla inline-flex min-h-11 items-center gap-[7px] px-3.5"
+    style="background: var(--hueso-alt); border: 1px solid var(--tejido); color: var(--tejido);"
+    >Tejido <span class="font-semibold">{{ r.tejido }}</span></span
+  >
+  <span
+    class="rounded-pastilla inline-flex min-h-11 items-center gap-[7px] px-3.5"
+    style="background: var(--hueso-alt); border: 1px solid var(--madera); color: var(--madera);"
+    >Madera <span class="font-semibold">{{ r.madera }}</span></span
+  >
+</div>
+
+@if (error()) {
+  <p
+    class="rounded-control mt-3 px-3 py-2.5 text-sm"
+    style="border: 1px solid #c9a08a; background: #fbf1ea; color: var(--alerta);"
+    role="alert"
+  >
+    {{ error() }}
+  </p>
+}
+
+<!-- El editor de un tipo nuevo es lo único que se abre arriba: todavía no tiene fila. -->
 @if (draft(); as d) {
-  <div class="mt-4 rounded-lg border p-4" style="border-color: var(--hoja); background: var(--hueso-alt);">
-    <h2 class="text-sm font-semibold">
-      {{ d.id ? 'Editar categoría' : (d.parentId ? 'Nueva subcategoría' : 'Nueva categoría') }}
-    </h2>
-    <div class="mt-3 space-y-3">
-      <div>
-        <label class="admin-label">Nombre</label>
-        <input [(ngModel)]="d.name" placeholder="Ej: Mecedoras" class="admin-input" />
-      </div>
-
-      <div>
-        <label class="admin-label">Pertenece a</label>
-        <select [(ngModel)]="d.parentId" [disabled]="!!d.id" class="admin-input">
-          <option [ngValue]="null">Nivel principal (tipo de mueble)</option>
-          @for (r of roots(); track r._id) {
-            <option [ngValue]="r._id">{{ r.name }}</option>
-          }
-        </select>
-      </div>
-
-      @if (d.parentId) {
-        <div>
-          <label class="admin-label">Material</label>
-          <select [(ngModel)]="d.material" class="admin-input">
-            <option value="">Sin material específico</option>
-            <option value="tejido">Tejido</option>
-            <option value="madera">Madera</option>
-          </select>
-        </div>
-      }
-
-      <div>
-        <label class="admin-label">Descripción (opcional)</label>
-        <textarea [(ngModel)]="d.description" rows="2" class="admin-input"></textarea>
-      </div>
-
-      @if (d.parentId) {
-        <div>
-          <label class="admin-label">Foto (la que se ve en el catálogo)</label>
-          <div class="flex items-center gap-3">
-            @if (d.imageUrl) {
-              <img [src]="d.imageUrl" alt="" class="h-14 w-14 rounded-md object-cover" />
-            }
-            <label class="admin-btn admin-btn--sm cursor-pointer">
-              {{ uploading() ? 'Subiendo…' : (d.imageUrl ? 'Cambiar foto' : 'Subir foto') }}
-              <input type="file" accept="image/*" class="hidden" (change)="onImage($event)" [disabled]="uploading()" />
-            </label>
-          </div>
-        </div>
-      }
-
-      <div class="flex gap-2">
-        <button type="button" (click)="save()" class="admin-btn admin-btn--primary">Guardar</button>
-        <button type="button" (click)="cancel()" class="admin-btn">Cancelar</button>
-      </div>
-    </div>
-  </div>
+  @if (!d.id && !d.parentId) {
+    <ng-container *ngTemplateOutlet="editor; context: { $implicit: d }"></ng-container>
+  }
 }
 
 @if (loading()) {
   <p class="mt-6" style="color: var(--gris);">Cargando…</p>
 } @else {
-  <ul class="mt-4 space-y-4">
-    @for (root of roots(); track root._id; let i = $index) {
-      <li class="overflow-hidden rounded-lg border" style="border-color: var(--linea); background: var(--hueso-alt);">
-
-        <!--
-          CATEGORÍA (padre). No lleva foto: el catálogo muestra las subcategorías, y es
-          ahí donde vive la foto. El padre solo agrupa y ordena.
-        -->
-        <div class="p-3">
-          <div class="min-w-0 flex-1">
-            <p class="text-lg font-semibold leading-tight" [style.opacity]="root.active ? 1 : 0.5">{{ root.name }}</p>
-            <p class="text-xs" style="color: var(--gris);">
-              Categoría · {{ root.productCount }}
-              {{ root.productCount === 1 ? 'mueble' : 'muebles' }}{{ root.active ? '' : ' · oculta' }}
-            </p>
-          </div>
-          <div class="mt-2.5 flex flex-wrap gap-2">
-            <button type="button" (click)="edit(root)" class="admin-btn admin-btn--sm">Editar nombre</button>
-            <button type="button" (click)="toggleActive(root)" [disabled]="busyId() === root._id" class="admin-btn admin-btn--sm">
-              {{ root.active ? 'Ocultar' : 'Mostrar' }}
-            </button>
-            <button type="button" (click)="move(roots(), i, -1)" [disabled]="i === 0" class="admin-btn admin-btn--sm" style="min-width: 2.4rem;" aria-label="Subir">↑</button>
-            <button type="button" (click)="move(roots(), i, 1)" [disabled]="i === roots().length - 1" class="admin-btn admin-btn--sm" style="min-width: 2.4rem;" aria-label="Bajar">↓</button>
-          </div>
+  @for (root of roots(); track root._id; let i = $index) {
+    @let hijas = childrenOf(root._id);
+    <section class="mt-7">
+      <!-- El tipo de mueble es un encabezado de sección, no una tarjeta más. -->
+      <div
+        class="flex flex-wrap items-end justify-between gap-3 pb-2"
+        style="border-bottom: 2px solid var(--tinta);"
+      >
+        <div class="min-w-0">
+          <h2 class="m-0 text-xl leading-tight" [style.opacity]="root.active ? 1 : 0.55">
+            {{ root.name }}
+          </h2>
+          <p class="mt-0.5 text-[13px]" style="color: var(--gris);">
+            {{ hijas.length }} {{ hijas.length === 1 ? 'subcategoría' : 'subcategorías' }} ·
+            {{ root.productCount }} {{ root.productCount === 1 ? 'mueble' : 'muebles' }}
+            @if (!root.active) { · oculto }
+          </p>
         </div>
+        <div class="flex flex-wrap gap-1.5">
+          <button type="button" (click)="edit(root)" class="admin-btn admin-btn--sm">
+            Editar nombre
+          </button>
+          <button
+            type="button"
+            (click)="toggleActive(root)"
+            [disabled]="busyId() === root._id"
+            class="admin-btn admin-btn--sm"
+          >
+            {{ root.active ? 'Ocultar' : 'Mostrar' }}
+          </button>
+          <button
+            type="button"
+            (click)="move(roots(), i, -1)"
+            [disabled]="i === 0"
+            class="admin-btn admin-btn--sm admin-btn--icono"
+            aria-label="Subir este tipo"
+          >
+            ↑
+          </button>
+          <button
+            type="button"
+            (click)="move(roots(), i, 1)"
+            [disabled]="i === roots().length - 1"
+            class="admin-btn admin-btn--sm admin-btn--icono"
+            aria-label="Bajar este tipo"
+          >
+            ↓
+          </button>
+        </div>
+      </div>
 
-        <!-- ===== SUBCATEGORÍAS (tejido / madera) — cada una con su foto ===== -->
-        <div class="border-t px-3 py-2" style="border-color: var(--linea); background: var(--hueso-alt);">
-          <p class="text-[0.7rem] font-semibold uppercase tracking-wide" style="color: var(--gris);">Subcategorías de {{ root.name }}</p>
-          <ul class="mt-1 divide-y" style="border-color: color-mix(in srgb, var(--linea-fuerte) 20%, transparent);">
-            @for (child of childrenOf(root._id); track child._id; let ci = $index) {
-              <li class="flex flex-wrap items-center gap-x-3 gap-y-2 py-2.5">
-                <span
-                  class="h-14 w-14 shrink-0 overflow-hidden rounded-md border"
-                  style="border-color: color-mix(in srgb, var(--linea-fuerte) 30%, transparent);"
-                >
-                  @if (child.imageUrl) {
-                    <img [src]="child.imageUrl" alt="" class="h-full w-full object-cover" />
-                  } @else {
-                    <span class="block h-full w-full" style="background: var(--hueso-alt);"></span>
+      @if (confirmingHide() === root._id) {
+        <ng-container *ngTemplateOutlet="confirmar; context: { $implicit: root }"></ng-container>
+      }
+      @if (draft(); as d) {
+        @if (d.id === root._id) {
+          <ng-container *ngTemplateOutlet="editor; context: { $implicit: d }"></ng-container>
+        }
+      }
+
+      <ul class="mt-2.5 list-none space-y-2 p-0">
+        @for (child of hijas; track child._id) {
+          <li
+            class="rounded-pieza overflow-hidden"
+            [attr.data-cat-id]="child._id"
+            [style.opacity]="dragId() === child._id ? 0.6 : 1"
+            [style.border]="'1px solid var(--linea)'"
+            [style.border-left]="'5px solid ' + colorMaterial(child)"
+            style="background: #fff;"
+          >
+            <div class="flex flex-wrap items-center gap-3 p-3">
+              <button
+                type="button"
+                class="cursor-grab px-0.5 text-[18px]"
+                style="touch-action: none; color: var(--linea-fuerte); min-height: 2.75rem;"
+                [attr.aria-label]="'Arrastrar ' + child.name + ' para reordenar, o usar las flechas'"
+                (pointerdown)="onHandleDown(child, $event)"
+                (pointermove)="onHandleMove(hijas, $event)"
+                (pointerup)="onHandleUp(hijas)"
+                (pointercancel)="onHandleUp(hijas)"
+                (keydown)="onHandleKey(hijas, child, $event)"
+              >
+                ⠿
+              </button>
+
+              <span
+                class="rounded-control h-14 w-14 shrink-0 overflow-hidden"
+                style="border: 1px solid var(--linea-fuerte);"
+              >
+                @if (child.imageUrl) {
+                  <img [src]="child.imageUrl" alt="" class="h-full w-full object-cover" />
+                } @else {
+                  <span class="block h-full w-full" style="background: var(--hueso-alt);"></span>
+                }
+              </span>
+
+              <span class="min-w-0 flex-1">
+                <span class="flex flex-wrap items-center gap-2">
+                  <span class="font-medium" [style.opacity]="child.active ? 1 : 0.55">{{ child.name }}</span>
+                  @if (nombreMaterial(child); as m) {
+                    <span class="text-[13px] font-semibold" [style.color]="colorMaterial(child)">{{ m }}</span>
                   }
                 </span>
-                <span class="min-w-0 flex-1">
-                  <span class="flex flex-wrap items-center gap-2">
-                    <span class="text-sm" [style.opacity]="child.active ? 1 : 0.5">{{ child.name }}</span>
-                    @if (child.material) {
-                      <span class="rounded-full px-2 py-0.5 text-[0.65rem]" style="background: var(--hueso-alt);">{{ child.material }}</span>
-                    }
-                  </span>
-                  <span class="block text-xs" style="color: var(--gris);">
-                    {{ child.productCount }} {{ child.productCount === 1 ? 'mueble' : 'muebles' }}
-                    @if (!child.imageUrl) { · usa la foto de un mueble }
-                    {{ child.active ? '' : ' · oculta' }}
+                <span class="mt-0.5 flex flex-wrap items-center gap-[7px] text-[13px]">
+                  <span
+                    class="h-[9px] w-[9px] shrink-0 rounded-full"
+                    [style.background]="child.active ? 'var(--hoja)' : 'transparent'"
+                    [style.border]="child.active ? 'none' : '1.5px solid var(--gris)'"
+                    aria-hidden="true"
+                  ></span>
+                  <span style="color: var(--gris);">
+                    @if (child.active) { Se ve en la página } @else { Oculta — nadie la ve }
+                    · {{ child.productCount }}
+                    {{ child.productCount === 1 ? 'mueble' : 'muebles' }}
                   </span>
                 </span>
-                <span class="ml-auto flex flex-wrap gap-1">
-                  <label class="admin-btn admin-btn--sm cursor-pointer" [class.opacity-50]="busyId() === child._id">
-                    {{ child.imageUrl ? 'Cambiar foto' : 'Subir foto' }}
-                    <input type="file" accept="image/*" class="hidden" (change)="changePhoto(child, $event)" [disabled]="busyId() === child._id" />
-                  </label>
-                  <button type="button" (click)="edit(child)" class="admin-btn admin-btn--sm">Editar</button>
-                  <button type="button" (click)="toggleActive(child)" [disabled]="busyId() === child._id" class="admin-btn admin-btn--sm">
-                    {{ child.active ? 'Ocultar' : 'Mostrar' }}
-                  </button>
-                </span>
-              </li>
-            } @empty {
-              <li class="py-2 text-xs" style="color: var(--gris);">Sin subcategorías.</li>
+              </span>
+
+              <span class="ml-auto flex flex-wrap gap-1.5">
+                <button type="button" (click)="edit(child)" class="admin-btn admin-btn--sm admin-btn--primary">
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  (click)="toggleActive(child)"
+                  [disabled]="busyId() === child._id"
+                  class="admin-btn admin-btn--sm"
+                >
+                  {{ child.active ? 'Ocultar' : 'Mostrar' }}
+                </button>
+              </span>
+            </div>
+
+            @if (confirmingHide() === child._id) {
+              <ng-container *ngTemplateOutlet="confirmar; context: { $implicit: child }"></ng-container>
             }
-          </ul>
-          <button type="button" (click)="newChild(root._id)" class="admin-btn admin-btn--sm mt-2">+ Agregar subcategoría</button>
-        </div>
-      </li>
-    }
-  </ul>
+
+            <!-- Sin foto propia, con su salida: quién decide qué se ve en el catálogo. -->
+            @if (!child.imageUrl && child.productCount > 0) {
+              <div
+                class="flex flex-wrap items-center gap-3 px-3 py-2.5"
+                style="background: #fbf1ea; border-top: 1px solid #e3c9b8;"
+              >
+                <p class="m-0 min-w-0 flex-1 text-[14px] leading-snug" style="color: var(--alerta); flex-basis: 16rem;">
+                  Está usando la foto de un mueble. Ponle una propia y decides tú qué se ve en el
+                  catálogo.
+                </p>
+                <label class="admin-btn admin-btn--sm admin-btn--primary cursor-pointer">
+                  {{ busyId() === child._id ? 'Subiendo…' : 'Subir foto' }}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
+                    class="hidden"
+                    (change)="changePhoto(child, $event)"
+                    [disabled]="busyId() === child._id"
+                  />
+                </label>
+              </div>
+            }
+
+            @if (draft(); as d) {
+              @if (d.id === child._id) {
+                <ng-container *ngTemplateOutlet="editor; context: { $implicit: d }"></ng-container>
+              }
+            }
+          </li>
+        } @empty {
+          <!--
+            Guadua no está rota: es una línea transversal, sus muebles viven en Sala,
+            Comedor y las demás.
+          -->
+          <li
+            class="rounded-pieza p-3.5 text-[14px] leading-relaxed"
+            style="border: 1px dashed var(--linea-fuerte); background: var(--hueso-alt); color: var(--tinta-suave);"
+          >
+            <strong>{{ root.name }} no tiene subcategorías propias</strong>, y puede estar bien:
+            hay líneas que atraviesan el catálogo y cuyos muebles viven dentro de Sala, Comedor y
+            las demás. Si quieres que aparezca como su propia sección, agrégale una subcategoría.
+          </li>
+        }
+      </ul>
+
+      @if (draft(); as d) {
+        @if (!d.id && d.parentId === root._id) {
+          <ng-container *ngTemplateOutlet="editor; context: { $implicit: d }"></ng-container>
+        }
+      }
+
+      <button
+        type="button"
+        (click)="newChild(root._id)"
+        class="rounded-pieza mt-2 w-full cursor-pointer px-3 py-3 text-[14px] font-medium"
+        style="border: 1px dashed var(--linea-fuerte); background: transparent; color: var(--hoja); min-height: 2.75rem;"
+      >
+        + Agregar subcategoría a {{ root.name }}
+      </button>
+    </section>
+  }
 }
+
+<!-- La consecuencia de ocultar, dicha en concreto y con los dos botones ahí mismo. -->
+<ng-template #confirmar let-c>
+  <div
+    class="flex flex-wrap items-center gap-3 px-3 py-3"
+    style="background: #fbf1ea; border-top: 1px solid #e3c9b8; border-bottom: 1px solid #e3c9b8;"
+  >
+    <p class="m-0 min-w-0 flex-1 text-[14px] leading-snug" style="color: var(--alerta); flex-basis: 18rem;">
+      {{ consecuenciaDeOcultar(c) }}
+    </p>
+    <button
+      type="button"
+      (click)="toggleActive(c)"
+      [disabled]="busyId() === c._id"
+      class="admin-btn admin-btn--sm admin-btn--danger"
+    >
+      Ocultar de todos modos
+    </button>
+    <button type="button" (click)="confirmingHide.set(null)" class="admin-btn admin-btn--sm">
+      Cancelar
+    </button>
+  </div>
+</ng-template>
+
+<!-- El editor se despliega donde estás, no en la cabecera de la pantalla. -->
+<ng-template #editor let-d>
+  <div
+    class="rounded-pieza m-3 p-4"
+    style="border: 2px solid var(--hoja); background: var(--hueso-alt);"
+  >
+    <h3 class="m-0 font-body text-sm font-semibold">
+      {{ d.id ? 'Editar' : d.parentId ? 'Nueva subcategoría' : 'Nuevo tipo de mueble' }}
+    </h3>
+    <div class="mt-3 space-y-3">
+      <div>
+        <label class="admin-label" [attr.for]="'cat-nombre'">Nombre</label>
+        <input id="cat-nombre" [(ngModel)]="d.name" placeholder="Ej: Mecedoras tejidas" class="admin-input" />
+      </div>
+
+      @if (d.parentId) {
+        <div>
+          <label class="admin-label" for="cat-material">Material</label>
+          <select id="cat-material" [(ngModel)]="d.material" class="admin-input">
+            <option value="">Sin material específico</option>
+            <option value="tejido">Tejido</option>
+            <option value="madera">Madera</option>
+          </select>
+          <p class="mt-1 text-xs" style="color: var(--gris);">
+            Decide de qué lado del conmutador tejido/madera aparece en el catálogo.
+          </p>
+        </div>
+
+        <div>
+          <label class="admin-label" for="cat-desc">Descripción (opcional)</label>
+          <textarea id="cat-desc" [(ngModel)]="d.description" rows="2" class="admin-input"></textarea>
+          <p class="mt-1 text-xs" style="color: var(--gris);">
+            Se ve arriba de la retícula, cuando alguien entra a esta subcategoría.
+          </p>
+        </div>
+
+        <div>
+          <label class="admin-label">Foto (la que se ve en el catálogo)</label>
+          <div class="flex items-center gap-3">
+            @if (d.imageUrl) {
+              <img [src]="d.imageUrl" alt="" class="rounded-control h-14 w-14 object-cover" />
+            }
+            <label class="admin-btn admin-btn--sm cursor-pointer">
+              {{ uploading() ? 'Subiendo…' : d.imageUrl ? 'Cambiar foto' : 'Subir foto' }}
+              <input
+                type="file"
+                accept="image/*"
+                capture="environment"
+                class="hidden"
+                (change)="onImage($event)"
+                [disabled]="uploading()"
+              />
+            </label>
+          </div>
+        </div>
+      }
+
+      <div class="flex flex-wrap gap-2">
+        <button type="button" (click)="save()" class="admin-btn admin-btn--primary">Guardar</button>
+        <button type="button" (click)="cancel()" class="admin-btn">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

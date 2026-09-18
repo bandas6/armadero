@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel · Ajustes (rediseño)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#f7f6f2;color:#191c1e;font-family:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Instrument Serif',Georgia,serif;font-weight:700}
+  a{color:#42604b;text-underline-offset:3px}
+  a:hover{color:#191c1e}
+  :focus-visible{outline:3px solid #42604b;outline-offset:3px}
+  @media (prefers-reduced-motion: reduce){*{transition-duration:.001ms!important;animation-duration:.001ms!important}}
+</style>
+</head>
+<body>
+<div style="--hueso:#f7f6f2;--hueso-alt:#f2f1ec;--tinta:#191c1e;--tinta-suave:#43484b;--gris:#5e6467;--tejido:#a8641e;--madera:#3a5a6b;--hoja:#42604b;--linea:#191c1e1f;--linea-fuerte:#191c1e33;--alerta:#8c4a34;--r-bloque:12px;--r-pieza:10px;--r-control:8px;--r-pastilla:999px;background:var(--hueso);min-height:100vh">
+
+<header style="position:sticky;top:0;z-index:30;background:var(--hueso-alt);border-bottom:1px solid var(--linea)">
+  <div style="max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <span style="font-weight:600;letter-spacing:0.06em;font-size:15px;color:var(--tinta)">ARTEMADERO · Panel</span>
+    <div style="display:flex;align-items:center;gap:18px;font-size:14px">
+      <a href="#aj" style="color:var(--gris)">Vanessa Ríos</a>
+      <a href="#aj" style="color:var(--hoja)">Salir</a>
+    </div>
+  </div>
+  <nav style="max-width:1120px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;font-size:14px">
+    <a href="#aj" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Muebles</a>
+    <a href="#aj" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Categorías</a>
+    <a href="#aj" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Colecciones</a>
+    <a href="#aj" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Cotizaciones</a>
+    <a href="#aj" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Inicio</a>
+    <a href="#aj" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Envíos</a>
+    <a href="#aj" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid var(--hoja);color:var(--tinta);font-weight:600;text-decoration:none">Ajustes</a>
+    <a href="#aj" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Usuarios</a>
+  </nav>
+</header>
+
+<main id="aj" style="max-width:1120px;margin:0 auto;padding:22px 20px 60px">
+
+  <h1 style="margin:0;font-size:clamp(26px,3.4vw,34px);line-height:1.05">Ajustes del sitio</h1>
+  <p style="margin:4px 0 0;font-size:15px;color:var(--gris);max-width:64ch">Cada bloque se guarda por separado. Puedes cambiar una cosa sin tocar las demás.</p>
+
+  <nav aria-label="Secciones de ajustes" style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap">
+    <a href="#wa" style="min-height:2.25rem;display:inline-flex;align-items:center;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;text-decoration:none">WhatsApp</a>
+    <a href="#hor" style="min-height:2.25rem;display:inline-flex;align-items:center;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;text-decoration:none">Horario</a>
+    <a href="#loc" style="min-height:2.25rem;display:inline-flex;align-items:center;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;text-decoration:none">Local y redes</a>
+    <a href="#msj" style="min-height:2.25rem;display:inline-flex;align-items:center;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;text-decoration:none">Mensaje de cotización</a>
+    <a href="#faq" style="min-height:2.25rem;display:inline-flex;align-items:center;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;text-decoration:none">Preguntas frecuentes</a>
+    <a href="#fra" style="min-height:2.25rem;display:inline-flex;align-items:center;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;text-decoration:none">Franja y año</a>
+  </nav>
+
+  <section id="wa" style="margin-top:22px;border:2px solid var(--hoja);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+    <div style="padding:15px 16px;border-bottom:1px solid var(--linea);display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1 1 18rem;min-width:0">
+        <h2 style="margin:0;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:16px">Número de WhatsApp</h2>
+        <p style="margin:3px 0 0;font-size:14px;color:var(--gris)">Es a donde llegan todas las cotizaciones del sitio.</p>
+      </div>
+      <span style="flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:var(--r-pastilla);background:#f3f5f1;border:1px solid var(--hoja);color:var(--hoja);font-size:14px;font-weight:600">
+        <span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;background:var(--hoja)"></span>
+        El botón de cotizar está funcionando
+      </span>
+    </div>
+    <div style="padding:16px">
+      <label style="display:block;max-width:22rem">
+        <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Número</span>
+        <span style="display:flex;align-items:center;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;overflow:hidden">
+          <span style="flex:0 0 auto;padding:0.6rem 0 0.6rem 0.75rem;font-size:0.95rem;color:var(--gris)">+57</span>
+          <input inputmode="numeric" value="316 254 2637" style="flex:1;min-width:0;border:0;background:transparent;padding:0.6rem 0.75rem 0.6rem 0.4rem;font:inherit;font-size:0.95rem">
+        </span>
+      </label>
+      <p style="margin:10px 0 0;font-size:14px;color:var(--gris);line-height:1.5;max-width:56ch">Si lo dejas vacío, el sitio usa el número que tenga el servidor. Si no hay ninguno de los dos, <strong style="color:var(--alerta)">el botón de cotizar se apaga en todo el sitio</strong> y nadie puede escribirte.</p>
+      <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer">Guardar el número</button>
+        <a href="https://wa.me/573162542637" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font-size:14px;font-weight:500;text-decoration:none">Probarlo</a>
+        <p style="margin:0;font-size:14px;color:var(--gris)">Abre el chat como lo abriría un cliente.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="hor" style="margin-top:14px;border:1px solid var(--linea);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+    <div style="padding:15px 16px;border-bottom:1px solid var(--linea)">
+      <h2 style="margin:0;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:16px">Horario de atención</h2>
+      <p style="margin:3px 0 0;font-size:14px;color:var(--gris)">Aparece en el inicio, en el pie y debajo de cada botón de cotizar.</p>
+    </div>
+    <div style="padding:16px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:16px">
+        <div>
+          <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.4rem">Lunes a viernes</span>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <input type="time" value="08:30" aria-label="Hora de apertura, lunes a viernes" style="border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.7rem;font:inherit;font-size:0.95rem">
+            <span style="font-size:15px;color:var(--gris)">a</span>
+            <input type="time" value="17:30" aria-label="Hora de cierre, lunes a viernes" style="border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.7rem;font:inherit;font-size:0.95rem">
+          </div>
+        </div>
+        <div>
+          <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.4rem">Sábado</span>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <input type="time" value="07:30" aria-label="Hora de apertura del sábado" style="border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.7rem;font:inherit;font-size:0.95rem">
+            <span style="font-size:15px;color:var(--gris)">a</span>
+            <input type="time" value="15:00" aria-label="Hora de cierre del sábado" style="border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.7rem;font:inherit;font-size:0.95rem">
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:14px;background:var(--hueso-alt);border:1px solid var(--linea);border-radius:var(--r-control);padding:11px 13px">
+        <p style="margin:0 0 4px;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gris);font-weight:600">En la página se lee así</p>
+        <p style="margin:0;font-size:15px;color:var(--tinta-suave)">Lunes a viernes 8:30 a. m. – 5:30 p. m. · Sábado 7:30 a. m. – 3:00 p. m.</p>
+      </div>
+      <div style="margin-top:14px">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer">Guardar el horario</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="loc" style="margin-top:14px;border:1px solid var(--linea);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+    <div style="padding:15px 16px;border-bottom:1px solid var(--linea)">
+      <h2 style="margin:0;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:16px">El local y las redes</h2>
+      <p style="margin:3px 0 0;font-size:14px;color:var(--gris)">Van en el pie de página.</p>
+    </div>
+    <div style="padding:16px">
+      <label style="display:block;margin-bottom:14px">
+        <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Dirección del local</span>
+        <input placeholder="Calle 00 # 00-00, barrio" style="width:100%;max-width:32rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+      </label>
+      <div style="background:#fbf1ea;border:1px solid #c9a08a;border-radius:var(--r-control);padding:11px 13px;margin-bottom:16px;max-width:52rem">
+        <p style="margin:0;font-size:14px;line-height:1.5;color:var(--alerta)">Está vacía, así que el pie dice “Dirección pendiente de confirmar”. Es lo primero que busca quien quiere ir al local.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:14px">
+        <label style="display:block">
+          <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Instagram</span>
+          <span style="display:flex;align-items:center;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;overflow:hidden">
+            <span style="flex:0 0 auto;padding:0.6rem 0 0.6rem 0.75rem;font-size:0.95rem;color:var(--gris)">instagram.com/</span>
+            <input value="artemadero" style="flex:1;min-width:0;border:0;background:transparent;padding:0.6rem 0.75rem 0.6rem 0.15rem;font:inherit;font-size:0.95rem">
+          </span>
+        </label>
+        <label style="display:block">
+          <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Facebook</span>
+          <span style="display:flex;align-items:center;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;overflow:hidden">
+            <span style="flex:0 0 auto;padding:0.6rem 0 0.6rem 0.75rem;font-size:0.95rem;color:var(--gris)">facebook.com/</span>
+            <input placeholder="artemadero" style="flex:1;min-width:0;border:0;background:transparent;padding:0.6rem 0.75rem 0.6rem 0.15rem;font:inherit;font-size:0.95rem">
+          </span>
+        </label>
+      </div>
+      <div style="margin-top:16px">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer">Guardar</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="msj" style="margin-top:14px;border:1px solid var(--linea);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+    <div style="padding:15px 16px;border-bottom:1px solid var(--linea)">
+      <h2 style="margin:0;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:16px">El mensaje que te llega por WhatsApp</h2>
+      <p style="margin:3px 0 0;font-size:14px;color:var(--gris);max-width:62ch">Cuando alguien cotiza, el sitio le arma este mensaje y él lo envía. Puedes cambiar las palabras; los datos entre llaves los pone el sitio.</p>
+    </div>
+    <div style="padding:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr));gap:18px;align-items:start">
+      <div>
+        <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Texto del mensaje</span>
+        <textarea rows="9" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.65rem 0.8rem;font:inherit;font-size:0.92rem;line-height:1.55;resize:vertical">Hola Artemadero, soy {customerName} de {customerCity}.
+
+Me interesa:
+{items}
+
+{customizationRequest}
+{notes}
+
+Código: {code}</textarea>
+        <p style="margin:9px 0 0;font-size:14px;font-weight:600">Datos que puedes usar</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:7px">
+          <button type="button" style="min-height:2.25rem;padding:0.35rem 0.8rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:13px;cursor:pointer">nombre</button>
+          <button type="button" style="min-height:2.25rem;padding:0.35rem 0.8rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:13px;cursor:pointer">ciudad</button>
+          <button type="button" style="min-height:2.25rem;padding:0.35rem 0.8rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:13px;cursor:pointer">los muebles</button>
+          <button type="button" style="min-height:2.25rem;padding:0.35rem 0.8rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:13px;cursor:pointer">lo que pidió a la medida</button>
+          <button type="button" style="min-height:2.25rem;padding:0.35rem 0.8rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:13px;cursor:pointer">su nota</button>
+          <button type="button" style="min-height:2.25rem;padding:0.35rem 0.8rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:13px;cursor:pointer">código</button>
+        </div>
+        <p style="margin:9px 0 0;font-size:13px;color:var(--gris);line-height:1.5">Tócalos para insertarlos donde tengas el cursor. Si un dato viene vacío, esa línea no se manda.</p>
+      </div>
+
+      <div>
+        <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Así te va a llegar</span>
+        <div style="background:#e8ded0;border-radius:var(--r-pieza);padding:14px">
+          <div style="background:#fff;border-radius:9px 9px 9px 2px;padding:12px 14px;box-shadow:0 1px 2px #191c1e26;max-width:22rem">
+            <p style="margin:0;font-size:14px;line-height:1.6;color:var(--tinta);white-space:pre-line">Hola Artemadero, soy Camila Ospina de Cali.
+
+Me interesa:
+· Comedor Roldanillo (tejido sol, ⌀140) × 1 — $ 3.900.000
+· Silla Nariño (nogal y cuero) × 6 — $ 5.340.000
+
+¿Alcanzan a entregarlo antes del 20 de octubre?
+
+Código: AM-0192</p>
+            <p style="margin:8px 0 0;font-size:11px;color:var(--gris);text-align:right">9:14 a. m.</p>
+          </div>
+        </div>
+        <p style="margin:9px 0 0;font-size:13px;color:var(--gris);line-height:1.5">Ejemplo con una cotización real. Los precios van como valor estimado.</p>
+      </div>
+    </div>
+    <div style="border-top:1px solid var(--linea);padding:14px 16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer">Guardar el mensaje</button>
+      <button type="button" style="min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:15px;cursor:pointer">Volver al de siempre</button>
+    </div>
+  </section>
+
+  <section id="faq" style="margin-top:14px;border:1px solid var(--linea);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+    <div style="padding:15px 16px;border-bottom:1px solid var(--linea)">
+      <h2 style="margin:0;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:16px">Preguntas frecuentes</h2>
+      <p style="margin:3px 0 0;font-size:14px;color:var(--gris);max-width:62ch">Son seis y van al final del inicio. Puedes cambiar el texto; la cantidad y el lugar no se tocan. Contestarlas bien baja el trabajo del chat.</p>
+    </div>
+    <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
+
+      <details open style="border:1px solid var(--linea);border-radius:var(--r-pieza);background:var(--hueso-alt);padding:12px 14px">
+        <summary style="cursor:pointer;font-size:15px;font-weight:600;min-height:1.75rem;display:flex;align-items:center">1 · ¿Fabrican a la medida?</summary>
+        <div style="margin-top:12px">
+          <label style="display:block;margin-bottom:10px">
+            <span style="display:block;font-size:13px;font-weight:600;margin-bottom:0.2rem;color:var(--gris)">Pregunta</span>
+            <input value="¿Fabrican a la medida?" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.55rem 0.7rem;font:inherit;font-size:0.95rem">
+          </label>
+          <label style="display:block">
+            <span style="display:block;font-size:13px;font-weight:600;margin-bottom:0.2rem;color:var(--gris)">Respuesta</span>
+            <textarea rows="2" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.55rem 0.7rem;font:inherit;font-size:0.95rem;resize:vertical">Sí, casi todo. Nos dices el espacio que tienes y ajustamos el mueble. El precio depende de las medidas finales.</textarea>
+          </label>
+        </div>
+      </details>
+
+      <details style="border:1px solid var(--linea);border-radius:var(--r-pieza);background:var(--hueso-alt);padding:12px 14px">
+        <summary style="cursor:pointer;font-size:15px;font-weight:600;min-height:1.75rem;display:flex;align-items:center">2 · ¿En cuánto tiempo entregan?</summary>
+        <div style="margin-top:12px">
+          <label style="display:block;margin-bottom:10px">
+            <span style="display:block;font-size:13px;font-weight:600;margin-bottom:0.2rem;color:var(--gris)">Pregunta</span>
+            <input value="¿En cuánto tiempo entregan?" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.55rem 0.7rem;font:inherit;font-size:0.95rem">
+          </label>
+          <label style="display:block">
+            <span style="display:block;font-size:13px;font-weight:600;margin-bottom:0.2rem;color:var(--gris)">Respuesta</span>
+            <textarea rows="2" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.55rem 0.7rem;font:inherit;font-size:0.95rem;resize:vertical">Entre 2 y 5 semanas según la pieza y la medida. Al cotizar te damos la fecha concreta.</textarea>
+          </label>
+        </div>
+      </details>
+
+      <details style="border:1px solid var(--linea);border-radius:var(--r-pieza);background:var(--hueso-alt);padding:12px 14px">
+        <summary style="cursor:pointer;font-size:15px;font-weight:600;min-height:1.75rem;display:flex;align-items:center">3 · ¿Envían fuera de Cali?</summary>
+        <div style="margin-top:12px">
+          <label style="display:block;margin-bottom:10px">
+            <span style="display:block;font-size:13px;font-weight:600;margin-bottom:0.2rem;color:var(--gris)">Pregunta</span>
+            <input value="¿Envían fuera de Cali?" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.55rem 0.7rem;font:inherit;font-size:0.95rem">
+          </label>
+          <label style="display:block">
+            <span style="display:block;font-size:13px;font-weight:600;margin-bottom:0.2rem;color:var(--gris)">Respuesta</span>
+            <textarea rows="2" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.55rem 0.7rem;font:inherit;font-size:0.95rem;resize:vertical">Sí. El flete se cotiza aparte según la ciudad y el tamaño del mueble.</textarea>
+          </label>
+          <p style="margin:9px 0 0;font-size:13px;color:var(--gris)">Los fletes por ciudad se cargan en <a href="#env">Envíos</a>.</p>
+        </div>
+      </details>
+
+      <details style="border:1px solid var(--linea);border-radius:var(--r-pieza);background:var(--hueso-alt);padding:12px 14px">
+        <summary style="cursor:pointer;font-size:15px;font-weight:600;min-height:1.75rem;display:flex;align-items:center">4 · ¿El tejido aguanta el exterior?</summary>
+        <div style="margin-top:12px">
+          <label style="display:block;margin-bottom:10px">
+            <span style="display:block;font-size:13px;font-weight:600;margin-bottom:0.2rem;color:var(--gris)">Pregunta</span>
+            <input value="¿El tejido aguanta el exterior?" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.55rem 0.7rem;font:inherit;font-size:0.95rem">
+          </label>
+          <label style="display:block">
+            <span style="display:block;font-size:13px;font-weight:600;margin-bottom:0.2rem;color:var(--gris)">Respuesta</span>
+            <textarea rows="2" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.55rem 0.7rem;font:inherit;font-size:0.95rem;resize:vertical">Bajo techo sí, en terraza o corredor. A sol y lluvia directos la fibra se resiente; para eso te recomendamos madera o guadua.</textarea>
+          </label>
+        </div>
+      </details>
+
+      <details style="border:1px solid var(--linea);border-radius:var(--r-pieza);background:var(--hueso-alt);padding:12px 14px">
+        <summary style="cursor:pointer;font-size:15px;font-weight:600;min-height:1.75rem;display:flex;align-items:center">5 · ¿Dan garantía?</summary>
+        <div style="margin-top:12px">
+          <label style="display:block;margin-bottom:10px">
+            <span style="display:block;font-size:13px;font-weight:600;margin-bottom:0.2rem;color:var(--gris)">Pregunta</span>
+            <input value="¿Dan garantía?" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.55rem 0.7rem;font:inherit;font-size:0.95rem">
+          </label>
+          <label style="display:block">
+            <span style="display:block;font-size:13px;font-weight:600;margin-bottom:0.2rem;color:var(--gris)">Respuesta</span>
+            <textarea rows="2" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.55rem 0.7rem;font:inherit;font-size:0.95rem;resize:vertical">12 meses en estructura y tejido. Si algo se suelta, lo reparamos en el taller.</textarea>
+          </label>
+        </div>
+      </details>
+
+      <details style="border:1px solid var(--linea);border-radius:var(--r-pieza);background:var(--hueso-alt);padding:12px 14px">
+        <summary style="cursor:pointer;font-size:15px;font-weight:600;min-height:1.75rem;display:flex;align-items:center">6 · ¿Puedo ir al local?</summary>
+        <div style="margin-top:12px">
+          <label style="display:block;margin-bottom:10px">
+            <span style="display:block;font-size:13px;font-weight:600;margin-bottom:0.2rem;color:var(--gris)">Pregunta</span>
+            <input value="¿Puedo ir al local?" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.55rem 0.7rem;font:inherit;font-size:0.95rem">
+          </label>
+          <label style="display:block">
+            <span style="display:block;font-size:13px;font-weight:600;margin-bottom:0.2rem;color:var(--gris)">Respuesta</span>
+            <textarea rows="2" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.55rem 0.7rem;font:inherit;font-size:0.95rem;resize:vertical">Claro. Ahí ves los tejidos, las maderas y los acabados en vivo antes de encargar.</textarea>
+          </label>
+        </div>
+      </details>
+
+    </div>
+    <div style="border-top:1px solid var(--linea);padding:14px 16px">
+      <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer">Guardar las seis</button>
+    </div>
+  </section>
+
+  <section id="fra" style="margin-top:14px;border:1px solid var(--linea);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+    <div style="padding:15px 16px;border-bottom:1px solid var(--linea)">
+      <h2 style="margin:0;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:16px">Franja de avisos y año del taller</h2>
+    </div>
+    <div style="padding:16px">
+      <label style="display:block">
+        <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Aviso de la franja de arriba <span style="font-weight:400;color:var(--gris)">— vacío = sin franja</span></span>
+        <input placeholder="Cerramos del 24 al 26 de diciembre" style="width:100%;max-width:34rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+      </label>
+      <div style="margin-top:12px;background:var(--tinta);color:var(--hueso);border-radius:var(--r-control);padding:10px 14px;max-width:34rem">
+        <p style="margin:0;font-size:13px;color:#bdc2b8">Así se vería la franja, encima del menú:</p>
+        <p style="margin:5px 0 0;font-size:14px">Cerramos del 24 al 26 de diciembre</p>
+      </div>
+
+      <label style="display:block;margin-top:20px;max-width:14rem">
+        <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Año en que empezó el taller</span>
+        <input inputmode="numeric" placeholder="2011" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+      </label>
+      <div style="margin-top:12px;background:#fbf1ea;border:1px solid #c9a08a;border-radius:var(--r-control);padding:11px 13px;max-width:52rem">
+        <p style="margin:0;font-size:14px;line-height:1.5;color:var(--alerta)">Falta este dato. Con el año, el bloque del inicio abre con “Fabricamos desde 2011…”, que es lo que hace que un desconocido se anime a escribir. Sin él, la frase no aparece.</p>
+      </div>
+
+      <div style="margin-top:16px">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer">Guardar</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+</div>
+</body>
+</html>

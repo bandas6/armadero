@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel · Envíos (rediseño)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#f7f6f2;color:#191c1e;font-family:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+  h1,h2,h3{font-family:'Instrument Serif',Georgia,serif;font-weight:700}
+  a{color:#42604b;text-underline-offset:3px}
+  a:hover{color:#191c1e}
+  :focus-visible{outline:3px solid #42604b;outline-offset:3px}
+  @media (prefers-reduced-motion: reduce){*{transition-duration:.001ms!important;animation-duration:.001ms!important}}
+</style>
+</head>
+<body>
+<div style="--hueso:#f7f6f2;--hueso-alt:#f2f1ec;--tinta:#191c1e;--tinta-suave:#43484b;--gris:#5e6467;--tejido:#a8641e;--madera:#3a5a6b;--hoja:#42604b;--linea:#191c1e1f;--linea-fuerte:#191c1e33;--alerta:#8c4a34;--r-bloque:12px;--r-pieza:10px;--r-control:8px;--r-pastilla:999px;background:var(--hueso);min-height:100vh">
+
+<header style="position:sticky;top:0;z-index:30;background:var(--hueso-alt);border-bottom:1px solid var(--linea)">
+  <div style="max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <span style="font-weight:600;letter-spacing:0.06em;font-size:15px;color:var(--tinta)">ARTEMADERO · Panel</span>
+    <div style="display:flex;align-items:center;gap:18px;font-size:14px">
+      <a href="#env" style="color:var(--gris)">Vanessa Ríos</a>
+      <a href="#env" style="color:var(--hoja)">Salir</a>
+    </div>
+  </div>
+  <nav style="max-width:1120px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;font-size:14px">
+    <a href="#env" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Muebles</a>
+    <a href="#env" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Categorías</a>
+    <a href="#env" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Colecciones</a>
+    <a href="#env" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Cotizaciones</a>
+    <a href="#env" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Inicio</a>
+    <a href="#env" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid var(--hoja);color:var(--tinta);font-weight:600;text-decoration:none">Envíos</a>
+    <a href="#env" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Ajustes</a>
+    <a href="#env" style="white-space:nowrap;padding:10px 14px;border-bottom:2px solid transparent;color:var(--linea-fuerte);text-decoration:none">Usuarios</a>
+  </nav>
+</header>
+
+<main id="env" style="max-width:1120px;margin:0 auto;padding:22px 20px 60px">
+
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div>
+      <h1 style="margin:0;font-size:clamp(26px,3.4vw,34px);line-height:1.05">Envíos</h1>
+      <p style="margin:4px 0 0;font-size:15px;color:var(--gris);max-width:64ch">Flete aproximado por ciudad, para que el comprador se haga una idea antes de escribir. El valor final se sigue acordando por WhatsApp.</p>
+    </div>
+    <a href="#nueva" style="display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0.5rem 1.1rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font-size:15px;font-weight:600;text-decoration:none">+ Agregar ciudad</a>
+  </div>
+
+  
+    <section style="margin-top:18px;border:1px solid var(--linea);border-radius:var(--r-bloque);background:var(--hueso-alt);padding:16px 18px">
+      <h2 style="margin:0 0 10px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px">Así lo ve el comprador en la ficha</h2>
+      <div style="background:#fff;border:1px solid var(--linea);border-left:4px solid var(--hoja);border-radius:var(--r-pieza);padding:14px 16px;max-width:34rem">
+        <p style="margin:0 0 5px;font-size:15px;font-weight:600">Envío a Palmira: desde $ 90.000</p>
+        <p style="margin:0;font-size:14px;line-height:1.55;color:var(--tinta-suave)">Llega en 2 días aproximadamente, hasta la puerta. El valor exacto lo acordamos por WhatsApp según el tamaño del mueble.</p>
+      </div>
+      <p style="margin:11px 0 0;font-size:14px;color:var(--gris);line-height:1.5">El sitio detecta la ciudad del comprador. Si no está en tu lista, solo dice que el flete se acuerda en el chat.</p>
+    </section>
+  
+
+  <div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+    <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);background:var(--tinta);color:var(--hueso);font-size:14px;font-weight:600">Todas <span style="opacity:.75;font-weight:400">9</span></span>
+    <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);font-size:14px">Se ven en la página <span style="color:var(--gris)">8</span></span>
+    <span style="display:inline-flex;align-items:center;gap:7px;min-height:2.25rem;padding:0.35rem 0.9rem;border-radius:var(--r-pastilla);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);font-size:14px">Ocultas <span style="color:var(--gris)">1</span></span>
+    <input type="search" placeholder="Buscar ciudad" aria-label="Buscar ciudad" style="flex:1 1 11rem;min-width:0;margin-left:auto;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.55rem 0.75rem;font:inherit;font-size:0.95rem">
+  </div>
+
+  <h2 style="margin:24px 0 10px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gris)">Valle del Cauca</h2>
+
+  <div style="border:1px solid var(--linea);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+    <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.2fr) minmax(0,1fr) auto;gap:12px;padding:11px 14px;background:var(--hueso-alt);border-bottom:1px solid var(--linea);font-size:13px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--gris)">
+      <span>Ciudad</span>
+      <span style="text-align:right">Flete desde</span>
+      <span style="text-align:right">Llega en</span>
+      <span style="width:8.5rem"></span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.2fr) minmax(0,1fr) auto;gap:12px;padding:13px 14px;align-items:center;border-bottom:1px solid var(--linea);background:#f3f5f1">
+      <div style="min-width:0">
+        <p style="margin:0;font-weight:600;font-size:16px">Cali <span style="font-weight:400;font-size:13px;color:var(--hoja)">· donde está el taller</span></p>
+        <p style="margin:3px 0 0;font-size:14px;color:var(--gris)">Hasta la puerta, sin subir escaleras</p>
+      </div>
+      <p style="margin:0;text-align:right;font-size:16px;font-weight:600">$ 60.000</p>
+      <p style="margin:0;text-align:right;font-size:15px;color:var(--gris)">1 día</p>
+      <div style="width:8.5rem;display:flex;gap:6px;justify-content:flex-end">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 0.85rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Editar</button>
+        <button type="button" aria-label="Más acciones para Cali" style="min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.2fr) minmax(0,1fr) auto;gap:12px;padding:13px 14px;align-items:center;border-bottom:1px solid var(--linea)">
+      <div style="min-width:0">
+        <p style="margin:0;font-weight:500;font-size:16px">Jamundí</p>
+      </div>
+      <p style="margin:0;text-align:right;font-size:16px;font-weight:600">$ 75.000</p>
+      <p style="margin:0;text-align:right;font-size:15px;color:var(--gris)">1 día</p>
+      <div style="width:8.5rem;display:flex;gap:6px;justify-content:flex-end">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 0.85rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Editar</button>
+        <button type="button" aria-label="Más acciones para Jamundí" style="min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.2fr) minmax(0,1fr) auto;gap:12px;padding:13px 14px;align-items:center;border-bottom:1px solid var(--linea)">
+      <div style="min-width:0">
+        <p style="margin:0;font-weight:500;font-size:16px">Palmira</p>
+        <p style="margin:3px 0 0;font-size:14px;color:var(--gris)">Hasta la puerta</p>
+      </div>
+      <p style="margin:0;text-align:right;font-size:16px;font-weight:600">$ 90.000</p>
+      <p style="margin:0;text-align:right;font-size:15px;color:var(--gris)">2 días</p>
+      <div style="width:8.5rem;display:flex;gap:6px;justify-content:flex-end">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 0.85rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Editar</button>
+        <button type="button" aria-label="Más acciones para Palmira" style="min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.2fr) minmax(0,1fr) auto;gap:12px;padding:13px 14px;align-items:center;border-bottom:1px solid var(--linea)">
+      <div style="min-width:0">
+        <p style="margin:0;font-weight:500;font-size:16px">Yumbo</p>
+      </div>
+      <p style="margin:0;text-align:right;font-size:16px;font-weight:600">$ 70.000</p>
+      <p style="margin:0;text-align:right;font-size:15px;color:var(--gris)">1 día</p>
+      <div style="width:8.5rem;display:flex;gap:6px;justify-content:flex-end">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 0.85rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Editar</button>
+        <button type="button" aria-label="Más acciones para Yumbo" style="min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.2fr) minmax(0,1fr) auto;gap:12px;padding:13px 14px;align-items:center;background:var(--hueso-alt);opacity:.7">
+      <div style="min-width:0">
+        <p style="margin:0;font-weight:500;font-size:16px">Buga <span style="font-weight:400;font-size:13px;color:var(--gris)">· oculta, no se ve en la página</span></p>
+      </div>
+      <p style="margin:0;text-align:right;font-size:16px;font-weight:600">$ 110.000</p>
+      <p style="margin:0;text-align:right;font-size:15px;color:var(--gris)">2 días</p>
+      <div style="width:8.5rem;display:flex;gap:6px;justify-content:flex-end">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 0.85rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:14px;font-weight:500;cursor:pointer">Mostrar</button>
+        <button type="button" aria-label="Más acciones para Buga" style="min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+      </div>
+    </div>
+  </div>
+
+  <h2 style="margin:24px 0 10px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gris)">Otros departamentos</h2>
+
+  <div style="border:1px solid var(--linea);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+    <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.2fr) minmax(0,1fr) auto;gap:12px;padding:11px 14px;background:var(--hueso-alt);border-bottom:1px solid var(--linea);font-size:13px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--gris)">
+      <span>Ciudad</span>
+      <span style="text-align:right">Flete desde</span>
+      <span style="text-align:right">Llega en</span>
+      <span style="width:8.5rem"></span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.2fr) minmax(0,1fr) auto;gap:12px;padding:13px 14px;align-items:center;border-bottom:1px solid var(--linea)">
+      <div style="min-width:0">
+        <p style="margin:0;font-weight:500;font-size:16px">Popayán</p>
+      </div>
+      <p style="margin:0;text-align:right;font-size:16px;font-weight:600">$ 180.000</p>
+      <p style="margin:0;text-align:right;font-size:15px;color:var(--gris)">3 días</p>
+      <div style="width:8.5rem;display:flex;gap:6px;justify-content:flex-end">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 0.85rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Editar</button>
+        <button type="button" aria-label="Más acciones para Popayán" style="min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.2fr) minmax(0,1fr) auto;gap:12px;padding:13px 14px;align-items:center;border-bottom:1px solid var(--linea)">
+      <div style="min-width:0">
+        <p style="margin:0;font-weight:500;font-size:16px">Pereira</p>
+      </div>
+      <p style="margin:0;text-align:right;font-size:16px;font-weight:600">$ 200.000</p>
+      <p style="margin:0;text-align:right;font-size:15px;color:var(--gris)">3 días</p>
+      <div style="width:8.5rem;display:flex;gap:6px;justify-content:flex-end">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 0.85rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Editar</button>
+        <button type="button" aria-label="Más acciones para Pereira" style="min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.2fr) minmax(0,1fr) auto;gap:12px;padding:13px 14px;align-items:center;border-bottom:1px solid var(--linea)">
+      <div style="min-width:0">
+        <p style="margin:0;font-weight:500;font-size:16px">Medellín</p>
+        <p style="margin:3px 0 0;font-size:14px;color:var(--gris)">Entrega en terminal, no a domicilio</p>
+      </div>
+      <p style="margin:0;text-align:right;font-size:16px;font-weight:600">$ 260.000</p>
+      <p style="margin:0;text-align:right;font-size:15px;color:var(--gris)">4 días</p>
+      <div style="width:8.5rem;display:flex;gap:6px;justify-content:flex-end">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 0.85rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Editar</button>
+        <button type="button" aria-label="Más acciones para Medellín" style="min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.2fr) minmax(0,1fr) auto;gap:12px;padding:13px 14px;align-items:center">
+      <div style="min-width:0">
+        <p style="margin:0;font-weight:500;font-size:16px">Bogotá</p>
+      </div>
+      <p style="margin:0;text-align:right;font-size:16px;font-weight:600">$ 320.000</p>
+      <p style="margin:0;text-align:right;font-size:15px;color:var(--gris)">5 días</p>
+      <div style="width:8.5rem;display:flex;gap:6px;justify-content:flex-end">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 0.85rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:14px;cursor:pointer">Editar</button>
+        <button type="button" aria-label="Más acciones para Bogotá" style="min-width:2.75rem;min-height:2.75rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:var(--hueso-alt);color:var(--tinta);font:inherit;font-size:16px;cursor:pointer">⋯</button>
+      </div>
+    </div>
+  </div>
+
+  <section id="nueva" style="margin-top:30px;border:2px solid var(--hoja);border-radius:var(--r-bloque);background:#fff;overflow:hidden">
+    <div style="background:var(--hueso-alt);padding:14px 16px;border-bottom:1px solid var(--linea)">
+      <h2 style="margin:0;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:16px">Agregar una ciudad</h2>
+    </div>
+    <div style="padding:16px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:14px">
+        <label style="display:block">
+          <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Ciudad</span>
+          <input placeholder="Tuluá" maxlength="80" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+        </label>
+        <label style="display:block">
+          <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Flete desde</span>
+          <span style="display:flex;align-items:center;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;overflow:hidden">
+            <span style="flex:0 0 auto;padding:0.6rem 0 0.6rem 0.75rem;font-size:0.95rem;color:var(--gris)">$</span>
+            <input inputmode="numeric" value="120.000" style="flex:1;min-width:0;border:0;background:transparent;padding:0.6rem 0.75rem 0.6rem 0.35rem;font:inherit;font-size:0.95rem">
+          </span>
+          <span style="display:block;font-size:13px;color:var(--gris);margin-top:4px">Se van poniendo los puntos solos.</span>
+        </label>
+        <label style="display:block">
+          <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Llega en <span style="font-weight:400;color:var(--gris)">— opcional</span></span>
+          <span style="display:flex;align-items:center;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;overflow:hidden">
+            <input inputmode="numeric" placeholder="2" style="flex:1;min-width:0;border:0;background:transparent;padding:0.6rem 0.35rem 0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+            <span style="flex:0 0 auto;padding:0.6rem 0.75rem 0.6rem 0;font-size:0.95rem;color:var(--gris)">días</span>
+          </span>
+        </label>
+      </div>
+
+      <label style="display:block;margin-top:14px">
+        <span style="display:block;font-size:14px;font-weight:600;margin-bottom:0.25rem">Nota <span style="font-weight:400;color:var(--gris)">— opcional, el comprador la lee en la ficha</span></span>
+        <input maxlength="240" placeholder="Hasta la puerta, sin subir escaleras" style="width:100%;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;padding:0.6rem 0.75rem;font:inherit;font-size:0.95rem">
+        <span style="display:block;font-size:13px;color:var(--gris);margin-top:5px">Sirve para aclarar hasta dónde llega el flete. Las más usadas: “hasta la puerta”, “entrega en terminal”, “no incluye subir escaleras”.</span>
+      </label>
+
+      <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--linea);padding-top:14px">
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);background:var(--hoja);border:1px solid var(--hoja);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer">Agregar</button>
+        <button type="button" style="min-height:2.75rem;padding:0.5rem 1.2rem;border-radius:var(--r-control);border:1px solid var(--linea-fuerte);background:#fff;color:var(--tinta);font:inherit;font-size:15px;cursor:pointer">Cancelar</button>
+      </div>
+    </div>
+  </section>
+
+  <section style="margin-top:26px;border:1px solid var(--linea);border-radius:var(--r-bloque);background:var(--hueso-alt);padding:16px 18px">
+    <h2 style="margin:0 0 6px;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px">Las ciudades que no estén en la lista</h2>
+    <p style="margin:0;font-size:15px;line-height:1.55;color:var(--tinta-suave);max-width:62ch">Ven este mensaje: <em>“Enviamos a todo el país. El flete lo acordamos por WhatsApp según la ciudad y el tamaño del mueble.”</em> No queda nada vacío, así que no es obligatorio tener todas.</p>
+  </section>
+
+</main>
+
+</div>
+</body>
+</html>

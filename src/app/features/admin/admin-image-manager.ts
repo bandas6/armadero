@@ -41,13 +41,29 @@ import type { AdminImage, AdminProduct } from '../../core/models/admin.model';
               @if (img.isPrimary) {
                 <span class="absolute left-1 top-1 rounded-sm px-1 text-[0.6rem]" style="background: var(--hoja); color: #fff;">Principal</span>
               }
+              <!--
+                La confirmación va sobre la propia foto, no en un confirm() del navegador:
+                así se ve CUÁL se está borrando (design/panel/REGLAS-COMUNES.md §3).
+              -->
+              @if (confirmandoBorrado() === img._id) {
+                <div
+                  class="absolute inset-0 flex flex-col items-center justify-center gap-1 p-1 text-center"
+                  style="background: #191c1ee6; color: var(--hueso);"
+                >
+                  <p class="m-0 text-[0.65rem] leading-tight">¿Borrar esta foto?<br />No se puede deshacer.</p>
+                  <div class="flex gap-1">
+                    <button type="button" (click)="remove(img)" [disabled]="busy()" class="rounded-sm px-2 py-1 text-[0.65rem]" style="background: var(--alerta); color: #fff;">Borrar</button>
+                    <button type="button" (click)="confirmandoBorrado.set(null)" class="rounded-sm px-2 py-1 text-[0.65rem]" style="background: #ffffff33; color: var(--hueso);">No</button>
+                  </div>
+                </div>
+              }
             </div>
             <div class="mt-1 flex items-center justify-between gap-1 text-[0.65rem]">
               <button type="button" (click)="move(i, -1)" [disabled]="i === 0 || busy()" class="disabled:opacity-30" aria-label="Mover antes">←</button>
               @if (!img.isPrimary) {
                 <button type="button" (click)="setPrimary(img)" [disabled]="busy()" class="underline" style="color: var(--hoja);">Principal</button>
               }
-              <button type="button" (click)="remove(img)" [disabled]="busy()" class="underline" style="color: #8c4a34;">Borrar</button>
+              <button type="button" (click)="confirmandoBorrado.set(img._id)" [disabled]="busy()" class="underline" style="color: var(--alerta);">Borrar</button>
               <button type="button" (click)="move(i, 1)" [disabled]="i === images().length - 1 || busy()" class="disabled:opacity-30" aria-label="Mover después">→</button>
             </div>
           </li>
@@ -64,6 +80,9 @@ export class AdminImageManager {
   productId = input.required<string>();
   initialImages = input<AdminImage[]>([]);
   changed = output<AdminProduct>();
+
+  /** Foto cuya confirmación de borrado está abierta, encima de ella misma. */
+  confirmandoBorrado = signal<string | null>(null);
 
   private _images = signal<AdminImage[]>([]);
   images = computed(() => [...this._images()].sort((a, b) => a.position - b.position));
@@ -121,7 +140,7 @@ export class AdminImageManager {
   }
 
   async remove(img: AdminImage) {
-    if (!confirm('¿Borrar esta foto? No se puede deshacer.')) return;
+    this.confirmandoBorrado.set(null);
     this.busy.set(true);
     this.error.set(null);
     try {
