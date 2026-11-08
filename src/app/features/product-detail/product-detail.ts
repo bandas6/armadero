@@ -22,7 +22,7 @@ import { BUSINESS_HOURS } from '../../core/business';
 import type { Product, ProductVariant } from '../../core/models/product.model';
 import type { CategoryNode, SiteSettings } from '../../core/models/catalog.model';
 
-type LoadState = { product: Product | null; notFound: boolean };
+type LoadState = { product: Product | null; notFound: boolean; httpStatus?: number };
 
 @Component({
   selector: 'app-product-detail',
@@ -70,7 +70,12 @@ export class ProductDetail {
     effect(() => {
       const p = this.product();
       if (this.notFound()) {
-        this.seo.setPage({ title: 'Mueble no encontrado', path: '/catalogo', noindex: true });
+        this.seo.setPage({
+          title: 'Mueble no encontrado',
+          path: '/catalogo',
+          noindex: true,
+          status: this.state().httpStatus ?? 404,
+        });
         this.jsonLd.clear();
         return;
       }
@@ -127,12 +132,16 @@ export class ProductDetail {
       switchMap((params) => {
         const slug = params.get('slug')!;
         return this.productService.getBySlug(slug).pipe(
-          switchMap((product) => of({ product, notFound: false })),
-          catchError(() => of({ product: null, notFound: true })),
+          switchMap((product) => of<LoadState>({ product, notFound: false })),
+          // 404 solo si la API dice que no existe; si la API falla, 503 para que Google
+          // reintente en vez de sacar el mueble del índice.
+          catchError((e: { status?: number }) =>
+            of<LoadState>({ product: null, notFound: true, httpStatus: e?.status === 404 ? 404 : 503 }),
+          ),
         );
       }),
     ),
-    { initialValue: { product: null, notFound: false } },
+    { initialValue: { product: null, notFound: false } as LoadState },
   );
 
   product = computed(() => this.state().product);

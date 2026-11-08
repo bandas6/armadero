@@ -11,7 +11,7 @@ import type { CollectionDetail } from '../../core/models/catalog.model';
 type State =
   | { status: 'loading' }
   | { status: 'ready'; collection: CollectionDetail }
-  | { status: 'missing' };
+  | { status: 'missing'; httpStatus: number };
 
 /**
  * Un ambiente: la selección de muebles que Vanessa armó en el panel, con su foto y su
@@ -98,7 +98,10 @@ export class CollectionPage {
       switchMap((slug) =>
         this.catalog.getCollection(slug).pipe(
           map((collection): State => ({ status: 'ready', collection })),
-          catchError(() => of<State>({ status: 'missing' })),
+          // 404 solo si la colección no existe; si la API falla, 503 (Google reintenta).
+          catchError((e: { status?: number }) =>
+            of<State>({ status: 'missing', httpStatus: e?.status === 404 ? 404 : 503 }),
+          ),
         ),
       ),
     ),
@@ -123,7 +126,12 @@ export class CollectionPage {
           image: s.collection.imageUrl ?? undefined,
         });
       } else if (s.status === 'missing') {
-        this.seo.setPage({ title: 'Colección no encontrada', path: '/catalogo', noindex: true });
+        this.seo.setPage({
+          title: 'Colección no encontrada',
+          path: '/catalogo',
+          noindex: true,
+          status: s.httpStatus,
+        });
       }
     });
   }

@@ -1,8 +1,6 @@
 import { DOCUMENT } from '@angular/common';
-import { Injectable, REQUEST, inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { PLATFORM_ID } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { Injectable, inject } from '@angular/core';
+import { SiteOriginService } from './site-origin.service';
 import type { Product } from '../models/product.model';
 import type { SiteSettings } from '../models/catalog.model';
 import { WHATSAPP_DISPLAY } from '../business';
@@ -34,18 +32,10 @@ const AVAILABILITY: Record<string, string> = {
 @Injectable({ providedIn: 'root' })
 export class StructuredDataService {
   private doc = inject(DOCUMENT);
-  private platformId = inject(PLATFORM_ID);
-  private request = inject(REQUEST, { optional: true });
+  private site = inject(SiteOriginService);
 
   private origin(): string {
-    if (isPlatformBrowser(this.platformId)) return this.doc.location.origin;
-    const host = this.request?.headers?.get?.('host');
-    if (host) {
-      const fwd = this.request?.headers?.get?.('x-forwarded-proto');
-      const proto = fwd ?? (/^(localhost|127\.0\.0\.1)(:|$)/.test(host) ? 'http' : 'https');
-      return `${proto}://${host}`;
-    }
-    return environment.siteUrl || '';
+    return this.site.origin;
   }
 
   private write(data: unknown): void {

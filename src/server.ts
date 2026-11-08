@@ -114,7 +114,9 @@ app.use(
  */
 app.use((req, res, next) => {
   angularApp
-    .handle(req)
+    // El dominio canónico (canonical, og:url, JSON-LD) sale de SITE_URL, no del Host del
+    // request: el sitio también responde por .onrender.com y no debe declararse dos veces.
+    .handle(req, { siteUrl: process.env['SITE_URL'] })
     .then((response) =>
       response ? writeResponseToNodeResponse(response, res) : next(),
     )
