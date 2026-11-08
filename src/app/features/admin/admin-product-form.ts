@@ -1,6 +1,6 @@
 import { Component, DestroyRef, PLATFORM_ID, computed, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
@@ -12,35 +12,41 @@ import {
 } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { apiErrorMessage } from './admin-utils';
-import { CatalogService } from '../../core/services/catalog.service';
+import { AdminCategoryService } from '../../core/services/admin-category.service';
 import { AdminProductService } from '../../core/services/admin-product.service';
 import { AdminImageManager } from './admin-image-manager';
-import type { CategoryNode } from '../../core/models/catalog.model';
+import { AdminHelp } from './admin-help';
 import type {
+  AdminCategory,
   AdminImage,
   AdminProduct,
+  AdminProductCard,
   AdminProductInput,
   AdminVariant,
   CustomizationField,
+  Material,
 } from '../../core/models/admin.model';
+
+const MATERIAL_NAME: Record<Material, string> = { tejido: 'Tejido', madera: 'Madera' };
 
 @Component({
   selector: 'app-admin-product-form',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, AdminImageManager],
+  imports: [ReactiveFormsModule, RouterLink, AdminImageManager, AdminHelp],
   templateUrl: './admin-product-form.html',
 })
 export class AdminProductForm {
   private fb = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private catalog = inject(CatalogService);
+  private categoryService = inject(AdminCategoryService);
   private service = inject(AdminProductService);
 
   productId = signal<string | null>(this.route.snapshot.paramMap.get('id'));
   isNew = computed(() => this.productId() === null);
 
-  leafCategories = signal<{ _id: string; name: string; parentName: string }[]>([]);
+  /** Todas las categorías del panel (también las ocultas: un mueble puede estar en una). */
+  categories = signal<AdminCategory[]>([]);
   images = signal<AdminImage[]>([]);
   active = signal(false);
 
@@ -87,22 +93,138 @@ export class AdminProductForm {
     return this.form.controls.customFields;
   }
 
-  /** Los demás muebles del catálogo, para elegir la pieza gemela. */
-  twinCandidates = signal<{ _id: string; name: string }[]>([]);
+  // --- Tipo de mueble → tejido o madera ---
+  //
+  // Lo que pone un mueble del lado "Tejido" o "Madera" del catálogo es su subcategoría, no
+  // el campo de texto "material". Por eso la elección va en dos pasos visibles: primero el
+  // tipo (Mecedoras) y después la subcategoría como botones con su material a la vista.
+
+  private categoryValue = toSignal(this.form.controls.category.valueChanges, {
+    initialValue: this.form.controls.category.value,
+  });
+  private twinValue = toSignal(this.form.controls.twinProduct.valueChanges, {
+    initialValue: this.form.controls.twinProduct.value,
+  });
+
+  /** Tipo elegido a mano; si no, se deduce de la categoría guardada. */
+  private chosenType = signal<string | null>(null);
+
+  readonly types = computed(() => this.categories().filter((c) => !c.parent));
+
+  readonly selectedCategory = computed(
+    () => this.categories().find((c) => c._id === this.categoryValue()) ?? null,
+  );
+
+  readonly typeId = computed(() => {
+    const chosen = this.chosenType();
+    if (chosen) return chosen;
+    const cat = this.selectedCategory();
+    return cat ? (cat.parent ?? cat._id) : '';
+  });
+
+  /** Subcategorías del tipo elegido. Vacío si el tipo no se divide (Camas, Mesas de centro). */
+  readonly typeOptions = computed(() =>
+    this.categories().filter((c) => c.parent && c.parent === this.typeId()),
+  );
+
+  /** Materiales que le faltan al tipo: "Mecedoras tiene tejidas pero no de madera". */
+  readonly missingMaterials = computed(() => {
+    const opts = this.typeOptions();
+    if (!opts.length) return [] as string[];
+    return (['tejido', 'madera'] as Material[])
+      .filter((m) => !opts.some((o) => o.material === m))
+      .map((m) => MATERIAL_NAME[m].toLowerCase());
+  });
+
+  /** La línea "Aparecerá en: Mecedoras → Tejido", para responder la duda antes de que nazca. */
+  readonly placement = computed(() => {
+    const cat = this.selectedCategory();
+    if (!cat) return null;
+    const type = this.categories().find((c) => c._id === cat.parent);
+    return {
+      path: type ? `${type.name} → ${cat.name}` : cat.name,
+      material: cat.material ? MATERIAL_NAME[cat.material] : null,
+      hidden: !cat.active || (type ? !type.active : false),
+    };
+  });
+
+  materialName(m: Material | null | undefined): string {
+    return m ? MATERIAL_NAME[m] : 'Sin material';
+  }
+
+  materialColor(m: Material | null | undefined): string {
+    if (m === 'tejido') return 'var(--tejido)';
+    if (m === 'madera') return 'var(--madera)';
+    return 'var(--linea-fuerte)';
+  }
+
+  chooseType(id: string) {
+    this.chosenType.set(id || null);
+    const type = this.categories().find((c) => c._id === id);
+    const ctrl = this.form.controls.category;
+    if (!type) {
+      ctrl.setValue('');
+    } else if (type.isLeaf) {
+      // El tipo no se divide por material: el mueble va directo en él.
+      ctrl.setValue(type._id);
+    } else {
+      const opts = this.categories().filter((c) => c.parent === type._id);
+      const keep = opts.some((o) => o._id === ctrl.value);
+      ctrl.setValue(keep ? ctrl.value : opts.length === 1 ? opts[0]._id : '');
+    }
+    ctrl.markAsTouched();
+  }
+
+  chooseCategory(id: string) {
+    this.form.controls.category.setValue(id);
+    this.form.controls.category.markAsTouched();
+  }
+
+  // --- Pieza gemela ---
+  /** Todos los muebles (paginado de 60 en 60), para buscar la gemela en el catálogo entero. */
+  private allProducts = signal<AdminProductCard[]>([]);
+
+  /** Las otras piezas, filtradas al material contrario cuando este mueble tiene material. */
+  readonly twinCandidates = computed(() => {
+    const byId = new Map(this.categories().map((c) => [c._id, c]));
+    const mine = this.selectedCategory()?.material;
+    const opposite: Material | null = mine === 'tejido' ? 'madera' : mine === 'madera' ? 'tejido' : null;
+    const current = this.twinValue();
+    return this.allProducts()
+      .filter((p) => p._id !== this.productId())
+      .map((p) => {
+        const cat = p.category ? byId.get(p.category._id) : undefined;
+        return { _id: p._id, name: p.name, material: cat?.material ?? null, category: cat?.name ?? '' };
+      })
+      .filter((p) => !opposite || p.material === opposite || p._id === current)
+      .sort((a, b) => a.name.localeCompare(b.name, 'es'));
+  });
+
+  readonly twinOpposite = computed(() => {
+    const mine = this.selectedCategory()?.material;
+    return mine === 'tejido' ? 'de madera' : mine === 'madera' ? 'tejidos' : null;
+  });
+
+  private async loadAllProducts() {
+    const out: AdminProductCard[] = [];
+    try {
+      for (let page = 1; page <= 50; page++) {
+        const res = await firstValueFrom(this.service.list({ page, pageSize: 60 }));
+        out.push(...res.items);
+        if (out.length >= res.total || !res.items.length) break;
+      }
+    } catch {
+      /* sin la lista completa, la gemela muestra lo que alcanzó a cargar */
+    }
+    this.allProducts.set(out);
+  }
 
   constructor() {
-    this.catalog.getCategoryTree().subscribe((tree) => {
-      this.leafCategories.set(this.flattenLeaves(tree));
+    this.categoryService.list().subscribe({
+      next: (rows) => this.categories.set(rows),
+      error: () => this.error.set('No pudimos cargar las categorías. Recarga la página.'),
     });
-
-    // Un mueble no puede ser su propia gemela.
-    this.service.list({ pageSize: 60 }).subscribe((list) => {
-      this.twinCandidates.set(
-        list.items
-          .filter((p) => p._id !== this.productId())
-          .map((p) => ({ _id: p._id, name: p.name })),
-      );
-    });
+    void this.loadAllProducts();
 
     const id = this.productId();
     if (id) {
@@ -185,6 +307,7 @@ export class AdminProductForm {
         value: Record<string, unknown> & { variants?: unknown[]; customFields?: unknown[] };
       };
       const { variants, customFields, ...rest } = value;
+      this.chosenType.set(null);
       this.form.patchValue(rest);
       this.variants.clear();
       for (const v of variants ?? []) this.addVariant(v as Partial<AdminVariant>);
@@ -220,20 +343,6 @@ export class AdminProductForm {
     const hours = Math.round(mins / 60);
     if (hours < 24) return `hace ${hours} h`;
     return `hace ${Math.round(hours / 24)} día(s)`;
-  }
-
-  private flattenLeaves(tree: CategoryNode[]) {
-    const out: { _id: string; name: string; parentName: string }[] = [];
-    for (const parent of tree) {
-      if (parent.children.length) {
-        for (const child of parent.children) {
-          out.push({ _id: child._id, name: child.name, parentName: parent.name });
-        }
-      } else {
-        out.push({ _id: parent._id, name: parent.name, parentName: '' });
-      }
-    }
-    return out;
   }
 
   private variantGroup(v: Partial<AdminVariant> = {}): FormGroup {
@@ -332,6 +441,7 @@ export class AdminProductForm {
     this.productId.set(p._id);
     this.active.set(p.active);
     this.images.set(p.images ?? []);
+    this.chosenType.set(null); // el tipo se deduce de la categoría guardada
     const categoryId = typeof p.category === 'string' ? p.category : p.category?._id;
     this.form.patchValue({
       name: p.name,

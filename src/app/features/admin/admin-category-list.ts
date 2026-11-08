@@ -16,6 +16,24 @@ interface Draft {
   imageUrl: string;
   imagePublicId: string;
   slug?: string;
+  /** Solo al crear un tipo nuevo: crear de una vez sus versiones tejida y de madera. */
+  withTejido?: boolean;
+  withMadera?: boolean;
+}
+
+const HELP_KEY = 'artemadero:ayuda-categorias-cerrada';
+
+/** "Mecedoras" -> "tejidas"; "Butacos" -> "tejidos". Se decide por la primera palabra. */
+function tejidoAdjetivo(name: string): string {
+  const first = name.trim().split(/\s+/)[0]?.toLowerCase() ?? '';
+  return first.endsWith('as') || first.endsWith('a') ? 'tejidas' : 'tejidos';
+}
+
+/** El material que sugiere el nombre: "Mecedoras tejidas" -> tejido. */
+export function materialFromName(name: string): Material | null {
+  if (/tejid/i.test(name)) return 'tejido';
+  if (/madera|r[uú]stic/i.test(name)) return 'madera';
+  return null;
 }
 
 @Component({
@@ -36,8 +54,47 @@ export class AdminCategoryList {
   draft = signal<Draft | null>(null);
   uploading = signal(false);
 
-  /** El bloque de ayuda se cierra y no vuelve en esta sesión. */
-  helpDismissed = signal(false);
+  /** El bloque de ayuda se cierra y no vuelve en este navegador (se reabre con "Ayuda"). */
+  helpDismissed = signal(this.readHelpDismissed());
+
+  private readHelpDismissed(): boolean {
+    try {
+      return typeof localStorage !== 'undefined' && localStorage.getItem(HELP_KEY) === '1';
+    } catch {
+      return false;
+    }
+  }
+
+  setHelpDismissed(value: boolean) {
+    this.helpDismissed.set(value);
+    try {
+      if (value) localStorage.setItem(HELP_KEY, '1');
+      else localStorage.removeItem(HELP_KEY);
+    } catch {
+      /* sin almacenamiento: vuelve a salir la próxima vez, no pasa nada */
+    }
+  }
+
+  /** Nombres que se crearán junto al tipo nuevo. */
+  versionNames(name: string): { tejido: string; madera: string } {
+    const base = name.trim();
+    return { tejido: `${base} ${tejidoAdjetivo(base)}`, madera: `${base} de madera` };
+  }
+
+  /** Si el nombre dice "tejidas" pero el material elegido es otro, lo avisamos. */
+  materialMismatch(d: Draft): Material | null {
+    if (!d.parentId) return null;
+    const suggested = materialFromName(d.name);
+    return suggested && suggested !== d.material ? suggested : null;
+  }
+
+  useMaterial(m: Material) {
+    this.draft.update((d) => (d ? { ...d, material: m } : d));
+  }
+
+  materialLabel(m: Material): string {
+    return m === 'tejido' ? 'Tejido' : 'Madera';
+  }
   /** Categoría cuya franja de "¿ocultar?" está abierta. Reemplaza al confirm(). */
   confirmingHide = signal<string | null>(null);
   dragId = signal<string | null>(null);
@@ -186,6 +243,9 @@ export class AdminCategoryList {
       description: '',
       imageUrl: '',
       imagePublicId: '',
+      // Es el patrón del negocio: cada tipo se parte en tejido y madera. Se puede desmarcar.
+      withTejido: parentId === null,
+      withMadera: parentId === null,
     };
   }
 
@@ -241,13 +301,41 @@ export class AdminCategoryList {
     };
     if (d.id && d.slug) payload.slug = d.slug;
 
+    let rootCreated = false;
     try {
-      if (d.id) await firstValueFrom(this.service.update(d.id, payload));
-      else await firstValueFrom(this.service.create(payload));
+      if (d.id) {
+        await firstValueFrom(this.service.update(d.id, payload));
+      } else {
+        const created = await firstValueFrom(this.service.create(payload));
+        rootCreated = !d.parentId;
+        // Tipo nuevo: sus versiones tejida y de madera en el mismo paso.
+        if (!d.parentId) {
+          const names = this.versionNames(payload.name!);
+          const versions: { name: string; material: Material }[] = [];
+          if (d.withTejido) versions.push({ name: names.tejido, material: 'tejido' });
+          if (d.withMadera) versions.push({ name: names.madera, material: 'madera' });
+          for (const v of versions) {
+            await firstValueFrom(
+              this.service.create({ name: v.name, parentId: created._id, material: v.material }),
+            );
+          }
+        }
+      }
       this.draft.set(null);
       this.load();
     } catch (e: unknown) {
-      this.error.set((e as { error?: { error?: string } })?.error?.error ?? 'No se pudo guardar.');
+      const msg = (e as { error?: { error?: string } })?.error?.error ?? 'No se pudo guardar.';
+      if (rootCreated) {
+        // El tipo ya existe: cerrar el editor evita crearlo dos veces al reintentar.
+        this.draft.set(null);
+        this.error.set(
+          `Se creó «${payload.name}», pero falló una de sus versiones (${msg}). ` +
+            'Agrégala con "+ Agregar subcategoría".',
+        );
+      } else {
+        this.error.set(msg);
+      }
+      this.load();
     }
   }
 

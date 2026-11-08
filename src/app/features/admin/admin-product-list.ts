@@ -16,7 +16,9 @@ const FEATURED_LIMIT = 9;
 /** Cuántos muebles se muestran antes de pedir "ver los que faltan". */
 const PAGE = 20;
 
-type Filtro = 'todos' | 'sin-foto' | 'ocultos' | 'visibles' | 'inicio';
+const GUIDE_KEY = 'artemadero:guia-muebles-cerrada';
+
+type Filtro ='todos' | 'sin-foto' | 'ocultos' | 'visibles' | 'inicio';
 
 @Component({
   selector: 'app-admin-product-list',
@@ -48,6 +50,39 @@ export class AdminProductList {
   /** Cuántos se muestran; "Ver los que faltan" lo sube. */
   shown = signal(PAGE);
   readonly featuredLimit = FEATURED_LIMIT;
+
+  /** Guía "Cómo subir un mueble": visible hasta que se cierra; se reabre con "Ayuda". */
+  guideOpen = signal(this.readGuideOpen());
+
+  private readGuideOpen(): boolean {
+    try {
+      return typeof localStorage === 'undefined' || localStorage.getItem(GUIDE_KEY) !== '1';
+    } catch {
+      return true;
+    }
+  }
+
+  setGuideOpen(open: boolean) {
+    this.guideOpen.set(open);
+    try {
+      if (open) localStorage.removeItem(GUIDE_KEY);
+      else localStorage.setItem(GUIDE_KEY, '1');
+    } catch {
+      /* sin almacenamiento: la guía vuelve a salir la próxima vez */
+    }
+  }
+
+  /** Material de cada subcategoría, para ver de un vistazo qué quedó tejido y qué madera. */
+  private materialByCategory = computed(
+    () => new Map(this.leafCategories().map((c) => [c._id, c.material])),
+  );
+
+  materialOf(p: AdminProductCard): { label: string; color: string } | null {
+    const m = p.category ? this.materialByCategory().get(p.category._id) : null;
+    if (m === 'tejido') return { label: 'Tejido', color: 'var(--tejido)' };
+    if (m === 'madera') return { label: 'Madera', color: 'var(--madera)' };
+    return null;
+  }
 
   constructor() {
     this.load();

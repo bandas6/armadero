@@ -81,18 +81,84 @@
       }
     </div>
 
-    <div>
-      <label for="category" class="admin-label">Categoría</label>
-      <select id="category" formControlName="category" class="admin-input">
-        <option value="">Elige una categoría</option>
-        @for (c of leafCategories(); track c._id) {
-          <option [value]="c._id">{{ c.parentName ? c.parentName + ' · ' + c.name : c.name }}</option>
+    <!-- Dónde aparece: tipo de mueble y, después, tejido o madera. -->
+    <fieldset class="rounded-lg border p-3" style="border-color: var(--linea);">
+      <legend class="px-1 text-sm font-semibold">¿Dónde aparece en el catálogo?</legend>
+
+      <label for="tipo" class="admin-label mt-1">1. Tipo de mueble</label>
+      <select
+        id="tipo"
+        class="admin-input"
+        [value]="typeId()"
+        (change)="chooseType($any($event.target).value)"
+      >
+        <option value="">Elige el tipo de mueble</option>
+        @for (t of types(); track t._id) {
+          <option [value]="t._id">{{ t.name }}{{ t.active ? '' : ' (oculto)' }}</option>
         }
       </select>
-      @if (form.controls.category.touched && form.controls.category.invalid) {
-        <p class="mt-1 text-xs" style="color: #8c4a34;">Elige la categoría del mueble.</p>
+
+      @if (typeOptions().length) {
+        <p class="admin-label mt-4 mb-1.5">2. ¿Tejido o madera?</p>
+        <div class="grid gap-2" style="grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));">
+          @for (o of typeOptions(); track o._id) {
+            <button
+              type="button"
+              class="admin-opcion"
+              [attr.aria-pressed]="form.controls.category.value === o._id"
+              [style.border-left-color]="materialColor(o.material)"
+              (click)="chooseCategory(o._id)"
+            >
+              {{ o.name }}
+              <small [style.color]="materialColor(o.material)">
+                {{ materialName(o.material) }}{{ o.active ? '' : ' · oculta' }}
+              </small>
+            </button>
+          }
+        </div>
+        @if (missingMaterials().length) {
+          <p class="mt-2 text-xs" style="color: var(--gris);">
+            ¿Lo haces también en {{ missingMaterials().join(' y en ') }}? Esa versión todavía no
+            existe: créala en <a routerLink="/admin/categorias">Categorías</a> y vuelve aquí.
+          </p>
+        }
       }
-    </div>
+
+      @if (form.controls.category.touched && form.controls.category.invalid) {
+        <p class="mt-2 text-xs" style="color: #8c4a34;">
+          {{ typeId() ? 'Elige si es tejido o de madera.' : 'Elige el tipo de mueble.' }}
+        </p>
+      }
+
+      @if (placement(); as pl) {
+        <p
+          class="mt-3 rounded-md px-3 py-2 text-sm"
+          style="background: var(--hueso-alt); border: 1px solid var(--linea);"
+        >
+          Aparecerá en: <strong>{{ pl.path }}</strong>
+          @if (pl.material) {
+            · al filtrar por <strong>{{ pl.material }}</strong>
+          } @else {
+            <span class="block text-xs" style="color: var(--gris);">
+              Este tipo no se divide por material: sale en su sección, pero no al filtrar por
+              Tejido o por Madera.
+            </span>
+          }
+          @if (pl.hidden) {
+            <span class="block text-xs" style="color: var(--alerta);">
+              Esta categoría está oculta: el mueble no se verá hasta que la muestres en Categorías.
+            </span>
+          }
+        </p>
+      }
+
+      <app-admin-help>
+        <p>El catálogo se organiza por <strong>tipo de mueble</strong> (Mecedoras, Butacos…) y,
+          dentro de cada tipo, por <strong>tejido o madera</strong>.</p>
+        <p>Lo que elijas aquí decide en qué lado del filtro “Tejido / Madera” lo ve el cliente.
+          Si el tipo que buscas no está, créalo en <a routerLink="/admin/categorias">Categorías</a>.</p>
+      </app-admin-help>
+    </fieldset>
 
     <div>
       <label for="shortDescription" class="admin-label">Descripción corta</label>
@@ -105,13 +171,16 @@
       <textarea id="description" formControlName="description" rows="3" class="admin-input"></textarea>
     </div>
 
-    <div class="grid grid-cols-2 gap-3">
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
       <div>
-        <label for="material" class="admin-label">Material</label>
+        <label for="material" class="admin-label">Fibra o madera específica <span class="font-normal" style="color: var(--gris);">(opcional)</span></label>
         <input id="material" formControlName="material" class="admin-input" placeholder="mimbre, cedro…" />
+        <p class="mt-1 text-xs" style="color: var(--gris);">
+          Solo es un detalle para la ficha. Si sale en Tejido o en Madera lo decide el paso de arriba.
+        </p>
       </div>
       <div>
-        <label for="finish" class="admin-label">Acabado</label>
+        <label for="finish" class="admin-label">Acabado <span class="font-normal" style="color: var(--gris);">(opcional)</span></label>
         <input id="finish" formControlName="finish" class="admin-input" placeholder="natural, color miel…" />
       </div>
     </div>
@@ -134,13 +203,23 @@
       <select id="twinProduct" formControlName="twinProduct" class="admin-input">
         <option value="">Ninguna</option>
         @for (candidate of twinCandidates(); track candidate._id) {
-          <option [value]="candidate._id">{{ candidate.name }}</option>
+          <option [value]="candidate._id">
+            {{ candidate.name }}{{ candidate.category ? ' · ' + candidate.category : '' }}
+          </option>
         }
       </select>
       <p class="mt-1 text-xs" style="color: var(--gris);">
-        Si este mueble existe tejido y en madera, engancha aquí la otra versión: la ficha
-        muestra el enlace a la pieza gemela.
+        @if (twinOpposite(); as otro) {
+          Solo se listan los muebles {{ otro }}.
+        } @else {
+          Elige primero si es tejido o de madera y la lista mostrará solo los del otro material.
+        }
       </p>
+      <app-admin-help>
+        <p>Si haces la misma mecedora tejida y en madera, engánchalas aquí. La ficha de cada
+          una muestra un enlace a la otra versión.</p>
+        <p>Es opcional. Déjalo en “Ninguna” si el mueble solo existe en un material.</p>
+      </app-admin-help>
     </div>
 
     <div>
@@ -173,24 +252,56 @@
     <fieldset class="rounded-lg border p-3" style="border-color: var(--linea);">
       <legend class="px-1 text-sm font-semibold">Opciones del mueble</legend>
       <p class="text-xs" style="color: var(--gris);">Colores o tamaños de este mueble. Deja solo "Estándar" si no tiene variaciones.</p>
+      <app-admin-help>
+        <p>Una <strong>opción</strong> es una versión del mismo mueble que el cliente puede
+          escoger: “Sala 3 puestos” y “Sala 5 puestos”, o “Miel” y “Natural”.</p>
+        <p>Las medidas van siempre en centímetros y en este orden: <strong>ancho × alto ×
+          fondo</strong>. Si dejas el precio vacío y el mueble no es a la medida, no se podrá guardar.</p>
+      </app-admin-help>
 
       <div class="mt-3 space-y-4" formArrayName="variants">
         @for (v of variants.controls; track $index; let i = $index) {
           <div class="rounded-md border p-2" [formGroupName]="i" style="border-color: color-mix(in srgb, var(--linea-fuerte) 30%, transparent);">
-            <div class="flex items-center gap-2">
-              <input formControlName="name" placeholder="Nombre de la opción" class="admin-input flex-1" />
+            <div class="flex items-end gap-2">
+              <div class="flex-1">
+                <label class="admin-sublabel" [for]="'v-name-' + i">Nombre de la opción</label>
+                <input [id]="'v-name-' + i" formControlName="name" placeholder="Estándar, 5 puestos, Miel…" class="admin-input" />
+              </div>
               @if (variants.length > 1) {
                 <button type="button" (click)="removeVariant(i)" class="admin-btn admin-btn--sm admin-btn--danger">Quitar</button>
               }
             </div>
             <div class="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
-              <input formControlName="price" type="number" min="0" placeholder="Precio (pesos)" class="admin-input" />
-              <input formControlName="seats" type="number" min="0" placeholder="Puestos" class="admin-input" />
-              <input formControlName="colorName" placeholder="Color" class="admin-input" />
-              <input formControlName="widthCm" type="number" min="0" placeholder="Ancho cm" class="admin-input" />
-              <input formControlName="heightCm" type="number" min="0" placeholder="Alto cm" class="admin-input" />
-              <input formControlName="depthCm" type="number" min="0" placeholder="Fondo cm" class="admin-input" />
-              <input formControlName="seatHeightCm" type="number" min="0" placeholder="Alto del asiento cm" class="admin-input" />
+              <div>
+                <label class="admin-sublabel" [for]="'v-price-' + i">
+                  Precio en pesos{{ form.controls.personalizable.value ? ' (opcional)' : '' }}
+                </label>
+                <input [id]="'v-price-' + i" formControlName="price" type="number" min="0" inputmode="numeric" placeholder="1850000" class="admin-input" />
+              </div>
+              <div>
+                <label class="admin-sublabel" [for]="'v-seats-' + i">Puestos</label>
+                <input [id]="'v-seats-' + i" formControlName="seats" type="number" min="0" inputmode="numeric" class="admin-input" />
+              </div>
+              <div>
+                <label class="admin-sublabel" [for]="'v-color-' + i">Color</label>
+                <input [id]="'v-color-' + i" formControlName="colorName" placeholder="Miel" class="admin-input" />
+              </div>
+              <div>
+                <label class="admin-sublabel" [for]="'v-w-' + i">Ancho (cm)</label>
+                <input [id]="'v-w-' + i" formControlName="widthCm" type="number" min="0" inputmode="numeric" class="admin-input" />
+              </div>
+              <div>
+                <label class="admin-sublabel" [for]="'v-h-' + i">Alto (cm)</label>
+                <input [id]="'v-h-' + i" formControlName="heightCm" type="number" min="0" inputmode="numeric" class="admin-input" />
+              </div>
+              <div>
+                <label class="admin-sublabel" [for]="'v-d-' + i">Fondo (cm)</label>
+                <input [id]="'v-d-' + i" formControlName="depthCm" type="number" min="0" inputmode="numeric" class="admin-input" />
+              </div>
+              <div>
+                <label class="admin-sublabel" [for]="'v-sh-' + i">Alto del asiento (cm)</label>
+                <input [id]="'v-sh-' + i" formControlName="seatHeightCm" type="number" min="0" inputmode="numeric" class="admin-input" />
+              </div>
             </div>
             <label class="mt-2 flex items-center gap-2 text-xs">
               <input type="checkbox" formControlName="isDefault" class="h-4 w-4" /> Mostrar esta opción primero
@@ -203,12 +314,27 @@
     </fieldset>
 
     <!-- Qué puede pedir el cliente al cotizar -->
-    <fieldset class="rounded-lg border p-3" style="border-color: var(--linea);">
-      <legend class="px-1 text-sm font-semibold">Qué puede pedir el cliente</legend>
+    <!--
+      Avanzado: plegado por defecto para no asustar en el primer mueble. Se abre solo si el
+      mueble ya tiene campos (para no esconder lo que ya existe).
+    -->
+    <details class="rounded-lg border p-3" style="border-color: var(--linea);" [open]="customFields.length > 0">
+      <summary class="cursor-pointer text-sm font-semibold" style="min-height: 2.75rem; display: flex; align-items: center;">
+        Qué puede pedir el cliente
+        <span class="ml-1.5 font-normal" style="color: var(--gris);">
+          (avanzado · {{ customFields.length ? customFields.length + ' campo' + (customFields.length === 1 ? '' : 's') : 'opcional' }})
+        </span>
+      </summary>
       <p class="text-xs" style="color: var(--gris);">
         Campos que el cliente responde al cotizar (medidas, color, sí/no…). Útil sobre todo si el mueble se fabrica a la medida.
         Déjalo vacío si no aplica.
       </p>
+      <app-admin-help label="¿Cómo lo ve el cliente?">
+        <p>En la ficha, antes de “Cotizar por WhatsApp”, el cliente ve estas preguntas. Por
+          ejemplo, con “+ Medidas” le aparecen tres casillas: Ancho, Alto y Fondo en cm.</p>
+        <p>Sus respuestas llegan dentro del mensaje de WhatsApp y quedan guardadas en la
+          cotización. Marca “Obligatorio” solo si sin ese dato no puedes cotizar.</p>
+      </app-admin-help>
 
       <div class="mt-2 flex flex-wrap gap-2">
         <button type="button" (click)="addPreset('medidas')" class="admin-btn admin-btn--sm">+ Medidas (ancho/alto/fondo)</button>
@@ -256,7 +382,7 @@
       </div>
 
       <button type="button" (click)="addCustomField()" class="admin-btn admin-btn--sm mt-3">+ Agregar campo</button>
-    </fieldset>
+    </details>
 
     <button type="submit" [disabled]="saving()" class="admin-btn admin-btn--primary w-full" style="min-height: 3rem;">
       {{ saving() ? 'Guardando…' : (isNew() ? 'Crear mueble' : 'Guardar cambios') }}
