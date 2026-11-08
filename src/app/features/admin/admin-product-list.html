@@ -5,8 +5,47 @@
       {{ products().length }} en el catálogo · {{ visibles().length }} se ven en la página
     </p>
   </div>
-  <a routerLink="/admin/productos/nuevo" class="admin-btn admin-btn--primary">+ Nuevo mueble</a>
+  <div class="flex flex-wrap gap-2">
+    @if (!guideOpen()) {
+      <button type="button" (click)="setGuideOpen(true)" class="admin-btn">
+        <span aria-hidden="true">?</span> Ayuda
+      </button>
+    }
+    <a routerLink="/admin/productos/nuevo" class="admin-btn admin-btn--primary">+ Nuevo mueble</a>
+  </div>
 </div>
+
+<!-- Guía de primer uso: cuatro pasos, se cierra y se reabre con "Ayuda". -->
+@if (guideOpen()) {
+  <section
+    class="rounded-bloque mt-[18px] px-[18px] py-4"
+    style="border: 1px solid var(--linea-fuerte); border-left: 5px solid var(--hoja); background: var(--hueso-alt);"
+    aria-labelledby="guia-titulo"
+  >
+    <div class="flex items-start justify-between gap-3">
+      <h2 id="guia-titulo" class="m-0 font-body text-[16px] font-semibold">Cómo subir un mueble</h2>
+      <button
+        type="button"
+        (click)="setGuideOpen(false)"
+        class="admin-btn admin-btn--sm admin-btn--icono"
+        aria-label="Cerrar la guía"
+      >
+        ✕
+      </button>
+    </div>
+    <ol class="mt-2 mb-0 max-w-[66ch] space-y-1.5 pl-5 text-[15px] leading-relaxed" style="color: var(--tinta-suave);">
+      <li>Toca <strong>+ Nuevo mueble</strong> y toma o elige las fotos. La primera es la que se ve en el catálogo.</li>
+      <li>Escribe el nombre y elige el <strong>tipo de mueble</strong> y si es <strong>tejido o de madera</strong>. Eso decide dónde lo encuentra el cliente.</li>
+      <li>En <strong>Opciones del mueble</strong> pon el precio y las medidas en cm (ancho, alto, fondo). Si se hace a la medida, marca “Se fabrica a la medida” y el precio queda opcional.</li>
+      <li>Toca <strong>Crear mueble</strong>. Si tiene foto, queda publicado de una vez.</li>
+    </ol>
+    <p class="mt-3 mb-0 text-[14px]" style="color: var(--gris);">
+      ¿Falta un tipo de mueble o su versión tejida o de madera? Créalo en
+      <a routerLink="/admin/categorias">Categorías</a>. En los formularios, los enlaces
+      <strong>“¿Qué es esto?”</strong> explican cada parte.
+    </p>
+  </section>
+}
 
 <!--
   Lo pendiente sube al principio: sin foto no se puede publicar, así que estos muebles
@@ -233,6 +272,9 @@
             >
             <p class="mt-[3px] text-[13px]" style="color: var(--gris);">
               {{ p.category?.name || 'Sin categoría' }}
+              @if (materialOf(p); as m) {
+                · <span class="font-semibold" [style.color]="m.color">{{ m.label }}</span>
+              }
             </p>
             <p
               class="mt-1.5 text-[15px] font-semibold"

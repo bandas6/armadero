@@ -268,3 +268,84 @@ a:hover {
   font-weight: 600;
   margin-bottom: 0.25rem;
 }
+/* Etiqueta chica sobre cada medida: el placeholder desaparece al escribir. */
+.admin-sublabel {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--tinta-suave);
+  margin-bottom: 0.15rem;
+}
+
+/* ---- Ayuda en el lugar (app-admin-help) ---- */
+.admin-help {
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+}
+.admin-help > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  cursor: pointer;
+  color: var(--hoja);
+  font-weight: 500;
+  list-style: none;
+}
+.admin-help > summary::-webkit-details-marker {
+  display: none;
+}
+.admin-help__icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 999px;
+  border: 1.5px solid currentColor;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.admin-help__cuerpo {
+  border-left: 4px solid var(--hoja);
+  background: var(--hueso-alt);
+  border-radius: var(--r-control);
+  padding: 0.6rem 0.8rem;
+  color: var(--tinta-suave);
+  line-height: 1.5;
+  max-width: 62ch;
+}
+.admin-help__cuerpo p {
+  margin: 0 0 0.4rem;
+}
+.admin-help__cuerpo p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Selector de material en el formulario del mueble ---- */
+.admin-opcion {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  min-height: 3.25rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: var(--r-control);
+  border: 1.5px solid var(--linea-fuerte);
+  border-left-width: 6px;
+  background: #fff;
+  color: var(--tinta);
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.admin-opcion[aria-pressed='true'] {
+  border-color: var(--hoja);
+  background: color-mix(in srgb, var(--hoja) 9%, #fff);
+  box-shadow: 0 0 0 1px var(--hoja);
+}
+.admin-opcion small {
+  font-size: 0.75rem;
+  font-weight: 500;
+}

@@ -1,7 +1,7 @@
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { Injectable, PLATFORM_ID, REQUEST, inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Injectable, RESPONSE_INIT, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { environment } from '../../../environments/environment';
+import { SiteOriginService } from './site-origin.service';
 
 export interface PageSeo {
   title: string;
@@ -11,37 +11,36 @@ export interface PageSeo {
   image?: string;
   type?: 'website' | 'article' | 'product';
   noindex?: boolean;
+  /**
+   * Código HTTP de la respuesta SSR. Una página "no encontrado" debe responder 404 (no
+   * 200 con noindex, que Google reporta como soft 404); un fallo de la API, 503, para que
+   * Google reintente en vez de sacar el producto del índice.
+   */
+  status?: number;
 }
 
 const SUFIJO = ' · Artemadero';
+/** Imagen para compartir cuando la página no tiene foto propia (1200×630, en public/). */
+const OG_IMAGE_DEFAULT = '/og-artemadero.jpg';
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
   private title = inject(Title);
   private meta = inject(Meta);
   private doc = inject(DOCUMENT);
-  private platformId = inject(PLATFORM_ID);
-  private request = inject(REQUEST, { optional: true });
-
-  /** Origen absoluto del sitio (https://dominio), para canonical y og:url. */
-  private origin(): string {
-    if (isPlatformBrowser(this.platformId)) return this.doc.location.origin;
-    // SSR: el host real del request; si no, el configurado en environment.
-    const host = this.request?.headers?.get?.('host');
-    if (host) {
-      const fwd = this.request?.headers?.get?.('x-forwarded-proto');
-      const proto = fwd ?? (/^(localhost|127\.0\.0\.1)(:|$)/.test(host) ? 'http' : 'https');
-      return `${proto}://${host}`;
-    }
-    return environment.siteUrl || '';
-  }
+  private site = inject(SiteOriginService);
+  /** Solo existe en el servidor: en el navegador el código de estado ya no aplica. */
+  private response = inject(RESPONSE_INIT, { optional: true });
 
   setPage(seo: PageSeo): void {
+    if (this.response) this.response.status = seo.status ?? 200;
+
     const full = seo.title.endsWith(SUFIJO) ? seo.title : seo.title + SUFIJO;
     this.title.setTitle(full);
 
-    const url = this.origin() + seo.path;
-    const image = seo.image ?? `${this.origin()}/favicon.ico`;
+    const origin = this.site.origin;
+    const url = origin + seo.path;
+    const image = seo.image ?? origin + OG_IMAGE_DEFAULT;
 
     const tags: Record<string, string> = {
       'og:site_name': 'Artemadero',
